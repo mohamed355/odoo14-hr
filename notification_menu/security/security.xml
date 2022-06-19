@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="activity_menu_category" model="ir.module.category">
+    <field name="name">Activity Group</field>
+    <field name="sequence" eval="1"/>
+</record>
+<record id="activity_menu_group_admin" model="res.groups">
+    <field name="name">Mail Admin</field>
+    <field name="category_id" ref="activity_menu_category"/>
+<!--    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+</record>
+        <record id="activity_menu_group_User" model="res.groups">
+    <field name="name">Mail User</field>
+    <field name="category_id" ref="activity_menu_category"/>
+<!--    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+</record>
+       <record id="mail_notification_role" model="ir.rule">
+           <field name="name">Notification Role</field>
+           <field ref="mail.model_mail_activity" name="model_id"/>
+           <field name="domain_force">[('user_id', '=',user.id )]</field>
+           <field name="perm_write" eval="1"/>
+           <field name="perm_create" eval="1"/>
+           <field name="perm_read" eval="1"/>
+           <field name="perm_unlink" eval="1"/>
+           <!-- You can attach this rule to a specific group, Or make it Global -->
+           <field name="groups" eval="[(4, ref('activity_menu_group_User'))]"/>
+<!--           <field name="global" eval="1"/>-->
+       </record>
+
+    </data>
+</odoo>
