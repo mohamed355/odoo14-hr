@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <!-- Inherit Form View to Modify it -->
+    <record id="mail_activity_view_form_popup_inherit" model="ir.ui.view">
+        <field name="name">mail_activity_view_form_popup_inherit</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[3]/group[2]/field[@name='user_id']" position="after">
+                <field name="partner_id" attrs="{'invisible': [('opportunity_id', '!=', False)]}"/>
+                <field name="opportunity_id" attrs="{'invisible': [('partner_id', '!=', False)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+      <record id="mail_activity_action" model="ir.actions.act_window">
+          <field name="name">Activities</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">mail.activity</field>
+          <field name="view_mode">calendar</field>
+      </record>
+
+<!-- This Menu Item must have a parent and an action -->
+<menuitem id="crm_lead_activities_menu" name="Activities" parent="crm.crm_menu_root" action="mail_activity_action" sequence="2"/>
+    </data>
+</odoo>
