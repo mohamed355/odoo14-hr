@@ -1,0 +1,165 @@
+<odoo>
+  <data>
+
+      <record id="action_hiring_request_wizard" model="ir.actions.act_window">
+        <field name="name">Hiring Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hiring.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_oppr_id': active_id}</field>
+
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="crm_lead_add_hiring_request" model="ir.ui.view">
+        <field name="name">crm.lead.add.hiring.request</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="%(action_hiring_request_wizard)d" type="action"
+                        string="Create Hiring Request" class="oe_highlight"/>
+
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                  <button class="oe_stat_button" type="object" name="get_hiring_requests" icon="fa-list">
+                        <field string="Hiring Requests" name="hiring_requests_count" widget="statinfo"/>
+                  </button>
+              </xpath>
+
+        </field>
+    </record>
+
+    <record id="hiring_request_wizard_form" model="ir.ui.view">
+        <field name="name">hiring.request.wizard.form</field>
+        <field name="model">hiring.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+<!--                        <field name="oppr_id"/>-->
+                        <field name="country_id"/>
+                        <field name="job_id"/>
+                        <field name="gender"/>
+                        <field name="ex_level"/>
+                        <field name="language_ids" widget="many2many_tags"/>
+                        <field name="department_id"/>
+                        <field name="required_no"/>
+                        <field name="required_tech"/>
+                        <field name="salary_range"/>
+                        <field name="type_of_job_id"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="create_hiring_request" type="object"
+                        string="Create" class="oe_highlight"/>
+                </footer>
+            </form>
+
+        </field>
+    </record>
+
+
+
+      <record id="hiring_request_form" model="ir.ui.view">
+          <field name="name">hiring.request.form</field>
+          <field name="model">hiring.request</field>
+          <field name="arch" type="xml">
+              <form>
+                  <header>
+                      <button name="create_activities" string="Create activity" type="object" class="oe_highlight"/>
+                  </header>
+                  <sheet>
+                      <div class="oe_button_box" name="button_box">
+                          <button name="application_no" type="object" class="oe_stat_button" icon="fa-user">
+                              <div class="o_field_widget o_stat_info">
+                                  <span class="o_stat_value"><field name="app_count"/></span>
+                                  <span class="o_stat_text">Applications</span>
+                              </div>
+                          </button>
+                          <button name="activity_no" type="object" class="oe_stat_button" icon="fa-fw fa-calendar">
+                              <div class="o_field_widget o_stat_info">
+                                  <span class="o_stat_value"><field name="active_count"/></span>
+                                  <span class="o_stat_text">Activities</span>
+                              </div>
+                          </button>
+                      </div>
+                      <group>
+                          <field name="name"/>
+                      </group>
+                      <group>
+                          <group>
+                              <field name="oppr_id"/>
+                              <field name="customer_id"/>
+                              <field name="customer_address_email"/>
+                              <field name="customer_address_phone"/>
+                              <field name="customer_address_mobile"/>
+                              <field name="country_id"/>
+                              <field name="job_id"/>
+                              <field name="gender"/>
+                              <field name="ex_level"/>
+                              <field name="language_ids" widget="many2many_tags"/>
+                              <field name="user_id"/>
+                              <field name="team_id"/>
+                          </group>
+                          <group>
+                              <field name="department_id"/>
+                              <field name="required_no"/>
+                              <field name="required_tech"/>
+                              <field name="salary_range"/>
+                              <field name="tag_ids" widget="many2many_tags"/>
+                              <field name="type_of_job"/>
+                          </group>
+                      </group>
+
+                  </sheet>
+                  <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+              </form>
+          </field>
+      </record>
+
+      <record id="hiring_request_tree" model="ir.ui.view">
+          <field name="name">hiring.request.tree</field>
+          <field name="model">hiring.request</field>
+          <field name="arch" type="xml">
+              <tree>
+                  <field name="name"/>
+                  <field name="country_id"/>
+                  <field name="job_id"/>
+                  <field name="gender"/>
+                  <field name="ex_level"/>
+                  <field name="language_ids" widget="many2many_tags"/>
+                  <field name="department_id"/>
+                  <field name="required_no"/>
+                  <field name="required_tech"/>
+                  <field name="salary_range"/>
+
+              </tree>
+          </field>
+      </record>
+
+      <record id="action_hiring_request" model="ir.actions.act_window">
+          <field name="name">Hiring Requests</field>
+          <field name="type">ir.actions.act_window</field>
+<!--          <field name="view_type">form</field>-->
+          <field name="res_model">hiring.request</field>
+          <field name="view_mode">tree,form</field>
+          <field name="view_id" ref="hiring_request_tree"/>
+          <field name="target">current</field>
+
+
+
+      </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="hiring_request_menu"
+              name="Hiring Requests"
+              parent="hr_recruitment.menu_hr_recruitment_root"
+              action="action_hiring_request" sequence="4"/>
+  </data>
+</odoo>
