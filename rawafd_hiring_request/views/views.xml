@@ -42,7 +42,10 @@
 <!--                        <field name="oppr_id"/>-->
                         <field name="country_id"/>
                         <field name="job_id"/>
+                        <field name="client"/>
                         <field name="gender"/>
+                        <field name="location"/>
+                        <field name="job_level"/>
                         <field name="ex_level"/>
                         <field name="language_ids" widget="many2many_tags"/>
                         <field name="department_id"/>
@@ -87,32 +90,77 @@
                           </button>
                       </div>
                       <group>
+                          <group>
                           <field name="name"/>
+                          <field name="create_date" string="Request Date"/>
+                          <field name="client"/>
+                      </group>
+                      <group>
+                          <field name="req_state"/>
+                          <field name="priority" widget="priority"/>
+                      </group>
                       </group>
                       <group>
                           <group>
-                              <field name="oppr_id"/>
-                              <field name="customer_id"/>
-                              <field name="customer_address_email"/>
-                              <field name="customer_address_phone"/>
-                              <field name="customer_address_mobile"/>
-                              <field name="country_id"/>
                               <field name="job_id"/>
-                              <field name="gender"/>
-                              <field name="ex_level"/>
-                              <field name="language_ids" widget="many2many_tags"/>
-                              <field name="user_id"/>
-                              <field name="team_id"/>
+                              <field name="job_level"/>
+                              <field name="location"/>
+                               <field name="department_id"/>
                           </group>
                           <group>
-                              <field name="department_id"/>
-                              <field name="required_no"/>
-                              <field name="required_tech"/>
-                              <field name="salary_range"/>
-                              <field name="tag_ids" widget="many2many_tags"/>
+                              <field name="requested"/>
                               <field name="type_of_job"/>
+                              <label for="budget"/>
+                              <div>
+                                                                <field name="budget"/>
+                                                                <field name="currency_id" nolabel="1"/>
+                              </div>
                           </group>
+                          <field name="customer_ids">
+                              <tree editable="bottom">
+
+                                  <field name="customer_id"/>
+                                  <field name="level_1_child" invisible="1"/>
+                                  <field name="customer_child" invisible="1"/>
+                                  <field name="level_1_id" domain="[('id', 'in', customer_child), ]"/>
+                                  <field name="contact_id" domain="[('id', 'in', level_1_child), ]"/>
+                                  <field name="email" />
+                                  <field name="mobile"/>
+                              </tree>
+                      </field>
                       </group>
+
+<group>
+    <group>
+        <field name="note"/>
+    </group>
+    <group></group>
+</group>
+                      <group>
+                      <group>
+        <field name="nationality"/>
+        <field name="language_ids" widget="many2many_tags"/>
+    </group>
+    <group>
+        <field name="gender"/>
+    </group>
+</group>
+                      <group>
+                      <group>
+        <field name="user_id"/>
+    </group>
+    <group>
+        <field name="team_id"/>
+    </group>
+</group>
+                       <group>
+                      <group>
+        <field name="comment"/>
+<!--        <field name="attach"/>-->
+    </group>
+    <group>
+    </group>
+</group>
 
                   </sheet>
                   <div class="oe_chatter">
@@ -129,16 +177,15 @@
           <field name="model">hiring.request</field>
           <field name="arch" type="xml">
               <tree>
-                  <field name="name"/>
-                  <field name="country_id"/>
+                  <field name="create_date" string="Request Date"/>
+                  <field name="client"/>
+                  <field name="job_level"/>
                   <field name="job_id"/>
-                  <field name="gender"/>
-                  <field name="ex_level"/>
-                  <field name="language_ids" widget="many2many_tags"/>
+                  <field name="location"/>
+                  <field name="nationality"/>
+                  <field name="requested"/>
                   <field name="department_id"/>
-                  <field name="required_no"/>
-                  <field name="required_tech"/>
-                  <field name="salary_range"/>
+                  <field name="req_state"/>
 
               </tree>
           </field>
