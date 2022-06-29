@@ -6,7 +6,10 @@
         <field name="name">recruitment_form_activity</field>
         <field name="model">mail.activity</field>
         <field name="arch" type="xml">
+                    <field name="priority" eval="22"/>
+
             <form string="Activity">
+
                 <sheet>
                     <group invisible="1">
                         <field name="activity_category" invisible="1"/>
