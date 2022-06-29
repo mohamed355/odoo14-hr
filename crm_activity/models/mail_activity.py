@@ -6,8 +6,11 @@ class MailActivity(models.Model):
 
     partner_id = fields.Many2one(comodel_name="res.partner", string="Partner", required=False, )
     opportunity_id = fields.Many2one(comodel_name="crm.lead", string="Opportunity", required=False, )
+    lead_id = fields.Many2one(comodel_name="crm.lead", string="Leads", required=False, )
+    date_from = fields.Datetime(string="Date From", required=True, )
+    date_to = fields.Datetime(string="Date To", required=True, )
 
-    @api.onchange('partner_id','opportunity_id')
+    @api.onchange('partner_id','opportunity_id','lead_id')
     def onchange_fields_filter(self):
         if self.partner_id:
             self.res_model_id = self.env['ir.model'].search([('model','=','res.partner')],limit=1).id
@@ -15,4 +18,7 @@ class MailActivity(models.Model):
         if self.opportunity_id:
             self.res_model_id = self.env['ir.model'].search([('model','=','crm.lead')],limit=1).id
             self.res_id = self.opportunity_id.id
+        if self.lead_id:
+            self.res_model_id = self.env['ir.model'].search([('model','=','crm.lead')],limit=1).id
+            self.res_id = self.lead_id.id
 

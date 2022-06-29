@@ -9,8 +9,17 @@
         <field name="arch" type="xml">
 
             <xpath expr="//group[3]/group[2]/field[@name='user_id']" position="after">
-                <field name="partner_id" attrs="{'invisible': [('opportunity_id', '!=', False)]}"/>
-                <field name="opportunity_id" attrs="{'invisible': [('partner_id', '!=', False)]}"/>
+                <field name="partner_id" attrs="{'invisible': ['|',('opportunity_id', '!=', False),('lead_id', '!=', False)]}"/>
+                <field name="opportunity_id" attrs="{'invisible': ['|',('partner_id', '!=', False),('lead_id', '!=', False)]}" domain="[('type', '=','opportunity' ), ]"/>
+                <field name="lead_id" attrs="{'invisible': ['|',('opportunity_id', '!=', False),('partner_id', '!=', False)]}" domain="[('type', '=','lead' ), ]"/>
+             <label for="date_from" string="Date"/>
+                                <div name="date" class="d-flex">
+                                    <field name="date_from" />
+<!--                                    <span class="oe_inline o_form_label mx-3 oe_read_only"> To </span>-->
+                                    <!-- Bigger margin on the left because in edit mode the external link button covers the text -->
+                                    <span class="oe_inline o_form_label mr-3 ml-5 oe_edit_only"> To </span>
+                                    <field name="date_to"/>
+                                </div>
             </xpath>
 
         </field>
@@ -42,7 +51,6 @@
 
       </record>
 
-<!-- This Menu Item must have a parent and an action -->
 <menuitem id="crm_lead_activities_menu" name="Activities" parent="crm.crm_menu_root" action="mail_activity_action" sequence="2"/>
     </data>
 </odoo>
