@@ -5,8 +5,9 @@
     <record id="recruitment_form_activity" model="ir.ui.view">
         <field name="name">recruitment_form_activity</field>
         <field name="model">mail.activity</field>
+                            <field name="priority" eval="22"/>
+
         <field name="arch" type="xml">
-                    <field name="priority" eval="22"/>
 
             <form string="Activity">
 
