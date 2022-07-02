@@ -71,9 +71,9 @@
           <field name="model">hiring.request</field>
           <field name="arch" type="xml">
               <form>
-                  <header>
-                      <button name="create_activities" string="Create activity" type="object" class="oe_highlight"/>
-                  </header>
+<!--                  <header>-->
+<!--                      <button name="create_activities" string="Create activity" type="object" class="oe_highlight"/>-->
+<!--                  </header>-->
                   <sheet>
                       <div class="oe_button_box" name="button_box">
                           <button name="application_no" type="object" class="oe_stat_button" icon="fa-user">

@@ -19,7 +19,7 @@ class NewModule(models.TransientModel):
     location = fields.Char(string="Location", required=True, )
 
     language_ids = fields.Many2many(comodel_name="job.lang", string="Language", required=False)
-    department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=False)
+    department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
     required_no = fields.Integer(string='Number of Required Employees')
     required_tech = fields.Char(string='Required Technology')
     salary_range = fields.Char(string='Salary Range')
@@ -71,11 +71,11 @@ class HiringRequest(models.Model):
     attach = fields.Binary(string="Attach",)
     location = fields.Char(string="Location", required=True, )
     priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string='Appreciation')
-    customer_id = fields.Many2one(comodel_name="res.partner", string="Customer", readonly=True,required=True)
+    # customer_id = fields.Many2one(comodel_name="res.partner", string="Customer", readonly=True,required=True)
     client = fields.Many2one(comodel_name="res.partner", string="Client",required=True)
-    customer_address_email = fields.Char('Email', related='customer_id.email', readonly=True)
-    customer_address_phone = fields.Char('Phone', related='customer_id.phone', readonly=True)
-    customer_address_mobile = fields.Char('Mobile', related='customer_id.mobile', readonly=True)
+    # customer_address_email = fields.Char('Email', related='customer_id.email', readonly=True)
+    # customer_address_phone = fields.Char('Phone', related='customer_id.phone', readonly=True)
+    # customer_address_mobile = fields.Char('Mobile', related='customer_id.mobile', readonly=True)
     user_id = fields.Many2one(comodel_name="res.users", string="Salesperson", readonly=True)
     team_id = fields.Many2one(comodel_name="crm.team", string="Sales Team", readonly=True)
     comment = fields.Text(string="Other Comments", required=False, )
@@ -105,19 +105,19 @@ class HiringRequest(models.Model):
 
     def create_activities(self):
         print('hi')
-        if self.type_of_job and self.type_of_job.activity_ids:
-            for i in self.type_of_job.activity_ids:
-                self.env['mail.activity'].sudo().create({
-                    'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
-                    'note': i.name,
-                    'user_id': self._uid,
-                    'res_id': self.id,
-                    'date_deadline': date.today() + timedelta(days=i.no_days),
-                    'res_model_id': self.env['ir.model'].sudo().search(
-                         [('model', '=', 'hiring.request')], limit=1).id,
-                })
-        else:
-            raise ValidationError("Please add type of job and activities")
+        # if self and self.activity_ids:
+        for i in self.activity_ids:
+            self.env['mail.activity'].sudo().create({
+                'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+                'note': i.name,
+                'user_id': self._uid,
+                'res_id': self.id,
+                'date_deadline': date.today() + timedelta(days=i.no_days),
+                'res_model_id': self.env['ir.model'].sudo().search(
+                     [('model', '=', 'hiring.request')], limit=1).id,
+            })
+        # else:
+        #     raise ValidationError("Please add type of job and activities")
 
     def application_no(self):
         self.ensure_one()
