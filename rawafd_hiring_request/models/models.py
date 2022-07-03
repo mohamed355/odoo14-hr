@@ -94,8 +94,30 @@ class HiringRequest(models.Model):
     required_tech = fields.Char(string='Required Technology')
     salary_range = fields.Char(string='Salary Range')
     type_of_job = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],)
-    app_count = fields.Integer(compute='_compute_app_count', string="Number of applications")
+    app_count = fields.Integer(compute='_compute_application_ids', string="Number of applications")
     active_count = fields.Integer(compute='_compute_activity_count', string="Number of applications")
+    application_ids = fields.Many2many(comodel_name="hr.applicant", relation="hr_application_rel", column1='application_id', column2="hr_id", string="Application", compute='_compute_application_ids')
+
+    def create_application(self):
+        application = self.env['hr.applicant'].create({
+            'name':"Application from hiring",
+            'experience_level':self.job_level,
+            'country_id':self.country_id.id,
+            'language_ids':self.language_ids.ids,
+            'gender':self.gender,
+            'job_id':self.job_id.id,
+            'nationality':self.nationality,
+            'department_id':self.department_id.id,
+            'hiring_id':self.id,
+        })
+
+    @api.depends()
+    def _compute_application_ids(self):
+        for rec in self:
+            rec.app_count = len(self.env['hr.applicant'].search([('hiring_id', '=', rec.id)]))
+            rec.application_ids = self.env['hr.applicant'].search([('hiring_id', '=', rec.id)]).ids
+
+
 
     @api.model
     def create(self, vals):
@@ -127,9 +149,8 @@ class HiringRequest(models.Model):
             'view_mode': 'kanban,tree,form,pivot,graph,calendar',
             'res_model': 'hr.applicant',
             'type': 'ir.actions.act_window',
-            'domain': [('country_id', '=', self.country_id.id), ('job_id', '=', self.job_id.id),
-                       ('gender', '=', self.gender), ('experience_level', '=', self.ex_level),
-                       ('in_active_state', '=', True)],
+            'domain': [('id', 'in', self.application_ids.ids)
+                       ],
         }
 
         return action
@@ -148,12 +169,10 @@ class HiringRequest(models.Model):
         return action
 
 
-    def _compute_app_count(self):
-        for product in self:
-            product.app_count = self.env['hr.applicant'].search_count(
-                [('country_id', '=', self.country_id.id), ('job_id', '=', self.job_id.id), ('gender', '=', self.gender),
-                 ('experience_level', '=', self.ex_level), ('in_active_state', '=', True)])
-
+    # def _compute_app_count(self):
+    #     for product in self:
+    #         product.app_count = self.env['hr.applicant'].search_count(
+    #             [('country_id', '=', self.country_id.id), ('job_id', '=', self.job_id.id), ])
 
     def _compute_activity_count(self):
         for product in self:

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sequence_hr_application" model="ir.sequence">
+            <field name="name">Hr Application</field>
+            <field name="code">hr.applicant.seq</field>
+            <field name="prefix">App</field>
+            <field name="padding">2</field>
+        </record>
+        
+        
+    
+    </data>
+</odoo>

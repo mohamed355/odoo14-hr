@@ -71,9 +71,9 @@
           <field name="model">hiring.request</field>
           <field name="arch" type="xml">
               <form>
-<!--                  <header>-->
-<!--                      <button name="create_activities" string="Create activity" type="object" class="oe_highlight"/>-->
-<!--                  </header>-->
+                  <header>
+                      <button name="create_application" string="Create Application" type="object" class="oe_highlight"/>
+                  </header>
                   <sheet>
                       <div class="oe_button_box" name="button_box">
                           <button name="application_no" type="object" class="oe_stat_button" icon="fa-user">
@@ -82,12 +82,12 @@
                                   <span class="o_stat_text">Applications</span>
                               </div>
                           </button>
-                          <button name="activity_no" type="object" class="oe_stat_button" icon="fa-fw fa-calendar">
-                              <div class="o_field_widget o_stat_info">
-                                  <span class="o_stat_value"><field name="active_count"/></span>
-                                  <span class="o_stat_text">Activities</span>
-                              </div>
-                          </button>
+<!--                          <button name="activity_no" type="object" class="oe_stat_button" icon="fa-fw fa-calendar">-->
+<!--                              <div class="o_field_widget o_stat_info">-->
+<!--                                  <span class="o_stat_value"><field name="active_count"/></span>-->
+<!--                                  <span class="o_stat_text">Activities</span>-->
+<!--                              </div>-->
+<!--                          </button>-->
                       </div>
                       <group>
                           <group>
@@ -143,6 +143,7 @@
     </group>
     <group>
         <field name="gender"/>
+        <field name="country_id"/>
     </group>
 </group>
                       <group>
