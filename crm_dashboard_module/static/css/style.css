@@ -1,0 +1,468 @@
+/*
+ * #### Gauge Component
+ *
+ * The standard markup for the component is:
+ *
+ *      <div class="gauge">
+ *          <div class="gauge__container">
+ *              <div class="gauge__marker"></div>
+ *              <div class="gauge__background"></div>
+ *              <div class="gauge__center"></div>
+ *              <div class="gauge__data"></div>
+ *              <div class="gauge__needle"></div>
+ *          </div>
+ *          <div class="gauge__labels">
+ *              <span class="gauge__label--low">No</span>
+ *              <span class="gauge__label--spacer"></span>
+ *              <span class="gauge__label--high">Yes</span>
+ *          </div>
+ *      </div>
+ */
+
+/*
+ * First define all of the relevant rules that aren't dependent
+ * on the size of the gauge. We want to collect the size-depenent
+ * rules in one place to make it easier to adjust the size.
+ */
+
+.gauge {
+    position: relative;
+}
+
+.gauge__container {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	left: 50%;
+	overflow: hidden;
+	text-align: center;
+	-webkit-transform: translateX(-50%);
+	   -moz-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	     -o-transform: translateX(-50%);
+	        transform: translateX(-50%);
+}
+
+.gauge__background {
+	z-index: 0;
+	position: absolute;
+	background-color: #d8f0de;
+	top: 0;
+	border-radius: 300px 300px 0 0;
+}
+
+.gauge__data {
+	z-index: 1;
+	position: absolute;
+	background-color: #00c29d;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 300px 300px 0 0;
+    -webkit-transform-origin: center bottom;
+       -moz-transform-origin: center bottom;
+        -ms-transform-origin: center bottom;
+         -o-transform-origin: center bottom;
+            transform-origin: center bottom;
+}
+
+.gauge__center {
+	z-index: 2;
+	position: absolute;
+	background-color: #f9f9f9;
+	margin-right: auto;
+	border-radius: 300px 300px 0 0;
+}
+
+.gauge__marker {
+    z-index: 3;
+    background-color: #fff;
+    position: absolute;
+    width: 1px;
+}
+
+.gauge__needle {
+    z-index: 4;
+    background-color: #21242c;
+    height: 3px;
+    position: absolute;
+    -webkit-transform-origin: left center;
+       -moz-transform-origin: left center;
+        -ms-transform-origin: left center;
+         -o-transform-origin: left center;
+            transform-origin: left center;
+}
+
+.gauge__labels {
+    display: table;
+    margin: 0 auto;
+    position: relative;
+}
+
+.gauge__label--low {
+    display: table-cell;
+    text-align: center;
+    color: #00c29d;
+}
+
+.gauge__label--spacer {
+    display: table-cell;
+}
+
+.gauge__label--high {
+    display: table-cell;
+    text-align: center;
+    color: #979f99;
+}
+
+/*
+ * Now define the rules that depend on the size of
+ * the gauge. We start with sizing for a small mobile
+ * device.
+ */
+
+.gauge { height: calc(120px + 3em); }
+.gauge__container { width: 240px; height: 120px; }
+.gauge__marker { height: 120px; left: 119.5px; }
+.gauge__background { width: 240px; height: 120px; }
+.gauge__center { width: 144px; height: 72px; top: 48px; margin-left: 48px; }
+.gauge__data { width: 240px; height: 120px; }
+.gauge__needle { left: 120px; top: 117px; width: 120px; }
+.gauge__labels { top: 120px; width: 240px; }
+.gauge__label--low { width: 48px; }
+.gauge__label--spacer { width: 144px; }
+.gauge__label--high { width: 48px; }
+
+/*
+ * Increase the gauge size slightly on larger viewports.
+ */
+
+ @media only screen and (min-width: 400px) {
+    .gauge { height: calc(150px + 3em); }
+    .gauge__container { width: 300px; height: 150px; }
+    .gauge__marker { height: 150px; left: 149.5px; }
+    .gauge__background { width: 300px; height: 150px; }
+    .gauge__center { width: 180px; height: 90px; top: 60px; margin-left: 60px; }
+    .gauge__data { width: 300px; height: 150px; }
+    .gauge__needle { left: 150px; top: 147px; width: 150px; }
+    .gauge__labels { top: 160px; width: 300px; font-size: 20px;}
+    .gauge__label--low { width: 60px; }
+    .gauge__label--spacer { width: 180px; }
+    .gauge__label--high { width: 60px; }
+}
+
+/*
+ * As an option, the `gauge--liveupdate` class can be added
+ * to the main gauge element. When this class is present,
+ * we add a transition that animates any changes to the gauge
+ * value. Currently, the app does not use this option because
+ * all the inputs that can change gauge values are present
+ * on tab panels that are different from the gauge itself.
+ * Therefore, users won't be able to see any gauge changes
+ * when they make input changes. The code is available, though,
+ * should this change.
+ */
+
+.gauge--liveupdate .gauge__data,
+.gauge--liveupdate .gauge__needle {
+    -webkit-transition: all 1s ease-in-out;
+       -moz-transition: all 1s ease-in-out;
+        -ms-transition: all 1s ease-in-out;
+         -o-transition: all 1s ease-in-out;
+            transition: all 1s ease-in-out;
+}
+
+/*
+ * For a given gauge value, x, ranging from 0.0 to 1.0, set
+ * the `transform: rotate()` property according to the
+ * following equation: `-0.5 + 0.5x turns` The default
+ * properties below represent an x value of 0.
+ */
+
+.gauge__data {
+    -webkit-transform: rotate(-.50turn);
+       -moz-transform: rotate(-.50turn);
+        -ms-transform: rotate(-.50turn);
+         -o-transform: rotate(-.50turn);
+            transform: rotate(-.50turn);
+}
+.gauge__needle {
+    -webkit-transform: rotate(-.50turn);
+       -moz-transform: rotate(-.50turn);
+        -ms-transform: rotate(-.50turn);
+         -o-transform: rotate(-.50turn);
+            transform: rotate(-.50turn);
+}
+p, span, a, ul, li, button {
+    font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
+}
+
+strong {
+	font-weight: 600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.5em;
+	font-weight: 300;
+}
+
+strong {
+  font-weight: 400;
+}
+
+.sub_title {
+	font-size: 14px;
+}
+
+.sub_title div span {
+	font-weight: 600;
+}
+:root {
+    /* Primary */
+    --mauve: #7D7EAF;
+    --pink-dark: #BD85BA;
+    --pink: #F78EAD;
+    --peach: #FFA48E;
+    --orange: #FFCA71;
+    --gold: #CEA716;
+    --green: #1EC198;
+    --grey: #a0a0a0;
+    /* Light */
+    --mauve-light: #e5e5ef;
+    --pink-dark-light: #f2e7f1;
+    --pink-light: #fde8ef;
+    --peach-light: #ffede8;
+    --orange-light: #fff4e3;
+    --gold-light: #faf6e8;
+    --green-light: #e9f9f5;
+    --grey-light: #e0e0e0;
+
+    /*Lighter*/
+    --grey-lighter: #fafafa;
+    --grey-dark-lighter: #f3f3f3;
+}
+
+/* Background */
+.bg-mauve-light {
+    background-color: var(--mauve-light);
+}
+
+.bg-pink-dark-light {
+    background-color: var(--pink-dark-light);
+}
+
+.bg-pink-light {
+    background-color: var(--pink-light);
+}
+
+.bg-peach-light {
+    background-color: var(--peach-light);
+}
+
+.bg-orange-light {
+    background-color: var(--orange-light);
+}
+
+.bg-gold-light {
+    background-color: var(--gold-light);
+}
+
+.bg-green-light {
+    background-color: var(--green-light);
+}
+
+/* Text */
+.text-mauve {
+    color: var(--mauve);
+}
+
+.text-pink-dark {
+    color: var(--pink-dark);
+}
+
+.text-pink {
+    color: var(--pink);
+}
+
+.text-peach {
+    color: var(--peach);
+}
+
+.text-orange {
+    color: var(--orange);
+}
+
+.text-gold {
+    color: var(--gold);
+}
+
+.text-green {
+    color: var(--green);
+}
+
+/* Cards */
+
+.dashboard-card {
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+    padding: 1.7rem 1.5rem 1.5rem 1.5rem;
+    margin: 1rem auto;
+    height: 90px;
+}
+
+.dashboard-card__icon-container {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.dashboard-card__icon-container i {
+	font-size: 20px;
+}
+
+.dashboard-card__details {
+    margin-left: 1rem;
+    max-width: 120px;
+}
+
+.dashboard-card__details h3 {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.dashboard-card__details h4 {
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--grey);
+    margin-top: -5px;
+}
+
+h2.section-header {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.chart-container {
+    border-radius: 0.3rem;
+    padding: 1rem;
+    margin: 1rem auto;
+}
+
+.chart-container.card-shadow {
+    height: 100%;
+}
+
+.half_chart.chart-container.card-shadow {
+	height: 49%;
+}
+
+.chart-container h2 {
+    font-weight: 700;
+    font-size: 1.125rem;
+}
+
+.item-container {
+    background-color: var(--grey-lighter);
+    border-radius: 0.3rem;
+    padding: 1.2rem 1rem;
+    margin: 1rem auto;
+}
+
+.item-container:hover {
+    background-color: var(--grey-dark-lighter);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.count-container {
+    font-weight: 700;
+    font-size: 1.7rem;
+    background-color: var(--mauve-light);
+    color: var(--mauve);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-header {
+    display: flex;
+    align-items: flex-start;
+}
+
+.item-title h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.item-content ul {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.item-content ul>li {
+    font-size: 0.9rem;
+    color: var(--grey);
+    font-weight: 700;
+}
+
+/* Misc */
+.card-shadow {
+    -webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
+    -moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
+    box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
+}
+
+/* Table */
+thead {
+    background-color: #e9ecf0;
+    border-bottom: none;
+}
+
+.table thead th {
+    border-bottom: none;
+}
+.o_action_manager{
+max-height: 1000px;
+	overflow-y: auto;
+}
+.table td,
+.table th {
+    border-top: 1px solid #eceff2;
+}
+
+.crm_scroll_table {
+	max-height: 1000px;
+	overflow-y: scroll;
+}
+.recent_activity_div .crm_scroll_table {
+	max-height: 1000px;
+}
+
+.crm_scroll_table thead {
+    position: sticky;
+    top: 0;
+}
+
+.crm_scroll_table .count-container {
+    height: 100px;
+    width: 1000px;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.crm_scroll_table .item-content ul > li {
+	font-size: 1.1rem;
+}
+
+.chart #canvas_graph {
+	height: 400px !important;
+}
+
+.highcharts-background {
+	fill: none;
+}
