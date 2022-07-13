@@ -8,19 +8,22 @@ class Dashboard(models.Model):
 
     @api.model
     def get_data(self):
-        # default_data= datetime.today().date()
+        default_data= datetime.today().date()
         # domain = [('date_order','>=',default_data)]
         crm_lead=self.env['crm.lead'].search([])
         crm_activity=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','meeting')])
         crm_activity_meeting=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','meeting')])
         crm_activity_call=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','phonecall')])
+        open_opp=self.env['crm.lead'].search([('probability', '!=', 100), ('type', '=', 'opportunity')])
+        close_to=self.env['crm.lead'].search([('date_deadline', '=', default_data)])
         crm_opp=self.env['crm.lead'].search([('type','=','opportunity')])
         return {
             'total_lead':len(crm_lead),
             'total_opp':len(crm_opp),
             'total_activity':len(crm_activity),
             'crm_activity_call':len(crm_activity_call),
-            'crm_activity_meeting':crm_activity_meeting
+            'open_opp':len(open_opp),
+            'close_to':len(close_to),
         }
 
     @api.model

@@ -3,8 +3,8 @@
 
     <t t-name="Dashboard">
 
-    <div class="oh_dashboards">
-        <div class="my-5 o_pos_dashboard">
+    <div class="oh_dashboards" style="max-height: 100%;overflow-y: auto;">
+        <div class="container-fluid my-5 o_pos_dashboard" >
          </div>
     </div>
     </t>
@@ -89,7 +89,44 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-12 col-md-3">
+                    <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:pink">
+                        <div
+                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                            <i class="fa fa-ban"></i>
+                        </div>
+                        <div class="dashboard-card__details">
+                            <h3>
+                                <span>
+<!--                                    <div id="rev_this_year"/>-->
+<!--                                    <div id="rev_this_quarter"/>-->
+<!--                                    <div id="rev_this_month"/>-->
+<div><t t-esc="widget.close_to"/>       </div>                                    </span>
+                            </h3>
+                            <h4>Closing Today</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-20 col-md-3">
+                    <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:blue">
+                        <div
+                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                            <i class="fa fa-unlock-alt"/>
+                        </div>
+                        <div class="dashboard-card__details">
+                            <h3>
+                                <span>
+<!--                                    <div id="rev_this_year"/>-->
+<!--                                    <div id="rev_this_quarter"/>-->
+<!--                                    <div id="rev_this_month"/>-->
+<div><t t-esc="widget.open_opp"/>       </div>                                    </span>
+                            </h3>
+                            <h4>Open Opportunity</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 <!--     <div class="col-sm-12 col-md-3">-->
 <!--                    <div class="dashboard-card card-shadow win_ratio">-->
 <!--                        <div-->
@@ -208,7 +245,6 @@
     </t>
     <t t-name="DashboardChart">
 
-            <div class="crm_scroll_table">
 <div class="row mt-5">
     <div class="upcoming_activities_div col-12 col-sm-12 col-md-6">
                     <div class="chart-container card-shadow">
@@ -335,7 +371,7 @@
 <!--                        </div>-->
 <!--                    </div>-->
                 </div>
-          </div>
+
 
 <!--            </div>-->
 <!--        <div class="col-12 col-sm-12 col-md-6">-->

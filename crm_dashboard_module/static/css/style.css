@@ -309,7 +309,7 @@ strong {
     justify-content: center;
     padding: 1.7rem 1.5rem 1.5rem 1.5rem;
     margin: 1rem auto;
-    height: 90px;
+    height: 100px;
 }
 
 .dashboard-card__icon-container {
@@ -331,6 +331,7 @@ strong {
     font-weight: 700;
     font-size: 1.5rem;
 }
+
 
 .dashboard-card__details h4 {
     font-weight: 700;

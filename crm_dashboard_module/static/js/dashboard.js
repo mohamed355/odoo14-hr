@@ -20,6 +20,8 @@ var PosDashboard =  AbstractAction.extend({
             this.recent_activities = [];
             this.crm_activity_meeting = [];
             this.get_recent_call_activities = [];
+            this.close_to = [];
+            this.open_opp = [];
         }   ,
         start: function() {
             var self = this;
@@ -237,6 +239,8 @@ render_sales_activity_graph:function(){
                 self.total_activity = result['total_activity'];
                 self.crm_activity_call = result['crm_activity_call'];
                 self.crm_activity_meeting = result['crm_activity_meeting'];
+                self.open_opp = result['open_opp'];
+                self.close_to = result['close_to'];
         });
 
          var def2 = this._rpc({
