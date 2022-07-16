@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="assign_hiring_form" model="ir.ui.view">
+           <field name="name">assign_hiring_form</field>
+           <field name="model">assign.hiring</field>
+           <field name="arch" type="xml">
+               <form string="Assign Hiring">
+                   <sheet>
+                       <group>
+                           <field name="hiring_ids" widget="many2many_tags"/>
+                       </group>
+                   </sheet>
+                   <footer>
+                       <button name="assign_hiring" type="object" class="oe_highlight" string="Assign"/>
+                       <button special="cancel" class="btn-secondary" string="Cancel"/>
+                   </footer>
+               </form>
+           </field>
+       </record>
+
+        <record id="assign_hiring_action" model="ir.actions.act_window">
+            <field name="name">Assign Applications</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">assign.hiring</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+
+        </record>
+
+
+    </data>
+</odoo>

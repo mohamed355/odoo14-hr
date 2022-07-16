@@ -8,6 +8,14 @@ from odoo.exceptions import ValidationError
 class NewModule(models.TransientModel):
     _name = 'hiring.wizard'
     _description = 'Hiring Wizard'
+
+    key_ids = fields.Many2many(comodel_name="key", relation="wizkey", column1="wiz", column2="key", string="Specific Key Words", )
+    tec_ids = fields.Many2many(comodel_name="tec", relation="wiztec", column1="w", column2="tec", string="Required Technology", )
+    priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string='Appreciation')
+    job_des = fields.Text(string="Job Requirements And Duties", required=False, )
+    impo_level = fields.Selection(string="Importance Level",
+                                  selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
+
     client = fields.Many2one(comodel_name="res.partner", string="Client",required=True)
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
     country_id = fields.Many2one(comodel_name="res.country", string="Country", required=False)
@@ -38,6 +46,7 @@ class NewModule(models.TransientModel):
                     # 'customer_address_phone': oppr.partner_id.phone,
                     # 'customer_address_mobile': oppr.partner_id.mobile,
                     'user_id': oppr.user_id.id,
+                    'priority': oppr.priority,
                     'team_id': oppr.team_id.id,
                     'tag_ids': oppr.tag_ids.ids,
                     'country_id': rec.country_id.id,
@@ -46,6 +55,10 @@ class NewModule(models.TransientModel):
                     'gender': rec.gender,
                     'ex_level': rec.ex_level,
                     'language_ids': rec.language_ids.ids,
+                    'key_ids': rec.key_ids.ids,
+                    'tec_ids': rec.tec_ids.ids,
+                    'job_des': rec.job_des,
+                    'impo_level': rec.impo_level,
                     'department_id': rec.department_id.id,
                     'required_no': rec.required_no,
                     'required_tech': rec.required_tech,
@@ -59,6 +72,18 @@ class NewModule(models.TransientModel):
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+
+    # @api.model
+    # def _get_default_stage_id(self):
+    #     return self.env['hiring.stage'].search([], limit=1)
+
+    stage_id = fields.Many2one(comodel_name="hiring.stage",default=lambda self: self.env['hiring.request'].search([], limit=1),ondelete='restrict',string="Stage",required=False, )
+    av_status = fields.Selection(string="Availability Status", selection=[('in', 'Interested'), ('not_in', 'Not Interested'), ], required=False, )
+    key_ids = fields.Many2many(comodel_name="key", relation="svg", column1="sdf", column2="fdfd", string="Specific Key Words", )
+    job_des = fields.Text(string="Job Requirements And Duties", required=False, )
+    impo_level = fields.Selection(string="Importance Level",
+                                  selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
+    tec_ids = fields.Many2many(comodel_name="tec", relation="dewf", column1="wf", column2="tfeec", string="Required Technology", )
 
     name = fields.Char(string='Serial' ,readonly=True, default="New")
     currency_id = fields.Many2one('res.currency', string='Currency')
@@ -96,7 +121,7 @@ class HiringRequest(models.Model):
     type_of_job = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],)
     app_count = fields.Integer(compute='_compute_application_ids', string="Number of applications")
     active_count = fields.Integer(compute='_compute_activity_count', string="Number of applications")
-    application_ids = fields.Many2many(comodel_name="hr.applicant", relation="hr_application_rel", column1='application_id', column2="hr_id", string="Application", compute='_compute_application_ids')
+    application_ids = fields.Many2many(comodel_name="hr.applicant", relation="hr_application_rel", column1='application_id', column2="hr_id", string="Application")
 
     def create_application(self):
         application = self.env['hr.applicant'].create({
@@ -110,12 +135,12 @@ class HiringRequest(models.Model):
             'department_id':self.department_id.id,
             'hiring_id':self.id,
         })
-
+    #
     @api.depends()
     def _compute_application_ids(self):
         for rec in self:
-            rec.app_count = len(self.env['hr.applicant'].search([('hiring_id', '=', rec.id)]))
-            rec.application_ids = self.env['hr.applicant'].search([('hiring_id', '=', rec.id)]).ids
+            rec.app_count = len(rec.application_ids)
+            # rec.application_ids = self.env['hr.applicant'].search([('hiring_id', '=', rec.id)]).ids
 
 
 
@@ -200,7 +225,6 @@ class CrmLeadInherit(models.Model):
             'domain': [('oppr_id', '=', self.id)],
         }
 
-
     def compute_hiring_requests(self):
         for rec in self:
             rec.hiring_requests_count = len(self.env['hiring.request'].search([('oppr_id', '=', rec.id)]))
@@ -222,3 +246,24 @@ class HiringRequestCustomer(models.Model):
     def onchange_email(self):
         self.email = self.contact_id.email
         self.mobile = self.contact_id.mobile
+
+
+class key(models.Model):
+    _name = 'key'
+    color = fields.Integer('Color Index', default=0)
+
+    name = fields.Char()
+
+
+class tec(models.Model):
+    _name = 'tec'
+    color = fields.Integer('Color Index', default=0)
+
+    name = fields.Char()
+
+
+class stage(models.Model):
+    _name = 'hiring.stage'
+
+    name = fields.Char()
+

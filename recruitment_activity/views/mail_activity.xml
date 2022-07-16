@@ -5,8 +5,7 @@
     <record id="recruitment_form_activity" model="ir.ui.view">
         <field name="name">recruitment_form_activity</field>
         <field name="model">mail.activity</field>
-                            <field name="priority" eval="22"/>
-
+         <field name="priority" eval="22"/>
         <field name="arch" type="xml">
 
             <form string="Activity">
@@ -35,7 +34,7 @@
                         <group>
                             <field name="date_deadline"/>
                             <field name="user_id"/>
-                            <field name="application_id"/>
+                            <field name="hiring_id"/>
                         </group>
                     </group>
                     <field name="note" placeholder="Log a note..."/>
@@ -56,7 +55,7 @@
         <field name="name">mail_activity_view_calendar_inherit</field>
         <field name="model">mail.activity</field>
         <field name="arch" type="xml">
-<calendar string="Activity" date_start="date_deadline" color="activity_type_id" mode="month">
+<calendar string="Activity" date_start="date_deadline" color="activity_type_id" mode="month" quick_add="False">
                 <field name="user_id" avatar_field="avatar_128"/>
                 <field name="res_name"/>
                 <field name="date_deadline"/>
