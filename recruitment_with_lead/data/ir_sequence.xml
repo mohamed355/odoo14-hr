@@ -4,7 +4,7 @@
         <record id="sequence_hr_application" model="ir.sequence">
             <field name="name">Hr Application</field>
             <field name="code">hr.applicant.seq</field>
-            <field name="prefix">App</field>
+            <field name="prefix"></field>
             <field name="padding">2</field>
         </record>
         

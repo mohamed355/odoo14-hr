@@ -27,19 +27,12 @@ class HrApp(models.Model):
     first_work_ex = fields.Char(string="Fisrt work experience ", required=False, )
     tools = fields.Char(string="Tools ", required=False, )
     notice_period = fields.Integer(string="Notice period 'Days' ", required=False, )
-    app_code = fields.Char(string="Serial", required=False )
     nationality = fields.Char(string="Nationality", required=False, )
     candidate_location = fields.Char(string="Candidate Location", required=False, )
     cv_source = fields.Char(string="CV Source", required=False, )
     current_salary = fields.Float(string="Current Salary",  required=False, )
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
     partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter", required=False, )
-
-    @api.model
-    def create(self, vals):
-        vals['app_code'] = self.env['ir.sequence'].next_by_code(
-            'hr.applicant.seq')
-        return super(HrApp, self).create(vals)
 
 
 class TypeJob(models.Model):
@@ -61,4 +54,5 @@ class JobLang(models.Model):
     _name = 'job.lang'
 
     name = fields.Char('Name')
+
 

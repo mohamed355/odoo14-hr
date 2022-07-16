@@ -10,20 +10,15 @@
             <field name="source_id" position="after">
                 <field name="nationality"/>
                 <field name="candidate_location"/>
-<!--                <field name="cv_source"/>-->
-                <field name="app_code"/>
-
             </field>
             <field name="type_id" position="after">
                 <field name="country_id"/>
                 <field name="gender"/>
                 <field name="experience_level"/>
-<!--                <field name="ex_level"/>-->
                 <field name="language_ids" widget="many2many_tags"/>
                 <field name="linkedin"/>
                 <field name="first_work_ex"/>
                 <field name="tools"/>
-<!--                <field name="ex_level"/>-->
                 <field name="notice_period"/>
             </field>
                         <field name="availability" position="before">
@@ -41,9 +36,7 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
         <field name="arch" type="xml">
-                        <field name="partner_name" position="before">
-                            <field name="app_code" string="#"/>
-                        </field>
+
             <field name="name" position="after">
                 <field name="linkedin"/>
                 <field name="first_work_ex"/>
@@ -79,5 +72,8 @@
 
             </field>
         </record>
+
+
+
 
 </odoo>

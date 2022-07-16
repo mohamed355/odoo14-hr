@@ -18,7 +18,7 @@
     "data": [
         'security/ir.model.access.csv',
         "views/recruitment_w_lead_view.xml",
-        "data/ir_sequence.xml",
+        # "data/ir_sequence.xml",
 
     ],
     "application": False,
