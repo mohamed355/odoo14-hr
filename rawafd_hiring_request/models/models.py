@@ -10,12 +10,11 @@ class NewModule(models.TransientModel):
     _description = 'Hiring Wizard'
 
     key_ids = fields.Many2many(comodel_name="key", relation="wizkey", column1="wiz", column2="key", string="Specific Key Words", )
-    tec_ids = fields.Many2many(comodel_name="tec", relation="wiztec", column1="w", column2="tec", string="Required Technology", )
-    priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string='Appreciation')
+    # tec_ids = fields.Many2many(comodel_name="tec", relation="wiztec", column1="w", column2="tec", string="Required Technology", )
+    # priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string='Appreciation')
     job_des = fields.Text(string="Job Requirements And Duties", required=False, )
     impo_level = fields.Selection(string="Importance Level",
                                   selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
-
     client = fields.Many2one(comodel_name="res.partner", string="Client",required=True)
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
     country_id = fields.Many2one(comodel_name="res.country", string="Country", required=False)
@@ -25,7 +24,6 @@ class NewModule(models.TransientModel):
                                                                       ('i', 'Intermediate'), ('a', 'Advanced'),
                                                                       ('e', 'Expert')], required=False, )
     location = fields.Char(string="Location", required=True, )
-
     language_ids = fields.Many2many(comodel_name="job.lang", string="Language", required=False)
     department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
     required_no = fields.Integer(string='Number of Required Employees')
@@ -46,7 +44,7 @@ class NewModule(models.TransientModel):
                     # 'customer_address_phone': oppr.partner_id.phone,
                     # 'customer_address_mobile': oppr.partner_id.mobile,
                     'user_id': oppr.user_id.id,
-                    'priority': oppr.priority,
+                    # 'priority': oppr.priority,
                     'team_id': oppr.team_id.id,
                     'tag_ids': oppr.tag_ids.ids,
                     'country_id': rec.country_id.id,
@@ -56,7 +54,7 @@ class NewModule(models.TransientModel):
                     'ex_level': rec.ex_level,
                     'language_ids': rec.language_ids.ids,
                     'key_ids': rec.key_ids.ids,
-                    'tec_ids': rec.tec_ids.ids,
+                    # 'tec_ids': rec.tec_ids.ids,
                     'job_des': rec.job_des,
                     'impo_level': rec.impo_level,
                     'department_id': rec.department_id.id,
@@ -68,14 +66,9 @@ class NewModule(models.TransientModel):
                     'type_of_job': rec.type_of_job_id,
                 })
 
-
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-
-    # @api.model
-    # def _get_default_stage_id(self):
-    #     return self.env['hiring.stage'].search([], limit=1)
 
     stage_id = fields.Many2one(comodel_name="hiring.stage",default=lambda self: self.env['hiring.request'].search([], limit=1),ondelete='restrict',string="Stage",required=False, )
     av_status = fields.Selection(string="Availability Status", selection=[('in', 'Interested'), ('not_in', 'Not Interested'), ], required=False, )
@@ -83,8 +76,8 @@ class HiringRequest(models.Model):
     job_des = fields.Text(string="Job Requirements And Duties", required=False, )
     impo_level = fields.Selection(string="Importance Level",
                                   selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
+    approved = fields.Boolean(string="Approved",  )
     tec_ids = fields.Many2many(comodel_name="tec", relation="dewf", column1="wf", column2="tfeec", string="Required Technology", )
-
     name = fields.Char(string='Serial' ,readonly=True, default="New")
     currency_id = fields.Many2one('res.currency', string='Currency')
     requested = fields.Integer(string="Requested", required=False, )
@@ -135,12 +128,14 @@ class HiringRequest(models.Model):
             'department_id':self.department_id.id,
             'hiring_id':self.id,
         })
-    #
+
+    def approve(self):
+        self.approved = True
+
     @api.depends()
     def _compute_application_ids(self):
         for rec in self:
             rec.app_count = len(rec.application_ids)
-            # rec.application_ids = self.env['hr.applicant'].search([('hiring_id', '=', rec.id)]).ids
 
 
 
@@ -152,7 +147,6 @@ class HiringRequest(models.Model):
 
     def create_activities(self):
         print('hi')
-        # if self and self.activity_ids:
         for i in self.activity_ids:
             self.env['mail.activity'].sudo().create({
                 'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
@@ -163,8 +157,6 @@ class HiringRequest(models.Model):
                 'res_model_id': self.env['ir.model'].sudo().search(
                      [('model', '=', 'hiring.request')], limit=1).id,
             })
-        # else:
-        #     raise ValidationError("Please add type of job and activities")
 
     def application_no(self):
         self.ensure_one()
@@ -267,3 +259,23 @@ class stage(models.Model):
 
     name = fields.Char()
 
+
+class AssignApplications(models.Model):
+    _name = 'assign.application'
+
+    name = fields.Char(default="Assign Applications")
+    applications_ids = fields.Many2many(comodel_name="hr.applicant", relation="hrapplicant", column1="hr", column2="applicant", string="Applications", )
+
+
+    def assign_applications(self):
+        hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
+        apps_exist = []
+        for application in self.applications_ids:
+            if application.id in hiring.application_ids.ids:
+                apps_exist.append(application.name)
+
+
+            else:
+                hiring.update({'application_ids': [(4, application.id)]})
+        if apps_exist:
+            raise ValidationError('This Applications %s Already Assigned ' % apps_exist)

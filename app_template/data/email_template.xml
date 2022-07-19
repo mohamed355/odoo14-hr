@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contract_template_" model="mail.template">
+            <field name="name">Application: Contract</field>
+            <!--<field name="email_from">neptune2technology@gmail.com</field>-->
+            <field name="subject">Send Mail</field>
+<!--            <field name="email_to">${ctx.get('recipient_mail')}</field>-->
+<!--            <field name="lang">${object.lang}</field>-->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'hr.applicant')]"/>
+        </record>
+
+    </data>
+</odoo>

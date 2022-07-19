@@ -20,12 +20,21 @@
                 <field name="first_work_ex"/>
                 <field name="tools"/>
                 <field name="notice_period"/>
+
             </field>
                         <field name="availability" position="before">
                                            <field name="current_salary"/>
                                             <field name="currency_id"/>
 
                         </field>
+            <xpath expr="//group[1]/group[2]" position="after">
+<group string="Experience">
+                        <field name="start_date"/>
+                        <label for="experience_y"/>
+                        <div class="o_row">
+                            <field name="experience_y"/>Years-<field name="experience_m"/>Months-<field name="experience_d"/>Days
+                        </div>
+                    </group>            </xpath>
              <field name="user_id" position="replace">
                             <field name="partner_id" domain="[('contact_type', '=','contact' ), ]"/>
                         </field>

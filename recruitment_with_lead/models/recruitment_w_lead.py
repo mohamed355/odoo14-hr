@@ -2,7 +2,9 @@
 
 from odoo.exceptions import ValidationError, RedirectWarning, UserError
 from odoo import models, fields, api, _
-from datetime import timedelta, date
+from datetime import timedelta, date,datetime
+from dateutil.relativedelta import relativedelta
+
 class Stage(models.Model):
     _inherit = 'hr.recruitment.stage'
 
@@ -33,6 +35,47 @@ class HrApp(models.Model):
     current_salary = fields.Float(string="Current Salary",  required=False, )
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
     partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter", required=False, )
+    start_date = fields.Date(string="Start Date", required=False, )
+    experience_y = fields.Integer(compute="_calculate_experience",
+                                  string="Experience",
+                                  help="experience in our company", store=True)
+    experience_m = fields.Integer(compute="_calculate_experience",
+                                  string="Experience monthes", store=True)
+    experience_d = fields.Integer(compute="_calculate_experience",
+                                  string="Experience dayes", store=True)
+
+    @api.depends("start_date")
+    def _calculate_experience(self):
+        for app in self.search([]):
+            if app.start_date:
+                date_format = '%Y-%m-%d'
+                current_date = (datetime.today()).strftime(date_format)
+                d1 = app.start_date
+                d2 = datetime.strptime(current_date, date_format).date()
+                r = relativedelta(d2, d1)
+                app.experience_y = r.years
+                app.experience_m = r.months
+                app.experience_d = r.days
+            else:
+                app.experience_y = 0
+                app.experience_m = 0
+                app.experience_d = 0
+
+    @api.onchange('partner_mobile','linkedin','email_from')
+    def _onchange_fields(self):
+        applications = self.env['hr.applicant'].search([('job_id','=',self.job_id.id)])
+        for app in applications:
+            if self.partner_mobile:
+                if app.partner_mobile == self.partner_mobile:
+                    raise ValidationError("Mobile is Duplicated")
+            if self.linkedin:
+                if app.linkedin == self.linkedin:
+                    raise ValidationError("Linkedin is Duplicated")
+
+            if self.email_from:
+                if app.email_from == self.email_from:
+                    raise ValidationError("Email is Duplicated")
+
 
 
 class TypeJob(models.Model):
