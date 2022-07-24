@@ -31,7 +31,6 @@ class NewModule(models.TransientModel):
     salary_range = fields.Char(string='Salary Range')
     type_of_job_id = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],)
     job_level = fields.Selection(string="Job Level", selection=[('intern', 'Intern'),('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior') ,('teamlead', 'Team Lead'),('manager', 'Manager'),('consultant', 'Consultant')], required=False, )
-
     def create_hiring_request(self):
         print('hi')
         for rec in self:
@@ -69,7 +68,11 @@ class NewModule(models.TransientModel):
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-
+    
+    offered = fields.Integer(string="Offered", required=False, compute='_compute_application_ids_stages')
+    awaiting_review= fields.Integer(string="Awaiting Review", required=False, compute='_compute_application_ids_stages')
+    new_opp = fields.Integer(string="New Applicants", required=False,compute='_compute_application_ids_stages' )
+    reviewed = fields.Integer(string="Reviewed", required=False,compute='_compute_application_ids_stages' )
     stage_id = fields.Many2one(comodel_name="hiring.stage",default=lambda self: self.env['hiring.request'].search([], limit=1),ondelete='restrict',string="Stage",required=False, )
     av_status = fields.Selection(string="Availability Status", selection=[('in', 'Interested'), ('not_in', 'Not Interested'), ], required=False, )
     key_ids = fields.Many2many(comodel_name="key", relation="svg", column1="sdf", column2="fdfd", string="Specific Key Words", )
@@ -77,6 +80,7 @@ class HiringRequest(models.Model):
     impo_level = fields.Selection(string="Importance Level",
                                   selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
     approved = fields.Boolean(string="Approved",  )
+    user_ids = fields.Many2many(comodel_name="res.users", relation="resusers", column1="res", column2="users", string="Users", )
     tec_ids = fields.Many2many(comodel_name="tec", relation="dewf", column1="wf", column2="tfeec", string="Required Technology", )
     name = fields.Char(string='Serial' ,readonly=True, default="New")
     currency_id = fields.Many2one('res.currency', string='Currency')
@@ -113,8 +117,17 @@ class HiringRequest(models.Model):
     salary_range = fields.Char(string='Salary Range')
     type_of_job = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],)
     app_count = fields.Integer(compute='_compute_application_ids', string="Number of applications")
-    active_count = fields.Integer(compute='_compute_activity_count', string="Number of applications")
+    # active_count = fields.Integer(compute='_compute_activity_count', string="Number of applications")
     application_ids = fields.Many2many(comodel_name="hr.applicant", relation="hr_application_rel", column1='application_id', column2="hr_id", string="Application")
+    activity_count = fields.Integer(string="Activities", required=False,compute='_compute_activity_count')
+    
+    @api.depends('application_ids')
+    def _compute_application_ids_stages(self):
+        for record in self:
+            record.offered = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Offered")])
+            record.new_opp = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"New Applicants")])
+            record.reviewed = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Reviewed")])
+            record.awaiting_review = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Awaiting Review")])
 
     def create_application(self):
         application = self.env['hr.applicant'].create({
@@ -171,7 +184,26 @@ class HiringRequest(models.Model):
         }
 
         return action
+    def _compute_activity_count(self):
+        for record in self:
+            record.activity_count = self.env['mail.activity'].sudo().search_count(
+                [('res_model_id.model', '=', 'hr.applicant'),('res_id','in',self.application_ids.ids)])
 
+    def get_activities(self):
+        form_view = self.env.ref('mail.mail_activity_view_form_popup').id
+        tree_view = self.env.ref('mail.mail_activity_view_tree').id
+        return {
+            'name': _('Activities'),
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_model': 'mail.activity',
+            'type': 'ir.actions.act_window',
+            'views': [
+                (tree_view, 'tree'),
+                (form_view, 'form'),
+                      ],
+            'domain': [('res_model_id.model', '=', 'hr.applicant'),('res_id','in',self.application_ids.ids)],
+        }
     def activity_no(self):
         self.ensure_one()
         action = {
@@ -191,10 +223,10 @@ class HiringRequest(models.Model):
     #         product.app_count = self.env['hr.applicant'].search_count(
     #             [('country_id', '=', self.country_id.id), ('job_id', '=', self.job_id.id), ])
 
-    def _compute_activity_count(self):
-        for product in self:
-            product.active_count = self.env['mail.activity'].sudo().search_count(
-                [('res_model_id', '=', product._name), ('res_id', '=', product.id)])
+    # def _compute_activity_count(self):
+    #     for product in self:
+    #         product.active_count = self.env['mail.activity'].sudo().search_count(
+    #             [('res_model_id', '=', product._name), ('res_id', '=', product.id)])
 
 
 class CrmLeadInherit(models.Model):
@@ -279,3 +311,16 @@ class AssignApplications(models.Model):
                 hiring.update({'application_ids': [(4, application.id)]})
         if apps_exist:
             raise ValidationError('This Applications %s Already Assigned ' % apps_exist)
+
+
+class AssignUsers(models.Model):
+    _name = 'assign.users'
+
+    user_ids = fields.Many2many(comodel_name="res.users", relation="resuser", column1="resuser", column2="ss", string="Users", )
+
+    def assign_users(self):
+        hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
+        hiring.approved=True
+        for user in self.user_ids:
+
+                hiring.update({'user_ids': [(4, user.id)]})

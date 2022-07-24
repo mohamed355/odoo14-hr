@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="general_mail_form" model="ir.ui.view">
+           <field name="name">general_mail_form</field>
+           <field name="model">general.mail</field>
+           <field name="arch" type="xml">
+               <form string="General Mail">
+                   <sheet>
+                       <group>
+                           <field name="name"/>
+                       </group>
+                   </sheet>
+                    <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+               </form>
+           </field>
+       </record>
+        <record id="general_mail_tree" model="ir.ui.view">
+            <field name="name">general_mail_tree</field>
+            <field name="model">general.mail</field>
+            <field name="arch" type="xml">
+                <tree string="General Mail">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="general_mail_action" model="ir.actions.act_window">
+            <field name="name">General Mail</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">general.mail</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

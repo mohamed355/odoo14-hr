@@ -4,7 +4,7 @@
        <record id="hiring_officer" model="ir.rule">
            <field name="name">Hiring Officer</field>
            <field ref="model_hiring_request" name="model_id"/>
-           <field name="domain_force">[('approved', '=',True )]</field>
+           <field name="domain_force">[('user_ids', '=',user.id )]</field>
            <field name="perm_write" eval="0"/>
            <field name="perm_create" eval="0"/>
            <field name="perm_read" eval="1"/>

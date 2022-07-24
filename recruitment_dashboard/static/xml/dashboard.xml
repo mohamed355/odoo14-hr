@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Rec Dashboard">
+
+    <div class="oh_dashboards" style="max-height: 100%;overflow-y: auto;">
+        <div class="container-fluid my-5 o_hr_dashboard">
+         </div>
+    </div>
+    </t>
+    <t t-name="DashboardRec">
+ <section class="dashboard_main_section" id="main_section_manager">
+
+            <div class="rec_dash_cards row">
+
+
+                <div class="col-sm-12 col-md-3" style="margin-left:300px">
+                    <div class="dashboard-card card-shadow" style="background:skyblue;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
+    -moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
+    box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
+                        <div
+                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+<i class="fa fa-book"></i>
+                        </div>
+                        <div class="dashboard-card__details" style="width:40%">
+                            <h3>
+                                <span>
+<div><t t-esc="widget.open_hiring"/>       </div>
+                                </span>
+                            </h3>
+                            <h3 style="color:gray">H Request</h3>
+                        </div>
+                    </div>
+                </div>
+ <div class="col-sm-12 col-md-3" >
+                    <div class="dashboard-card card-shadow" style="background:blue;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);-moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
+                        <div
+                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
+                            <i class="fa fa-desktop"/>
+                        </div>
+                        <div class="dashboard-card__details">
+                            <h3>
+                                <span>
+<div><t t-esc="widget.hr_applicant"/>       </div>
+                     </span>
+                            </h3>
+                            <h3 style="color:gray">Applications</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+ </section>
+
+    </t>
+    <t t-name="DashboardStages">
+ <section class="dashboard_main_section" id="main_section_manager">
+    <div class="stages_div col-12 col-sm-12 col-md-6">
+                    <div class="chart-container card-shadow"
+                         style="border-radius: 0.3rem;padding: 1rem;margin: 1rem auto;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);-moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
+                        <h3 class="h5">Stages</h3>
+                        <hr/>
+                        <div class="items-table">
+                                <div class="item-container"
+                                     style="background-color: var(--grey-lighter);border-radius: 0.3rem;font-weight: 700;">
+                                    <t t-foreach="widget.stages" t-as="stage">
+
+                                        <div class="item-header">
+                                        <div class="count-container"
+                                             style="background-color: orange;border-radius: 50px;font-size:80%;width:17%">
+                                            <t t-esc="stage[1]"/>
+                                        </div>
+                                        <div class="item-title pl-3" style=" font-size: 1.3rem; font-weight: 700;">
+                                            <div class="item-content">
+                                                    <span style="font-size: 0.9rem;color: var(--grey);font-weight: 700;margin-left:100px">
+                                                        Stage History:
+                                                        <span style="font-size: 16px;color: #4c4c4c;">
+                                                            <t t-esc="stage[2]"/>
+                                                        </span>
+                                                    </span>
+
+
+
+                                                    <span style="font-size: 0.9rem;color: var(--grey);font-weight: 700;margin-left:130px">
+                                                        Application:
+                                                        <span style="font-size: 15px;color: #4c4c4c;">
+                                                            <t t-esc="stage[3]"/>
+                                                        </span>
+                                                    </span>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ </section>
+        </t>
+
+
+
+</templates>
