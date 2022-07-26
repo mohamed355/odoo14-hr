@@ -1,11 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="mail_activity_view_form_popup_inherit" model="ir.ui.view">
+        <field name="name">mail_activity_view_form_popup_inherit</field>
+        <field name="model">mail.activity</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
+        <field name="arch" type="xml">
+     <xpath expr="//sheet" position="before">
+<header>
+    <field name="activity_type" widget="statusbar" statusbar_visible="notc,onhold,com,done,cancel"/>
+</header>            </xpath>
+
+<xpath expr="//footer" position="replace">
+<footer>
+                        <field name="id" invisible="1"/>
+                        <button id="mail_activity_schedule" string="Schedule" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '!=', False)]}" data-hotkey="q"/>
+                        <button id="mail_activity_save" string="Save" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '=', False)]}" data-hotkey="q"/>
+                        <button attrs="{'invisible': [('activity_type', '!=', 'cancel')]}" string="Reset" name="type_not" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
+                        <button attrs="{'invisible': [('activity_type', '!=', 'onhold')]}" string="Complete" name="type_com" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
+                        <button attrs="{'invisible': [('activity_type', '!=', 'notc')]}" string="On Hold" name="type_on" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
+                        <button attrs="{'invisible': [('chaining_type', '=', 'trigger')]}" string="Done &amp; Schedule Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>
+                        <button attrs="{'invisible': [('chaining_type', '=', 'suggest')]}" string="Done &amp; Launch Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>
+                        <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+
+                                            <button attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '=', 'done')]}" string="Mark as Done" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
+                        <button string="Cancel" name="type_cancel" type="object" context="{'mail_activity_quick_update': True}"/>
+
+</footer>            </xpath>
+
+        </field>
+    </record>
+    <record id="mail_activity_kanban" model="ir.ui.view">
+        <field name="name">mail.activity.kanban</field>
+        <field name="model">mail.activity</field>
+        <field name="arch" type="xml">
+            <kanban class="o_mail_activity_kanban" sample="1">
+                    <field name="id"/>
+                    <field name="summary"/>
+                    <field name="activity_type_id"/>
+                    <field name="date_deadline"/>
+                    <field name="user_id"/>
+                    <field name="res_model_id"/>
+<!--                    <field name="is_company"/>-->
+<!--                    <field name="function"/>-->
+<!--                    <field name="phone"/>-->
+<!--                    <field name="street"/>-->
+<!--                    <field name="street2"/>-->
+<!--                    <field name="zip"/>-->
+<!--                    <field name="city"/>-->
+<!--                    <field name="country_id"/>-->
+<!--                    <field name="mobile"/>-->
+<!--                    <field name="state_id"/>-->
+<!--                    <field name="category_id"/>-->
+<!--                    <field name="avatar_128"/>-->
+<!--                    <field name="type"/>-->
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
+
+
+                                <div class="oe_kanban_details d-flex flex-column">
+                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="summary"/></strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li><field name="activity_type_id"/></li>
+                                        <li><field name="user_id"/></li>
+                                        <li><field name="date_deadline"/></li>
+                                        <li class="o_text_overflow"><field name="res_model_id"/></li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+        </field>
+    </record>
        <record id="mail_activity_action" model="ir.actions.act_window">
            <field name="name">Activity</field>
            <field name="type">ir.actions.act_window</field>
            <field name="res_model">mail.activity</field>
-           <field name="view_mode">tree,form</field>
+           <field name="view_mode">tree,form,kanban</field>
            <field name="context">{'group_by':'res_model_id'}</field>
 
        </record>

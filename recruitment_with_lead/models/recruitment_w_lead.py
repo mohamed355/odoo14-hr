@@ -12,7 +12,6 @@ class Stage(models.Model):
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
-
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     language_ids = fields.Many2many('job.lang')
     gender = fields.Selection([

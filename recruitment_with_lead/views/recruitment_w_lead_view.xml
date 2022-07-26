@@ -27,6 +27,7 @@
                                             <field name="currency_id"/>
 
                         </field>
+
             <xpath expr="//group[1]/group[2]" position="after">
 <group string="Experience">
                         <field name="start_date"/>
