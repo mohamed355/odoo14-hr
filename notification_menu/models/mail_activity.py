@@ -9,10 +9,13 @@ class MailActivity(models.Model):
 
     def type_cancel(self):
         self.activity_type = 'cancel'
+
     def type_on(self):
         self.activity_type = 'onhold'
+
     def type_com(self):
         self.activity_type = 'com'
+
     def type_not(self):
         self.activity_type = 'notc'
 
