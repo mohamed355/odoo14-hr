@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
+
     hiring_id = fields.Many2one(comodel_name="hiring.request", string="Hiring", required=False, )
 
     @api.onchange('hiring_id')
