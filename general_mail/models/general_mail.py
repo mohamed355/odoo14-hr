@@ -12,8 +12,8 @@ class GeneralMail(models.Model):
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
-    @api.onchange('activity_type_id','hiring_id')
+    @api.onchange('activity_type_id','hiring_id','app_id')
     def general_mail(self):
-        if not (self.res_id and self.res_model_id and self.hiring_id):
+        if not (self.res_id and self.res_model_id and self.hiring_id and self.app_id):
             self.res_id = 1
             self.res_model_id = self.env['ir.model'].search([('model', '=', 'general.mail')], limit=1).id

@@ -7,7 +7,7 @@
            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
            <field name="arch" type="xml">
 
-               <field name="partner_mobile" position="after">
+               <field name="availability" position="after">
                    <field name="admin_boolean" invisible="1"/>
                    <field name="stages_ids" widget="many2many_tags" attrs="{'invisible': [('admin_boolean','=',False)]}"/>
                    <field name="stages_ids" widget="many2many_tags" attrs="{'invisible': [('admin_boolean','=',True)]}" readonly="1"/>

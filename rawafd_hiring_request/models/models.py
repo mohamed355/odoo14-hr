@@ -73,9 +73,10 @@ class HiringRequest(models.Model):
     awaiting_review= fields.Integer(string="Awaiting Review", required=False, compute='_compute_application_ids_stages')
     new_opp = fields.Integer(string="New Applicants", required=False,compute='_compute_application_ids_stages' )
     reviewed = fields.Integer(string="Reviewed", required=False,compute='_compute_application_ids_stages' )
-    stage_id = fields.Many2one(comodel_name="hiring.stage",default=lambda self: self.env['hiring.request'].search([], limit=1),ondelete='restrict',string="Stage",required=False, )
+    stage_id = fields.Many2one(comodel_name="hiring.stage", store=True,copy=False, index=True,ondelete='restrict',string="Stage",required=False, group_expand='_read_group_stage_ids' )
+    hiring = fields.Char(string="Hiring", required=False, )
     av_status = fields.Selection(string="Availability Status", selection=[('in', 'Interested'), ('not_in', 'Not Interested'), ], required=False, )
-    key_ids = fields.Many2many(comodel_name="key", relation="svg", column1="sdf", column2="fdfd", string="Specific Key Words", )
+    # key_ids = fields.Many2many(comodel_name="key", relation="svg", column1="sdf", column2="fdfd", string="Specific Key Words", )
     job_des = fields.Text(string="Job Requirements And Duties", required=False, )
     impo_level = fields.Selection(string="Importance Level",
                                   selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
@@ -89,7 +90,7 @@ class HiringRequest(models.Model):
     req_state = fields.Selection(string="Request State", selection=[('open', 'Open'), ('pending', 'Pending'), ('onhold', 'On Hold'), ('canceled', 'Canceled') , ('closed', 'Closed')], required=False, )
     budget = fields.Float(string="Budget",  required=False, )
     nationality = fields.Char(string="Nationality", required=False, )
-    note = fields.Text(string="Contact Notes", required=False, )
+    note = fields.Text(string="Recruiter Notes", required=False, )
     attach = fields.Binary(string="Attach",)
     location = fields.Char(string="Location", required=True, )
     priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string='Appreciation')
@@ -141,6 +142,9 @@ class HiringRequest(models.Model):
             'department_id':self.department_id.id,
             'hiring_id':self.id,
         })
+
+    def _read_group_stage_ids(self, stages, domain, order):
+        return self.env['hiring.stage'].search([])
 
     def approve(self):
         self.approved = True

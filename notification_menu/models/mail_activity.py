@@ -5,7 +5,10 @@ from  datetime import date,datetime
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
-    activity_type = fields.Selection(string="Type", selection=[('notc', 'Not Completed'),('onhold', 'On Hold'),('com', 'Completed'), ('done', 'Done'),('cancel', 'Canceled') ], required=False, default='notc' )
+    activity_type = fields.Selection(string="Type", selection=[('in',"In Progress"),('com', 'Completed'),('notc', 'Not Completed'),('onhold', 'On Hold'),('cancel', 'Cancelled') ], required=False, default='in' )
+
+    def type_in(self):
+        self.activity_type = 'in'
 
     def type_cancel(self):
         self.activity_type = 'cancel'
@@ -79,6 +82,6 @@ class MailActivity(models.Model):
 
         next_activities = self.env['mail.activity'].create(next_activities_values)
         # self.unlink()  # will unlink activity, dont access `self` after that
-        self.activity_type = 'done'
+        self.activity_type = 'com'
 
         return messages, next_activities

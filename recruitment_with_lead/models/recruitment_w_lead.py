@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError, RedirectWarning, UserError
 from odoo import models, fields, api, _
 from datetime import timedelta, date,datetime
 from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 class Stage(models.Model):
     _inherit = 'hr.recruitment.stage'
@@ -12,6 +13,8 @@ class Stage(models.Model):
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
+
+    stage_date = fields.Datetime(string="Stage Time", required=False, )
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     language_ids = fields.Many2many('job.lang')
     gender = fields.Selection([
@@ -42,6 +45,21 @@ class HrApp(models.Model):
                                   string="Experience monthes", store=True)
     experience_d = fields.Integer(compute="_calculate_experience",
                                   string="Experience dayes", store=True)
+
+    @api.onchange('stage_id')
+    def onchange_stage_id(self):
+        dt_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.stage_date = dt_string
+
+    def action_activities(self):
+        return {
+            'name': 'Activities',
+            'view_mode': 'calendar,tree,form',
+            'res_model': 'mail.activity',
+            'type': 'ir.actions.act_window',
+            'domain': [('res_id', '=', self.id)],
+
+        }
 
     @api.depends("start_date")
     def _calculate_experience(self):

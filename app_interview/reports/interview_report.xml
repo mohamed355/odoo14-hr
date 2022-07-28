@@ -194,6 +194,27 @@
                         </tr></tbody>
 
                     </table>
+                    <table width="80%" style="border:2px solid white;margin-top:60px"
+                           class="table table-sm o_main_table">
+                        <tr>
+                            <td style="border:2px solid #76a5ae;background-color: #76a5ae !important;color:white"
+                                width="15%">Interviewed By
+                            </td>
+                            <td style="border:2px solid #76a5ae" width="21%">
+                                <p class="m-0" t-field="docs.inter_by"/>
+                            </td>
+                            <td style="text-align: center;" width="25%"></td>
+                            <td style="border:2px solid #76a5ae;background-color: #76a5ae !important;color:white">
+                                Recommended Action
+                            </td>
+                            <td style="border:2px solid #76a5ae" width="20%">
+                                <p class="m-0" t-field="docs.re_action"/>
+                            </td>
+                        </tr>
+
+
+
+                    </table>
                 </div>
             </t>
         </t>

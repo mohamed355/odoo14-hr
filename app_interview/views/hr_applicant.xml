@@ -52,6 +52,13 @@
         </group>
 
     </group>
+    <group>
+        <group>
+            <field name="inter_by"/>
+            <field name="re_action"/>
+        </group>
+        <group/>
+    </group>
 </page>
             </xpath>
         </field>

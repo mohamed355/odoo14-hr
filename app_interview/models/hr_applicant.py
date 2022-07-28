@@ -3,6 +3,7 @@ from odoo import api, fields, models
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
+
     re_skill = fields.Char(string="Skill", required=False,readonly=True,default="Relevant educational background" )
     skill_re_s = fields.Selection(string="Grade", selection=[('rel', 'Related'), ('oc', 'Only courses'), ('nrel', 'Not related') ], required=False, )
     ro_skill = fields.Char(string="Skill", required=False,readonly=True,default="Related work experience " )
@@ -34,3 +35,5 @@ class HrApp(models.Model):
     atc_skill = fields.Char(string="Skill", required=False,readonly=True,default="Attitude towards our company " )
     skill_atc_s = fields.Selection(string="Grade", selection=[('vi', 'Very interested'), ('in', 'Interested'), ('poor', ' Poor interest'),('not', 'Not observed') ], required=False, )
     interview_date = fields.Datetime(string="Interview Date", required=False, )
+    inter_by = fields.Char(string="Interviewed By", required=False, )
+    re_action = fields.Char(string="Recommended Action", required=False, )
