@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="hiring_request_cohort" model="ir.ui.view">
+                <field name="name">hiring.request.cohort</field>
+                <field name="model">hiring.request</field>
+                <field name="arch" type="xml">
+                    <graph string="Hiring Requests">
+                        <field name="name"/>
+                    </graph>
+                </field>
+            </record>
+
+
+    </data>
+</odoo>
