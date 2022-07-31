@@ -1,105 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<record id="hr_recruitment_view_tree" model="ir.ui.view">
-        <field name="name">hr_recruitment_view_tree</field>
-        <field name="model">rec.dashboard</field>
-        <field name="arch" type="xml">
-        <tree string="Applicaitons">
-            <field name="name"/>
-            <field name="create_date"/>
-            <field name="stage_id"/>
-            <field name="job_id"/>
-            <field name="num"/>
 
-        </tree>
-    </field>
-</record>
-    <record id="hr_recruitment_view_form" model="ir.ui.view">
-        <field name="name">hr_recruitment_view_form</field>
-        <field name="model">rec.dashboard</field>
-        <field name="arch" type="xml">
-        <form string="Applicaitons">
-            <sheet>
-                <group>
-                <field name="name"/>
-            <field name="create_date"/>
-            <field name="stage_id"/>
-            <field name="company_id"/>
-            <field name="partner_id"/>
-            <field name="job_id"/>
-            <field name="num"/>
-                </group>
-            </sheet>
-
-        </form>
-    </field>
-</record>
- <record id="hr_recruitment_view_search" model="ir.ui.view">
-        <field name="name">hr_recruitment_view_search</field>
-        <field name="model">rec.dashboard</field>
-        <field name="arch" type="xml">
-                <search string="Filters">
-                    <field name="hiring_name" string="Hiring" filter_domain="[('hiring_name', 'ilike', self)]"/>
-                    <field name="name" string="Application" filter_domain="[('name', 'ilike', self)]"/>
-                    <field name="stage_id" string="Stage" filter_domain="[('stage_id', 'ilike', self)]"/>
-                    <field name="job_id" string="Job" filter_domain="[('job_id', 'ilike', self)]"/>
-<!--                    <filter string="company" domain="[('user_id','!=',False)]" name="user" help="Filters visible only for one user"/>-->
-<!--                    <filter string="Shared" domain="[('user_id','=',False)]" name="shared" help="Filters shared with all users"/>-->
-<!--                    <field string="Hiring Name" domain="[('hiring_name','ilike',self)]" name="h_name"/>-->
-                    <group expand="0" string="Group By">
-                        <filter string="Company" name="company" domain="[]" context="{'group_by':'company_id'}"/>
-                        <filter string="Job" name="job" domain="[]" context="{'group_by':'job_id'}"/>
-                        <filter string="Stage" name="stage" domain="[]" context="{'group_by':'stage_id'}"/>
-                        <filter string="Source" name="source_id" domain="[]" context="{'group_by':'source_id'}"/>
-                        <filter string="Recruiter" name="partner_id" domain="[]" context="{'group_by':'partner_id'}"/>
-                        <filter string="create_date" name="create_date" domain="[]" context="{'group_by':'create_date'}"/>
-                    </group>
-                </search>
-        </field>
- </record>
-    <record id="hr_recruitment_view_dashboard" model="ir.ui.view">
-        <field name="name">hr_recruitment_view_dashboard</field>
-        <field name="model">rec.dashboard</field>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <dashboard sample="1">
-<group col="1">
-
-  <widget name="pie_chart" title="Recruiter" attrs="{'groupby': 'partner_id'}"/>
-
-                                <widget name="pie_chart" title="Application Resources" attrs="{'groupby': 'source_id'}"/>
-                </group>
-<!--                    <view type="graph" ref="hiring_request_cohort"/>-->
-<group>
-<group>
-
-<!--                        <aggregate name="applications" string="Applications" group_operator="count" field="id" measure="__count__"/>-->
-                        <aggregate name="apps" field="apps" string="Applications"/>
-<!--                        <aggregate name="num" field="num" string="Stage History"/>-->
-
-
-                        <aggregate name="hiring" field="hiring" string="Hiring Requests"/>
-                </group>
-                </group>
-
-<!--                                <widget name="pie_chart" title="Job" attrs="{'groupby': 'job_id'}"/>-->
-
-<!--                                    <view type="pivot" ref="hr_recruitment.crm_case_graph_view_job"/>-->
-<!--                                                                                <view type="cohort" ref="hr_recruitment.crm_case_graph_view_job"/>-->
-                    <view type="graph" ref="hr_recruitment.crm_case_graph_view_job"/>
-
-                <!--                    <view type="cohort" ref="crm_enterprise.crm_lead_view_cohort"/>-->
-            </dashboard>
-        </field>
-    </record>
-
-    <record id="hr_recruitment_view_dashboard_action" model="ir.actions.act_window">
-        <field name="name">Recruitment Dashboard</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">rec.dashboard</field>
-        <field name="view_mode">dashboard</field>
+    <record id="rec_dashboard_action" model="ir.actions.client">
+        <field name="name">Rec Dashboard</field>
+        <field name="tag">rec_dashboard_tag</field>
 
     </record>
+
     <!-- This Menu Item must have a parent and an action -->
-    <menuitem id="rec_dashboard_action_menu" name="Home" action="hr_recruitment_view_dashboard_action" parent='hr_recruitment.menu_hr_recruitment_root' sequence="0"/>
+    <menuitem id="rec_dashboard_action_menu" name="Home" action="rec_dashboard_action" parent='hr_recruitment.menu_hr_recruitment_root' sequence="0"/>
 </odoo>
