@@ -8,7 +8,8 @@ class HrApplicant(models.Model):
     admin_boolean = fields.Boolean("Admin" , compute='_compute_admin')
     @api.constrains('stage_id')
     def _onchange_stage_id(self):
-        self.update({'stages_ids': [(4, self.stage_id.id)]})
+        if self.stage_id:
+            self.update({'stages_ids': [(4, self.stage_id.id)]})
 
     # @api.onchange('stage_id')
     # def _onchange_stage_id(self):
