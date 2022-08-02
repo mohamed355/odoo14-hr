@@ -6,10 +6,11 @@ from datetime import timedelta, date,datetime
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 
-class Stage(models.Model):
-    _inherit = 'hr.recruitment.stage'
+# class Stage(models.Model):
+#     _inherit = 'hr.recruitment.stage'
+#
+#     is_active_state = fields.Boolean(string="Active State")
 
-    is_active_state = fields.Boolean(string="Active State")
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
@@ -26,6 +27,7 @@ class HrApp(models.Model):
         ('intern', 'Intern'), ('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior'), ('teamlead', 'Team Lead'),
         ('manager', 'Manager'), ('consultant', 'Consultant')
     ], string='Experience level')
+    # in_active_state = fields.Boolean(related='stage_id.is_active_state')
     linkedin = fields.Char(string="Linkedin", required=False, )
     first_work_ex = fields.Char(string="Fisrt work experience ", required=False, )
     tools = fields.Char(string="Tools ", required=False, )
@@ -45,10 +47,6 @@ class HrApp(models.Model):
     experience_d = fields.Integer(compute="_calculate_experience",
                                   string="Experience dayes", store=True)
 
-    # @api.depends()
-    # def _compute_hiring_ids(self):
-    #     for x in self:
-    #         x.hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)]).ids
     @api.onchange('stage_id')
     def onchange_stage_id(self):
         dt_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

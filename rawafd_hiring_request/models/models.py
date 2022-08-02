@@ -187,7 +187,7 @@ class HiringRequest(models.Model):
         application = self.env['hr.applicant'].create({
             'name':"Application from hiring",
             'experience_level':self.job_level,
-            'country_id':self.country_id.id,
+            # 'country_id':self.country_id.id,
             'language_ids':self.language_ids.ids,
             'gender':self.gender,
             'job_id':self.job_id.id,
@@ -207,6 +207,8 @@ class HiringRequest(models.Model):
         for rec in self:
             if rec.application_ids:
                 rec.app_count = len(rec.application_ids)
+            else:
+                rec.app_count = 0
 
 
 
@@ -247,6 +249,9 @@ class HiringRequest(models.Model):
             if record.application_ids:
                 record.activity_count = self.env['mail.activity'].sudo().search_count(
                 [('res_model_id.model', '=', 'hr.applicant'),('res_id','in',self.application_ids.ids)])
+            else:
+                record.activity_count = 0
+
 
     def get_activities(self):
         form_view = self.env.ref('mail.mail_activity_view_form_popup').id
@@ -351,6 +356,15 @@ class stage(models.Model):
     name = fields.Char()
 
 
+class HrApplication(models.Model):
+    _inherit = 'hr.applicant'
+
+    hiring_ids = fields.Many2many(comodel_name="hiring.request", compute='_compute_hiring_ids',relation="asd", column1="df", column2="das", string="Hiring", )
+
+    @api.depends()
+    def _compute_hiring_ids(self):
+        for x in self:
+            x.hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)]).ids
 class AssignApplications(models.Model):
     _name = 'assign.application'
 

@@ -386,6 +386,33 @@
 <!--                </activity>-->
 <!--            </field>-->
 <!--        </record>-->
+        <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr_recruitment.hr_applicant_view_form.inherit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Hiring Requests">
+                    <group>
+                    <field name="hiring_ids" widget="many2many_tags"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+        <record id="hr_kanban_view_applicant_inherit_rawafd" model="ir.ui.view">
+            <field name="name">hr_kanban_view_applicant_inherit_rawafd</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_kanban_content']/field[@name='categ_ids']" position="after">
+
+                        <field name="hiring_ids" widget="many2many_tags"/>
+
+                </xpath>
+
+            </field>
+        </record>
         <record id="action_hiring_request" model="ir.actions.act_window">
             <field name="name">Hiring Requests</field>
             <field name="type">ir.actions.act_window</field>

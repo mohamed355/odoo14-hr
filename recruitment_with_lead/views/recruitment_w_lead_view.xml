@@ -38,7 +38,7 @@
                 <field name="candidate_location"/>
             </field>
             <field name="type_id" position="after">
-                <field name="country_id"/>
+<!--                <field name="country_id"/>-->
                 <field name="gender"/>
                 <field name="experience_level"/>
                 <field name="language_ids" widget="many2many_tags"/>
@@ -69,11 +69,7 @@
                 <field name="partner_id" domain="[('contact_type', '=','contact' ), ]"/>
             </field>
 
-<!--            <xpath expr="//notebook" position="inside">-->
-<!--                <page string="Hiring Requests">-->
-<!--                    <field name="hiring_ids" widget="many2many_tags"/>-->
-<!--                </page>-->
-<!--            </xpath>-->
+
         </field>
     </record>
     <record id="hr_kanban_view_applicant_inherit" model="ir.ui.view">
@@ -100,7 +96,8 @@
                                 </div>
                                            <div class="o_kanban_record_subtitle"
                                 >
-<field name="stage_date"/>                                </div>
+<field name="stage_date"/>
+                              </div>
 
 
                             </div>
@@ -166,18 +163,18 @@
         </field>
     </record>
 
-    <record id="hr_recruitment_stage_active_state" model="ir.ui.view">
-        <field name="name">hr.recruitment.stage.active.state</field>
-        <field name="model">hr.recruitment.stage</field>
-        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>
-        <field name="arch" type="xml">
+<!--    <record id="hr_recruitment_stage_active_state" model="ir.ui.view">-->
+<!--        <field name="name">hr.recruitment.stage.active.state</field>-->
+<!--        <field name="model">hr.recruitment.stage</field>-->
+<!--        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>-->
+<!--        <field name="arch" type="xml">-->
 
-            <xpath expr="//field[@name='job_ids']" position="after">
-                <field name="is_active_state"/>
-            </xpath>
+<!--            <xpath expr="//field[@name='job_ids']" position="after">-->
+<!--                <field name="is_active_state"/>-->
+<!--            </xpath>-->
 
-        </field>
-    </record>
+<!--        </field>-->
+<!--    </record>-->
 
 
 </odoo>
