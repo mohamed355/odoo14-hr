@@ -5,11 +5,23 @@ var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var QWeb = core.qweb;
 var rpc = require('web.rpc');
+var _t = core._t;
 var ajax = require('web.ajax');
 
 var PosDashboard =  AbstractAction.extend({
         template: 'Dashboard',
+        events: {
+//            'click .hiring':'hiring',
+//            'click .apps':'apps',
+//            'click .stage_click':'stage_click',
+            'click .calls':'calls',
+            'click .act':'act',
+            'click .meeting':'meeting',
+            'click .opp':'opp',
+            'click .leads':'leads',
+            'click .openopp':'openopp',
 
+            },
         init: function(parent, context) {
             this._super(parent, context);
             this.dashboards_templates = ['DashboardOrders','DashboardChart'];
@@ -141,6 +153,114 @@ render_sales_activity_graph:function(){
                 });
             });
         },
+       calls: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Calls"),
+            type: 'ir.actions.act_window',
+            res_model: 'mail.activity',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+                    domain: [['activity_type_id.category', '=', "phonecall"],['res_model', '=', "crm.lead"]],
+            target: 'current'
+        }, options)
+    },
+    act: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Crm Activities"),
+            type: 'ir.actions.act_window',
+            res_model: 'mail.activity',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+                    domain: [['res_model', '=', "crm.lead"]],
+            target: 'current'
+        }, options)
+    },
+    opp: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Opportunity"),
+            type: 'ir.actions.act_window',
+            res_model: 'crm.lead',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+                    domain: [['type', '=', "opportunity"]],
+            target: 'current'
+        }, options)
+    },
+    openopp: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Open Opportunity"),
+            type: 'ir.actions.act_window',
+            res_model: 'crm.lead',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+                    domain: [['type', '=', "opportunity"],['probability', '!=', 100]],
+            target: 'current'
+        }, options)
+    },
+    leads: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Leads"),
+            type: 'ir.actions.act_window',
+            res_model: 'crm.lead',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+//                    domain: [['type', '=', "lead"]],
+            target: 'current'
+        }, options)
+    },
+    meeting: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Meetings"),
+            type: 'ir.actions.act_window',
+            res_model: 'mail.activity',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+                    domain: [['activity_type_id.category', '=', "meeting"],['res_model', '=', "crm.lead"]],
+            target: 'current'
+        }, options)
+    },
      crm_lead_graph:function(){
             var self = this
             var ctx = self.$(".lost_leads_graph");

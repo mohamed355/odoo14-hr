@@ -12,7 +12,7 @@
  <section class="dashboard_main_section" id="main_section_manager">
 
             <div class="crm_dash_cards row">
-                <div class="col-sm-12 col-md-3" >
+                <div class="col-sm-12 col-md-3 leads" >
                     <div class="dashboard-card card-shadow" style="background:orange">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-3 opp">
                     <div class="dashboard-card card-shadow opportunity" style="background:skyblue">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-3 meeting">
                     <div class="dashboard-card card-shadow exp_revenue" style="background:green">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-3 calls">
                     <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:red">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-20 col-md-3">
+                <div class="col-sm-20 col-md-3 openopp">
                     <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:blue">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -246,7 +246,7 @@
     <t t-name="DashboardChart">
 
 <div class="row mt-5">
-    <div class="upcoming_activities_div col-12 col-sm-12 col-md-6">
+    <div class="upcoming_activities_div col-12 col-sm-12 col-md-6 calls">
                     <div class="chart-container card-shadow">
                         <h3 class="h5">Call</h3>
                         <hr/>
@@ -288,7 +288,7 @@
                         </div>
                     </div>
                 </div>
-    <div class="upcoming_activities_div col-12 col-sm-12 col-md-6">
+    <div class="upcoming_activities_div col-12 col-sm-12 col-md-6 meeting">
                     <div class="chart-container card-shadow">
                         <h3 class="h5">Meeting</h3>
                         <hr/>
@@ -330,7 +330,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="funnel_chart_div col-sm-3 col-md-4">
+                <div class="funnel_chart_div col-sm-3 col-md-4 leads">
                     <div class="chart-container card-shadow">
                         <h2>Funnel Chart</h2>
                         <hr/>
@@ -339,7 +339,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="year_to_date_graph_div col-sm-3 col-md-3">
+                <div class="year_to_date_graph_div col-sm-3 col-md-3 act">
                     <div class="sales_activity_pie_div half_chart chart-container card-shadow">
                         <h2>Crm Activities</h2>
                         <hr/>
