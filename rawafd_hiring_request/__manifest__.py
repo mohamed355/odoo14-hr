@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "rawafd_hiring_request",
-    'depends': ['base', 'crm', 'hr_recruitment', 'recruitment_with_lead', 'mail'],
+    'depends': ['base', 'crm', 'recruitment_with_lead', 'mail','hr_recruitment'],
 
     # always loaded
     'data': [

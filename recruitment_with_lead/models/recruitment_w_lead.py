@@ -21,13 +21,11 @@ class HrApp(models.Model):
         ('m', 'Male'),
         ('f', 'Female')
     ], string='Gender')
-    hiring_id = fields.Many2one(comodel_name="hiring.request", string="hiring", required=False, )
+    # hiring_id = fields.Many2one(comodel_name="hiring.request", string="hiring", required=False, )
     experience_level = fields.Selection([
         ('intern', 'Intern'), ('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior'), ('teamlead', 'Team Lead'),
         ('manager', 'Manager'), ('consultant', 'Consultant')
     ], string='Experience level')
-    # hiring_ids = fields.Many2many(comodel_name="hiring.request", compute='_compute_hiring_ids',relation="asd", column1="df", column2="das", string="Hiring", )
-    in_active_state = fields.Boolean(related='stage_id.is_active_state')
     linkedin = fields.Char(string="Linkedin", required=False, )
     first_work_ex = fields.Char(string="Fisrt work experience ", required=False, )
     tools = fields.Char(string="Tools ", required=False, )
@@ -83,20 +81,20 @@ class HrApp(models.Model):
                 app.experience_m = 0
                 app.experience_d = 0
 
-    @api.onchange('partner_mobile','linkedin','email_from')
-    def _onchange_fields(self):
-        applications = self.env['hr.applicant'].search([('job_id','=',self.job_id.id)])
-        for app in applications:
-            if self.partner_mobile:
-                if app.partner_mobile == self.partner_mobile:
-                    raise ValidationError("Mobile is Duplicated")
-            if self.linkedin:
-                if app.linkedin == self.linkedin:
-                    raise ValidationError("Linkedin is Duplicated")
-
-            if self.email_from:
-                if app.email_from == self.email_from:
-                    raise ValidationError("Email is Duplicated")
+    # @api.onchange('partner_mobile','linkedin','email_from')
+    # def _onchange_fields(self):
+    #     applications = self.env['hr.applicant'].search([('job_id','=',self.job_id.id)])
+    #     for app in applications:
+    #         if self.partner_mobile:
+    #             if app.partner_mobile == self.partner_mobile:
+    #                 raise ValidationError("Mobile is Duplicated")
+    #         if self.linkedin:
+    #             if app.linkedin == self.linkedin:
+    #                 raise ValidationError("Linkedin is Duplicated")
+    #
+    #         if self.email_from:
+    #             if app.email_from == self.email_from:
+    #                 raise ValidationError("Email is Duplicated")
 
 
 

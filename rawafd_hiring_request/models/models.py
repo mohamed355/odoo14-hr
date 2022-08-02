@@ -9,11 +9,10 @@ class NewModule(models.TransientModel):
     _name = 'hiring.wizard'
     _description = 'Hiring Wizard'
 
-    offered = fields.Integer(string="Offered", required=False, compute='_compute_application_ids_stages')
-    awaiting_review = fields.Integer(string="Awaiting Review", required=False,
-                                     compute='_compute_application_ids_stages')
-    new_opp = fields.Integer(string="New Applicants", required=False, compute='_compute_application_ids_stages')
-    reviewed = fields.Integer(string="Reviewed", required=False, compute='_compute_application_ids_stages')
+    offered = fields.Integer(string="Offered", required=False,)
+    awaiting_review = fields.Integer(string="Awaiting Review", required=False,)
+    new_opp = fields.Integer(string="New Applicants", required=False, )
+    reviewed = fields.Integer(string="Reviewed", required=False, )
     stage_id = fields.Many2one(comodel_name="hiring.stage", store=True, copy=False, index=True, ondelete='restrict',
                                string="Stage", required=False, group_expand='_read_group_stage_ids')
     hiring = fields.Char(string="Hiring", required=False, )
@@ -86,7 +85,7 @@ class NewModule(models.TransientModel):
                     'budget': rec.budget,
                     'ex_level': rec.ex_level,
                     'budget': rec.budget,
-                    'currency_id': oppr.currency_id.id,
+                    'currency_id': rec.currency_id.id,
                     # 'customer_id': oppr.partner_id.id,
                     # 'customer_address_email': oppr.partner_id.email,
                     # 'customer_address_phone': oppr.partner_id.phone,
@@ -122,10 +121,10 @@ class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     
-    offered = fields.Integer(string="Offered", required=False, compute='_compute_application_ids_stages')
-    awaiting_review= fields.Integer(string="Awaiting Review", required=False, compute='_compute_application_ids_stages')
-    new_opp = fields.Integer(string="New Applicants", required=False,compute='_compute_application_ids_stages' )
-    reviewed = fields.Integer(string="Reviewed", required=False,compute='_compute_application_ids_stages' )
+    offered = fields.Integer(string="Offered", required=False)
+    awaiting_review= fields.Integer(string="Awaiting Review", required=False)
+    new_opp = fields.Integer(string="New Applicants", required=False )
+    reviewed = fields.Integer(string="Reviewed", required=False, )
     stage_id = fields.Many2one(comodel_name="hiring.stage", store=True,copy=False, index=True,ondelete='restrict',string="Stage",required=False, group_expand='_read_group_stage_ids' )
     hiring = fields.Char(string="Hiring", required=False, )
     av_status = fields.Selection(string="Availability Status", selection=[('in', 'Interested'), ('not_in', 'Not Interested'), ], required=False, )
@@ -176,13 +175,13 @@ class HiringRequest(models.Model):
     activity_count = fields.Integer(string="Activities", required=False,compute='_compute_activity_count')
 
 
-    @api.depends('application_ids')
-    def _compute_application_ids_stages(self):
-        for record in self:
-            record.offered = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Offered")])
-            record.new_opp = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"New Applicants")])
-            record.reviewed = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Reviewed")])
-            record.awaiting_review = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Awaiting Review")])
+    # @api.depends('application_ids')
+    # def _compute_application_ids_stages(self):
+    #     for record in self:
+    #         record.offered = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Offered")])
+    #         record.new_opp = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"New Applicants")])
+    #         record.reviewed = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Reviewed")])
+    #         record.awaiting_review = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Awaiting Review")])
 
     def create_application(self):
         application = self.env['hr.applicant'].create({
@@ -206,7 +205,8 @@ class HiringRequest(models.Model):
     @api.depends()
     def _compute_application_ids(self):
         for rec in self:
-            rec.app_count = len(rec.application_ids)
+            if rec.application_ids:
+                rec.app_count = len(rec.application_ids)
 
 
 
@@ -244,7 +244,8 @@ class HiringRequest(models.Model):
         return action
     def _compute_activity_count(self):
         for record in self:
-            record.activity_count = self.env['mail.activity'].sudo().search_count(
+            if record.application_ids:
+                record.activity_count = self.env['mail.activity'].sudo().search_count(
                 [('res_model_id.model', '=', 'hr.applicant'),('res_id','in',self.application_ids.ids)])
 
     def get_activities(self):

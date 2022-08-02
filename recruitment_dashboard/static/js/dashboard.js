@@ -14,6 +14,8 @@ var RecDashboard =  AbstractAction.extend({
             'click .hiring':'hiring',
             'click .apps':'apps',
             'click .stage_click':'stage_click',
+            'click .act':'act',
+
             },
         init: function(parent, context) {
             this._super(parent, context);
@@ -98,6 +100,24 @@ var RecDashboard =  AbstractAction.extend({
             target: 'current'
         }, options)
     },
+    act: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        self.do_action({
+            name: _t("Activities"),
+            type: 'ir.actions.act_window',
+            res_model: 'mail.activity',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+//                    domain: [['amount_total', '<', 0.0]],
+            target: 'current'
+        }, options)
+    },
 
     get_s:function(){
             var self = this
@@ -131,30 +151,31 @@ var RecDashboard =  AbstractAction.extend({
 
             ]
           };
-         var options = {
-                    responsive: true,
-                    title: false,
-                    legend: {
-                        display: true,
-                        position: "bottom",
-                        labels: {
-                            fontColor: "#333",
-                            fontSize: 16
-                        }
-                    },
-                    scales: {
-                        yAxes: [{
-                            gridLines: {
-                                color: "rgba(0, 0, 0, 0)",
-                                display: false,
-                            },
-                            ticks: {
-                                min: 0,
-                                display: false,
-                            }
-                        }]
-                    }
-                };
+        var options = {
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
 
                 //create Chart class object
                 var chart = new Chart(ctx, {
@@ -196,7 +217,7 @@ var RecDashboard =  AbstractAction.extend({
 
             ]
           };
-         var options = {
+        var options = {
                     responsive: true,
                     title: false,
                     legend: {
@@ -262,29 +283,30 @@ var RecDashboard =  AbstractAction.extend({
             ]
           };
          var options = {
-                    responsive: true,
-                    title: false,
-                    legend: {
-                        display: true,
-                        position: "bottom",
-                        labels: {
-                            fontColor: "#333",
-                            fontSize: 16
-                        }
-                    },
-                    scales: {
-                        yAxes: [{
-                            gridLines: {
-                                color: "rgba(0, 0, 0, 0)",
-                                display: false,
-                            },
-                            ticks: {
-                                min: 0,
-                                display: false,
-                            }
-                        }]
-                    }
-                };
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
 
                 //create Chart class object
                 var chart = new Chart(ctx, {
