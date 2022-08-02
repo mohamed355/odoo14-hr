@@ -12,7 +12,7 @@
     "price": 00.00,
     "currency": 'EUR',
     "depends": [
-        'crm', 'hr_recruitment'
+        'crm', 'hr_recruitment','rawafd_hiring_request'
     ],
 
     "data": [

@@ -26,6 +26,7 @@ class HrApp(models.Model):
         ('intern', 'Intern'), ('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior'), ('teamlead', 'Team Lead'),
         ('manager', 'Manager'), ('consultant', 'Consultant')
     ], string='Experience level')
+    # hiring_ids = fields.Many2many(comodel_name="hiring.request", compute='_compute_hiring_ids',relation="asd", column1="df", column2="das", string="Hiring", )
     in_active_state = fields.Boolean(related='stage_id.is_active_state')
     linkedin = fields.Char(string="Linkedin", required=False, )
     first_work_ex = fields.Char(string="Fisrt work experience ", required=False, )
@@ -39,13 +40,17 @@ class HrApp(models.Model):
     partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter", required=False, )
     start_date = fields.Date(string="Start Date", required=False, )
     experience_y = fields.Integer(compute="_calculate_experience",
-                                  string="Experience",
+                                  string="Experience Years",
                                   help="experience in our company", store=True)
     experience_m = fields.Integer(compute="_calculate_experience",
                                   string="Experience monthes", store=True)
     experience_d = fields.Integer(compute="_calculate_experience",
                                   string="Experience dayes", store=True)
 
+    # @api.depends()
+    # def _compute_hiring_ids(self):
+    #     for x in self:
+    #         x.hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)]).ids
     @api.onchange('stage_id')
     def onchange_stage_id(self):
         dt_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

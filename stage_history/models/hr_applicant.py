@@ -6,6 +6,7 @@ class HrApplicant(models.Model):
 
     stages_ids = fields.Many2many(comodel_name="hr.recruitment.stage", relation="relationstage", column1="relation", column2="stage", string="Stage History", )
     admin_boolean = fields.Boolean("Admin" , compute='_compute_admin')
+
     @api.constrains('stage_id')
     def _onchange_stage_id(self):
         if self.stage_id:

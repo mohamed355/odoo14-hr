@@ -5,22 +5,8 @@ from  datetime import date,datetime
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
-    activity_type = fields.Selection(string="Type", selection=[('in',"In Progress"),('com', 'Completed'),('notc', 'Not Completed'),('onhold', 'On Hold'),('cancel', 'Cancelled') ], required=False, default='in' )
+    activity_type = fields.Selection(string="Type", selection=[('In Progress',"In Progress"),('Compeleted', 'Completed'),('Not Completed', 'Not Completed'),('On Hold', 'On Hold'),('Cancelled', 'Cancelled') ], required=False, default='In Progress' )
 
-    def type_in(self):
-        self.activity_type = 'in'
-
-    def type_cancel(self):
-        self.activity_type = 'cancel'
-
-    def type_on(self):
-        self.activity_type = 'onhold'
-
-    def type_com(self):
-        self.activity_type = 'com'
-
-    def type_not(self):
-        self.activity_type = 'notc'
 
     def _action_done(self, feedback=False, attachment_ids=None):
         """ Private implementation of marking activity as done: posting a message, deleting activity
@@ -82,6 +68,6 @@ class MailActivity(models.Model):
 
         next_activities = self.env['mail.activity'].create(next_activities_values)
         # self.unlink()  # will unlink activity, dont access `self` after that
-        self.activity_type = 'com'
+        self.activity_type = 'Compeleted'
 
         return messages, next_activities

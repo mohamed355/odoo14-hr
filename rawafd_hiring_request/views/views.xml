@@ -44,24 +44,31 @@
                         <group>
                             <!--                        <field name="oppr_id"/>-->
                             <field name="country_id"/>
+                            <field name="av_status"/>
                             <field name="job_id"/>
                             <field name="client"/>
                             <field name="gender"/>
                             <field name="location"/>
                             <field name="job_level"/>
+                            <field name="nationality"/>
+<!--                            <field name="tag_ids"/>-->
                             <field name="ex_level"/>
                             <field name="language_ids" widget="many2many_tags"/>
                             <field name="department_id"/>
+                            <field name="type_of_job"/>
                             <field name="required_no"/>
+                            <field name="budget"/>
                             <!--                        <field name="required_tech"/>-->
-                            <field name="salary_range"/>
-                            <field name="type_of_job_id"/>
-<!--                            <field name="key_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
+<!--                            <field name="salary_range"/>-->
+                            <field name="type_of_job"/>
+                            <!--                            <field name="key_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
                             <!--                        <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
                             <!--                        <field name="priority"  widget="priority"/>-->
                             <field name="job_des"/>
+                            <field name="currency_id"/>
 
                             <field name="impo_level"/>
+                                <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
                     </sheet>
                     <footer>
@@ -171,7 +178,7 @@
 
                             </group>
                             <group>
-<!--                                <field name="key_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
+                                <!--                                <field name="key_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
                             </group>
                         </group>
                         <group>
@@ -204,12 +211,7 @@
                             </field>
                         </group>
 
-                        <group>
-                            <group>
-                                <field name="note"/>
-                            </group>
-                            <group></group>
-                        </group>
+
                         <group>
                             <group>
                                 <field name="nationality"/>
@@ -227,7 +229,7 @@
                             </group>
                             <group>
                                 <field name="job_des"/>
-                                                                <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 
                             </group>
                         </group>
@@ -239,7 +241,12 @@
                                 <field name="team_id"/>
                             </group>
                         </group>
-
+                        <group>
+                            <group>
+                                <field name="note"/>
+                            </group>
+                            <group></group>
+                        </group>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -276,6 +283,18 @@
 
 
                 </tree>
+            </field>
+        </record>
+        <record id="hiring_request_view_pivot" model="ir.ui.view">
+            <field name="name">hiring.request.pivot</field>
+            <field name="model">hiring.request</field>
+            <!--            <field name="priority">60</field>-->
+            <field name="arch" type="xml">
+                <pivot string="Pipeline Analysis" sample="1">
+                    <field name="create_date" interval="month" type="col"/>
+                    <field name="stage_id" type="row"/>
+                    <!--                    <field name="prorated_revenue" type="measure"/>-->
+                </pivot>
             </field>
         </record>
 
@@ -328,12 +347,51 @@
 
             </field>
         </record>
+        <record id="hiring_request_view_graph" model="ir.ui.view">
+            <field name="name">hiring_request_view_graph</field>
+            <field name="model">hiring.request</field>
+            <field name="arch" type="xml">
+                <graph string="Pipeline Analysis" sample="1">
+                    <field name="stage_id"/>
+                    <field name="create_date" interval="month"/>
+                </graph>
+            </field>
+        </record>
+        <record id="hiring_request_view_calendar" model="ir.ui.view">
+            <field name="name">hiring_request_view_calendar</field>
+            <field name="model">hiring.request</field>
+            <field name="arch" type="xml">
+                <calendar string="Activity" date_start="create_date" color="stage_id" mode="month" quick_add="False">
+                    <field name="user_id" avatar_field="avatar_128"/>
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="note"/>
+                    <field name="stage_id" filters="1"/>
+                </calendar>
+
+            </field>
+        </record>
+        <record id="view_activity_hiring" model="ir.ui.view">
+            <field name="name">view_activity_hiring</field>
+            <field name="model">hiring.request</field>
+            <field name="arch" type="xml">
+                <activity string="Hiring Requests">
+                    <templates>
+                        <div t-name="activity-box">
+                            <div>
+                                <field name="name"/>
+                            </div>
+                        </div>
+                    </templates>
+                </activity>
+            </field>
+        </record>
         <record id="action_hiring_request" model="ir.actions.act_window">
             <field name="name">Hiring Requests</field>
             <field name="type">ir.actions.act_window</field>
             <!--          <field name="view_type">form</field>-->
             <field name="res_model">hiring.request</field>
-            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_mode">tree,form,kanban,pivot,graph,calendar,activity</field>
             <field name="view_id" ref="hiring_request_tree"/>
             <field name="target">current</field>
 

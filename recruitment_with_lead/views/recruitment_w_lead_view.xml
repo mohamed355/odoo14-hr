@@ -58,7 +58,7 @@
             <xpath expr="//group[1]/group[2]" position="after">
                 <group string="Experience">
                     <field name="start_date"/>
-                    <label for="experience_y"/>
+                    <label for="experience_y" string="Experience"/>
                     <div class="o_row">
                         <field name="experience_y"/>Years-<field name="experience_m"/>Months-<field
                             name="experience_d"/>Days
@@ -68,6 +68,12 @@
             <field name="user_id" position="replace">
                 <field name="partner_id" domain="[('contact_type', '=','contact' ), ]"/>
             </field>
+
+<!--            <xpath expr="//notebook" position="inside">-->
+<!--                <page string="Hiring Requests">-->
+<!--                    <field name="hiring_ids" widget="many2many_tags"/>-->
+<!--                </page>-->
+<!--            </xpath>-->
         </field>
     </record>
     <record id="hr_kanban_view_applicant_inherit" model="ir.ui.view">

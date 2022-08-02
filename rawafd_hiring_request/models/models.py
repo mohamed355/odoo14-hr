@@ -9,28 +9,70 @@ class NewModule(models.TransientModel):
     _name = 'hiring.wizard'
     _description = 'Hiring Wizard'
 
-    key_ids = fields.Many2many(comodel_name="key", relation="wizkey", column1="wiz", column2="key", string="Specific Key Words", )
-    # tec_ids = fields.Many2many(comodel_name="tec", relation="wiztec", column1="w", column2="tec", string="Required Technology", )
-    # priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')], string='Appreciation')
+    offered = fields.Integer(string="Offered", required=False, compute='_compute_application_ids_stages')
+    awaiting_review = fields.Integer(string="Awaiting Review", required=False,
+                                     compute='_compute_application_ids_stages')
+    new_opp = fields.Integer(string="New Applicants", required=False, compute='_compute_application_ids_stages')
+    reviewed = fields.Integer(string="Reviewed", required=False, compute='_compute_application_ids_stages')
+    stage_id = fields.Many2one(comodel_name="hiring.stage", store=True, copy=False, index=True, ondelete='restrict',
+                               string="Stage", required=False, group_expand='_read_group_stage_ids')
+    hiring = fields.Char(string="Hiring", required=False, )
+    av_status = fields.Selection(string="Availability Status",
+                                 selection=[('in', 'Interested'), ('not_in', 'Not Interested'), ], required=False, )
+    # key_ids = fields.Many2many(comodel_name="key", relation="svg", column1="sdf", column2="fdfd", string="Specific Key Words", )
     job_des = fields.Text(string="Job Requirements And Duties", required=False, )
     impo_level = fields.Selection(string="Importance Level",
                                   selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
-    client = fields.Many2one(comodel_name="res.partner", string="Client",required=True)
+    # approved = fields.Boolean(string="Approved", )
+    # user_ids = fields.Many2many(comodel_name="res.users", relation="resusers", column1="res", column2="users",
+    #                             string="Users", )
+    tec_ids = fields.Many2many(comodel_name="tec", relation="er", column1="qwe", column2="qwed",
+                               string="Required Technology", )
+    # name = fields.Char(string='Serial', readonly=True, default="New", track_visibility='onchange')
+    currency_id = fields.Many2one('res.currency', string='Currency')
+    requested = fields.Integer(string="Requested", required=False, )
+    job_level = fields.Selection(string="Job Level",
+                                 selection=[('intern', 'Intern'), ('fresh', 'Fresh'), ('jr', 'Junior'),
+                                            ('senior', 'Senior'), ('teamlead', 'Team Lead'), ('manager', 'Manager'),
+                                            ('consultant', 'Consultant')], required=False, )
+    req_state = fields.Selection(string="Request State",
+                                 selection=[('open', 'Open'), ('pending', 'Pending'), ('onhold', 'On Hold'),
+                                            ('canceled', 'Canceled'), ('closed', 'Closed')], required=False, )
+    budget = fields.Float(string="Budget", required=False, )
+    nationality = fields.Char(string="Nationality", required=False, )
+    note = fields.Text(string="Recruiter Notes", required=False, )
+    attach = fields.Binary(string="Attach", )
+    location = fields.Char(string="Location", required=True, )
+    priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')],
+                                string='Appreciation')
+    # customer_id = fields.Many2one(comodel_name="res.partner", string="Customer", readonly=True,required=True)
+    client = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
+    # customer_address_email = fields.Char('Email', related='customer_id.email', readonly=True)
+    # customer_address_phone = fields.Char('Phone', related='customer_id.phone', readonly=True)
+    # customer_address_mobile = fields.Char('Mobile', related='customer_id.mobile', readonly=True)
+    user_id = fields.Many2one(comodel_name="res.users", string="Salesperson", readonly=True)
+    team_id = fields.Many2one(comodel_name="crm.team", string="Sales Team", readonly=True)
+    comment = fields.Text(string="Other Comments", required=False, )
+    # tag_ids = fields.Many2many(comodel_name="crm.tag", string="Tags", readonly=True)
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
     country_id = fields.Many2one(comodel_name="res.country", string="Country", required=False)
-    job_id = fields.Many2one(comodel_name="hr.job", string="Job", required=False, )
-    gender = fields.Selection(string="Gender", selection=[('m', 'Male'), ('f', 'Female'), ], required=False, )
+    job_id = fields.Many2one(comodel_name="hr.job", string="Job", required=True, )
+    gender = fields.Selection(string="Gender", selection=[('m', 'Male'), ('f', 'Female'), ('any', 'Any')],
+                              required=False, )
     ex_level = fields.Selection(string="Experience level", selection=[('f', 'Fundamental Awareness'), ('n', 'Novice'),
                                                                       ('i', 'Intermediate'), ('a', 'Advanced'),
                                                                       ('e', 'Expert')], required=False, )
-    location = fields.Char(string="Location", required=True, )
-    language_ids = fields.Many2many(comodel_name="job.lang", string="Language", required=False)
+    customer_ids = fields.One2many(comodel_name="hiring.customer", inverse_name="hiring_id", string="Customer",
+                                   required=False, )
+    language_ids = fields.Many2many(comodel_name="job.lang", string="Languages", required=True)
     department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
     required_no = fields.Integer(string='Number of Required Employees')
     required_tech = fields.Char(string='Required Technology')
     salary_range = fields.Char(string='Salary Range')
-    type_of_job_id = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],)
-    job_level = fields.Selection(string="Job Level", selection=[('intern', 'Intern'),('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior') ,('teamlead', 'Team Lead'),('manager', 'Manager'),('consultant', 'Consultant')], required=False, )
+    type_of_job = fields.Selection(string='Type Of Job', required=True,
+                                   selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'), ('visit', 'Visit'),
+                                              ('iqama', 'Iqama Transfer')], )
+
     def create_hiring_request(self):
         print('hi')
         for rec in self:
@@ -38,14 +80,25 @@ class NewModule(models.TransientModel):
             Deal = self.env['hiring.request'].create({
                     # 'name': 'Hiring Request',
                     'oppr_id': oppr.id,
+                    'nationality': rec.nationality,
+                    'requested': rec.requested,
+                    'av_status': rec.av_status,
+                    'budget': rec.budget,
+                    'ex_level': rec.ex_level,
+                    'budget': rec.budget,
+                    'currency_id': oppr.currency_id.id,
                     # 'customer_id': oppr.partner_id.id,
                     # 'customer_address_email': oppr.partner_id.email,
                     # 'customer_address_phone': oppr.partner_id.phone,
                     # 'customer_address_mobile': oppr.partner_id.mobile,
-                    'user_id': oppr.user_id.id,
+                    'user_id': rec.user_id.id,
+                    'type_of_job': rec.type_of_job,
+                    'salary_range': rec.salary_range,
+                    'required_tech': rec.required_tech,
+                    'required_no': rec.required_no,
                     # 'priority': oppr.priority,
-                    'team_id': oppr.team_id.id,
-                    'tag_ids': oppr.tag_ids.ids,
+                    'team_id': rec.team_id.id,
+                    'tag_ids': rec.tag_ids.ids,
                     'country_id': rec.country_id.id,
                     'job_id': rec.job_id.id,
                     'job_level': rec.job_level,
@@ -53,7 +106,7 @@ class NewModule(models.TransientModel):
                     'ex_level': rec.ex_level,
                     'language_ids': rec.language_ids.ids,
                     'key_ids': rec.key_ids.ids,
-                    # 'tec_ids': rec.tec_ids.ids,
+                    'tec_ids': rec.tec_ids.ids,
                     'job_des': rec.job_des,
                     'impo_level': rec.impo_level,
                     'department_id': rec.department_id.id,
@@ -62,7 +115,7 @@ class NewModule(models.TransientModel):
                     'location': rec.location,
                     'client': rec.client.id,
                     'salary_range': rec.salary_range,
-                    'type_of_job': rec.type_of_job_id,
+                    'type_of_job': rec.type_of_job,
                 })
 
 class HiringRequest(models.Model):
@@ -83,7 +136,7 @@ class HiringRequest(models.Model):
     approved = fields.Boolean(string="Approved",  )
     user_ids = fields.Many2many(comodel_name="res.users", relation="resusers", column1="res", column2="users", string="Users", )
     tec_ids = fields.Many2many(comodel_name="tec", relation="dewf", column1="wf", column2="tfeec", string="Required Technology", )
-    name = fields.Char(string='Serial' ,readonly=True, default="New")
+    name = fields.Char(string='Serial' ,readonly=True, default="New",track_visibility='onchange')
     currency_id = fields.Many2one('res.currency', string='Currency')
     requested = fields.Integer(string="Requested", required=False, )
     job_level = fields.Selection(string="Job Level", selection=[('intern', 'Intern'),('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior') ,('teamlead', 'Team Lead'),('manager', 'Manager'),('consultant', 'Consultant')], required=False, )
@@ -106,7 +159,7 @@ class HiringRequest(models.Model):
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
     country_id = fields.Many2one(comodel_name="res.country", string="Country", required=False)
     job_id = fields.Many2one(comodel_name="hr.job", string="Job", required=True, )
-    gender = fields.Selection(string="Gender", selection=[('m', 'Male'), ('f', 'Female'), ], required=False, )
+    gender = fields.Selection(string="Gender", selection=[('m', 'Male'), ('f', 'Female'), ('any', 'Any')], required=False, )
     ex_level = fields.Selection(string="Experience level", selection=[('f', 'Fundamental Awareness'), ('n', 'Novice'),
                                                                       ('i', 'Intermediate'), ('a', 'Advanced'),
                                                                       ('e', 'Expert')], required=False, )
@@ -121,7 +174,8 @@ class HiringRequest(models.Model):
     # active_count = fields.Integer(compute='_compute_activity_count', string="Number of applications")
     application_ids = fields.Many2many(comodel_name="hr.applicant", relation="hr_application_rel", column1='application_id', column2="hr_id", string="Application")
     activity_count = fields.Integer(string="Activities", required=False,compute='_compute_activity_count')
-    
+
+
     @api.depends('application_ids')
     def _compute_application_ids_stages(self):
         for record in self:
