@@ -10,7 +10,7 @@
 
             <form string="Activity">
 <header>
-    <field name="activity_type" widget="statusbar" statusbar_visible="notc,onhold,com,done,cancel"/>
+    <field name="activity_type" widget="statusbar" options="{'clickable': '1'}"/>
 </header>
                 <sheet>
                     <group invisible="1">
@@ -51,18 +51,19 @@
                     </group>
                     <field name="note" placeholder="Log a note..."/>
                     <footer>
+
                         <field name="id" invisible="1"/>
                         <button id="mail_activity_schedule" string="Schedule" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '!=', False)]}" data-hotkey="q"/>
-                        <button id="mail_activity_save" string="Save" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '=', False)]}" data-hotkey="q"/>
-                        <button attrs="{'invisible': [('activity_type', '!=', 'cancel')]}" string="Reset" name="type_not" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
-                        <button attrs="{'invisible': [('activity_type', '!=', 'onhold')]}" string="Complete" name="type_com" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
-                        <button attrs="{'invisible': [('activity_type', '!=', 'notc')]}" string="On Hold" name="type_on" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
-                        <button attrs="{'invisible': [('chaining_type', '=', 'trigger')]}" string="Done &amp; Schedule Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>
-                        <button attrs="{'invisible': [('chaining_type', '=', 'suggest')]}" string="Done &amp; Launch Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>
-                        <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
-
-                                            <button attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '=', 'done')]}" string="Mark as Done" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
-                        <button string="Cancel" name="type_cancel" type="object" context="{'mail_activity_quick_update': True}"/>
+<!--                        <button id="mail_activity_save" string="Save" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '=', False)]}" data-hotkey="q"/>-->
+<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Compeleted')]}" string="Mark as Not Completed" name="type_not" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Cancelled')]}" string="In Progress" name="type_in" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'onhold')]}" string="Complete" name="type_com" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Not Completed')]}" string="On Hold" name="type_on" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button attrs="{'invisible': [('chaining_type', '=', 'trigger')]}" string="Done &amp; Schedule Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button attrs="{'invisible': [('chaining_type', '=', 'suggest')]}" string="Done &amp; Launch Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>-->
+<!--                        <button attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '!=', 'In Progress')]}" string="Mark as Completed" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+<!--                        <button attrs="{'invisible': [('activity_type', '=', 'Cancelled')]}" string="Cancel" name="type_cancel" type="object" context="{'mail_activity_quick_update': True}"/>-->
 
 </footer>
                 </sheet>
