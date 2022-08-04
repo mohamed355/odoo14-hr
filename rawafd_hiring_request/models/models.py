@@ -120,7 +120,8 @@ class NewModule(models.TransientModel):
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    
+
+    approve_date = fields.Datetime(string="Approve Date", required=False, )
     offered = fields.Integer(string="Offered", required=False)
     awaiting_review= fields.Integer(string="Awaiting Review", required=False)
     new_opp = fields.Integer(string="New Applicants", required=False )
@@ -323,8 +324,8 @@ class HiringRequestCustomer(models.Model):
 
     email = fields.Char(string="Email",required=False, )
     mobile = fields.Char(string="Mobile",required=False, )
-    customer_id = fields.Many2one(comodel_name="res.partner", string="Customer",  )
-    level_1_id = fields.Many2one(comodel_name="res.partner", string="Level 1",  )
+    customer_id = fields.Many2one(comodel_name="res.partner", string="Customer",)
+    level_1_id = fields.Many2one(comodel_name="res.partner", string="Level 1",)
     level_1_child= fields.One2many(comodel_name="res.partner",related="level_1_id.child_ids", required=True, )
     customer_child= fields.One2many(comodel_name="res.partner",related="customer_id.child_ids", required=True, )
     contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", )
@@ -359,12 +360,33 @@ class stage(models.Model):
 class HrApplication(models.Model):
     _inherit = 'hr.applicant'
 
-    hiring_ids = fields.Many2many(comodel_name="hiring.request", compute='_compute_hiring_ids',relation="asd", column1="df", column2="das", string="Hiring", )
+    hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", )
+    rej_boolean = fields.Boolean("rejected or no feedback")
 
-    @api.depends()
-    def _compute_hiring_ids(self):
+    # @api.depends()
+    # def _compute_hiring_ids(self):
+    #     for x in self:
+    #         if x.rej_boolean == False:
+    #             x.hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)]).ids
+    #         else:
+    #             hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)])
+    #             print(hiring_ids)
+    #             for h in hiring_ids:
+    #                 h.update({'application_ids': [(3,x.id,False)]})
+    #             x.hiring_ids = None
+
+    @api.constrains('stage_id')
+    def _constrains_stage_id(self):
         for x in self:
-            x.hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)]).ids
+            if x.stage_id.name in ["Rejected", "No Feedback"]:
+                # x.rej_boolean = True
+                x.stage_id = None
+                x.hiring_ids = None
+                hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)])
+                print(hiring_ids)
+                for h in hiring_ids:
+                    h.update({'application_ids': [(3,x.id,False)]})
+
 class AssignApplications(models.Model):
     _name = 'assign.application'
 
@@ -378,10 +400,12 @@ class AssignApplications(models.Model):
         for application in self.applications_ids:
             if application.id in hiring.application_ids.ids:
                 apps_exist.append(application.name)
-
-
+            if application.hiring_ids:
+                raise ValidationError('This Applications Already In Hiring Request ')
             else:
                 hiring.update({'application_ids': [(4, application.id)]})
+                application.update({'hiring_ids': [(4, hiring.id)]})
+
         if apps_exist:
             raise ValidationError('This Applications %s Already Assigned ' % apps_exist)
 
@@ -394,6 +418,6 @@ class AssignUsers(models.Model):
     def assign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
         hiring.approved=True
+        hiring.approve_date=fields.Datetime.now()
         for user in self.user_ids:
-
-                hiring.update({'user_ids': [(4, user.id)]})
+            hiring.update({'user_ids': [(4, user.id)]})

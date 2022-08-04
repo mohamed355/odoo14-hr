@@ -394,7 +394,12 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Hiring Requests">
                     <group>
-                    <field name="hiring_ids" widget="many2many_tags"/>
+                    <field name="hiring_ids">
+                            <tree editable="bottom">
+                                <field name="name" string="Code"/>
+                                <field name="approve_date"/>
+                            </tree>
+                    </field>
                     </group>
                 </page>
             </xpath>

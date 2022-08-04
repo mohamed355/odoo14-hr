@@ -8,7 +8,7 @@
                <form string="Assign Hiring">
                    <sheet>
                        <group>
-                           <field name="hiring_ids" widget="many2many_tags"/>
+                           <field name="hiring_id"/>
                        </group>
                    </sheet>
                    <footer>
