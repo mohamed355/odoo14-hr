@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_form_inherit" model="ir.ui.view">
+            <field name="name">crm_lead_form_inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]/group[@name='opportunity_partner']" position="replace">
+                    <group name="opportunity_partner" attrs="{'invisible': [('type', '=', 'lead')]}">
+                        <field name="l_1_id"/>
+                        <field name="level_2_child" invisible="1"/>
+                        <field name="customer_child" invisible="1"/>
+                        <field name="dep_child" invisible="1"/>
+                        <field name="level_2_id" domain="[('id', 'in', customer_child), ]"/>
+                        <field name="partner_id" domain="[('id', 'in', level_2_child), ]" widget="res_partner_many2one"
+                               string="Department"
+                               context="{'res_partner_search_mode': type == 'opportunity' and 'customer' or False,                                         'default_name': contact_name or partner_name,                                         'default_street': street,                                         'default_is_company': type == 'opportunity' and contact_name == False,                                         'default_company_name': type == 'opportunity' and partner_name,                                         'default_street2': street2,                                         'default_city': city,                                         'default_title': title,                                         'default_state_id': state_id,                                         'default_zip': zip,                                         'default_country_id': country_id,                                         'default_function': function,                                         'default_phone': phone,                                         'default_mobile': mobile,                                         'default_email': email_from,                                         'default_user_id': user_id,                                         'default_team_id': team_id,                                         'default_website': website,                                         'show_vat': True,                                     }"/>
+                        <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
+                        <field name="partner_name" string="Company"/>
+                        <field name="is_blacklisted" invisible="1"/>
+                        <field name="partner_is_blacklisted" invisible="1"/>
+                        <field name="phone_blacklisted" invisible="1"/>
+                        <field name="mobile_blacklisted" invisible="1"/>
+                        <field name="email_state" invisible="1"/>
+                        <field name="email_cc"/>
+                        <field name="phone_state" invisible="1"/>
+                        <field name="partner_email_update" invisible="1"/>
+                        <field name="partner_phone_update" invisible="1"/>
+                        <label for="email_from" class="oe_inline"/>
+                        <div class="o_row o_row_readonly">
+                            <button name="mail_action_blacklist_remove" class="fa fa-ban text-danger"
+                                    title="This email is blacklisted for mass mailings. Click to unblacklist."
+                                    type="object" context="{'default_email': email_from}" groups="base.group_user"
+                                    attrs="{'invisible': [('is_blacklisted', '=', False)]}"/>
+                            <field name="email_from" string="Email" widget="email"/>
+                            <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                  title="By saving this change, the customer email will also be updated."
+                                  attrs="{'invisible': [('partner_email_update', '=', False)]}"/>
+                        </div>
+                        <label for="phone" class="oe_inline"/>
+                        <div class="o_row o_row_readonly">
+                            <button name="phone_action_blacklist_remove" class="fa fa-ban text-danger"
+                                    title="This phone number is blacklisted for SMS Marketing. Click to unblacklist."
+                                    type="object" context="{'default_phone': phone}" groups="base.group_user"
+                                    attrs="{'invisible': [('phone_blacklisted', '=', False)]}"/>
+                            <field name="phone" widget="phone"/>
+                            <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
+                                  title="By saving this change, the customer phone number will also be updated."
+                                  attrs="{'invisible': [('partner_phone_update', '=', False)]}"/>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
