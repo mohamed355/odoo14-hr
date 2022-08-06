@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+import warnings
+
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore",category=DeprecationWarning)
+    import md5, sha
+
+
 from datetime import timedelta, date
 
 from odoo import models, fields, api, _
