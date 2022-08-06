@@ -263,7 +263,6 @@
                     <field name="user_ids">
                             <tree editable="bottom">
                                 <field name="name"/>
-                                <field name="approve_date"/>
                             </tree>
                     </field>
                     </group>

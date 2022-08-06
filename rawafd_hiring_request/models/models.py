@@ -414,10 +414,10 @@ class AssignApplications(models.Model):
             raise ValidationError('This Applications %s Already Assigned ' % apps_exist)
 
 
-class ResUsers(models.Model):
-    _inherit = 'res.users'
+#class ResUsers(models.Model):
+#    _inherit = 'res.users'
 
-    approve_date = fields.Datetime(string="Approve Date", required=False, )
+ #   approve_date = fields.Datetime(string="Approve Date", required=False, )
 
 
 class AssignUsers(models.Model):
