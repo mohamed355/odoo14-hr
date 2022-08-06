@@ -247,28 +247,6 @@
                             </group>
                             <group></group>
                         </group>
-                        <notebook>
-                            <page string="Applications">
-                    <group>
-                    <field name="application_ids">
-                            <tree editable="bottom">
-                                <field name="partner_name"/>
-                                <field name="approve_date"/>
-                            </tree>
-                    </field>
-                    </group>
-                </page>
-                            <page string="Users">
-                    <group>
-                    <field name="user_ids">
-                            <tree editable="bottom">
-                                <field name="name"/>
-                                <field name="approve_date"/>
-                            </tree>
-                    </field>
-                    </group>
-                </page>
-                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -300,8 +278,6 @@
 
                     <field name="offered"/>
                     <field name="stage_id"/>
-                    <field name="user_ids" widget="many2many_tags"/>
-                    <field name="application_ids" widget="many2many_tags"/>
                     <field name="note"/>
                     <field name="approved"/>
 
@@ -429,17 +405,6 @@
             </xpath>
         </field>
     </record>
-        <record id="crm_case_tree_view_job_inherit" model="ir.ui.view">
-            <field name="name">crm_case_tree_view_job_inherit</field>
-            <field name="model">hr.applicant</field>
-            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
-            <field name="arch" type="xml">
-
-                <xpath expr="//field[@name='priority']" position="after">
-                    <field name="hiring_ids" widget="many2many_tags"/>                </xpath>
-
-            </field>
-        </record>
         <record id="hr_kanban_view_applicant_inherit_rawafd" model="ir.ui.view">
             <field name="name">hr_kanban_view_applicant_inherit_rawafd</field>
             <field name="model">hr.applicant</field>
