@@ -121,6 +121,7 @@ class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    req_date = fields.Datetime(string="Request Date", required=False, )
     approve_date = fields.Datetime(string="Approve Date", required=False, )
     offered = fields.Integer(string="Offered", required=False)
     awaiting_review= fields.Integer(string="Awaiting Review", required=False)
@@ -217,6 +218,7 @@ class HiringRequest(models.Model):
     def create(self, vals):
         vals['name'] = self.env['ir.sequence'].next_by_code(
             'hiring.req.code')
+        vals['req_date'] = fields.Datetime.now()
         return super(HiringRequest, self).create(vals)
 
     def create_activities(self):
@@ -359,7 +361,10 @@ class stage(models.Model):
 
 class HrApplication(models.Model):
     _inherit = 'hr.applicant'
+    _rec_name = "partner_name"
 
+    name = fields.Char("Subject / Application Name", required=False, help="Email subject for applications sent via email")
+    approve_date = fields.Datetime(string="Approve Date", required=False, )
     hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", )
     rej_boolean = fields.Boolean("rejected or no feedback")
 
@@ -405,9 +410,16 @@ class AssignApplications(models.Model):
             else:
                 hiring.update({'application_ids': [(4, application.id)]})
                 application.update({'hiring_ids': [(4, hiring.id)]})
+                application.approve_date = fields.Datetime.now()
 
         if apps_exist:
             raise ValidationError('This Applications %s Already Assigned ' % apps_exist)
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    approve_date = fields.Datetime(string="Approve Date", required=False, )
 
 
 class AssignUsers(models.Model):
@@ -418,6 +430,6 @@ class AssignUsers(models.Model):
     def assign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
         hiring.approved=True
-        hiring.approve_date=fields.Datetime.now()
         for user in self.user_ids:
+            user.approve_date = fields.Datetime.now()
             hiring.update({'user_ids': [(4, user.id)]})
