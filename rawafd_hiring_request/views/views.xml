@@ -168,7 +168,7 @@
                                 <field name="name" string="Code"/>
                                 <field name="approved" invisible="1"/>
 
-                                <field name="create_date" string="Request Date"/>
+                                <field name="req_date" string="Request Date" readonly="1"/>
                                 <field name="client"/>
                                 <field name="impo_level"/>
                                 <field name="awaiting_review" invisible="1"/>
@@ -247,6 +247,7 @@
                             </group>
                             <group></group>
                         </group>
+
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -263,7 +264,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name" string="Code"/>
-                    <field name="create_date" string="Request Date"/>
+                    <field name="req_date" string="Request Date"/>
                     <field name="client"/>
                     <field name="job_level"/>
                     <field name="job_id" string="Job Title"/>
@@ -405,6 +406,17 @@
             </xpath>
         </field>
     </record>
+<!--        <record id="crm_case_tree_view_job_inherit" model="ir.ui.view">-->
+<!--            <field name="name">crm_case_tree_view_job_inherit</field>-->
+<!--            <field name="model">hr.applicant</field>-->
+<!--            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                <xpath expr="//field[@name='priority']" position="after">-->
+<!--                    <field name="hiring_ids" widget="many2many_tags"/>                </xpath>-->
+
+<!--            </field>-->
+<!--        </record>-->
         <record id="hr_kanban_view_applicant_inherit_rawafd" model="ir.ui.view">
             <field name="name">hr_kanban_view_applicant_inherit_rawafd</field>
             <field name="model">hr.applicant</field>
