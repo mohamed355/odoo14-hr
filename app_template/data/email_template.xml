@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="contract_template_" model="mail.template">
+        <record id="contract_template" model="mail.template">
             <field name="name">Application: Contract</field>
             <!--<field name="email_from">neptune2technology@gmail.com</field>-->
             <field name="subject">Send Mail</field>
