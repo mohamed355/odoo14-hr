@@ -15,6 +15,10 @@ from datetime import datetime
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
 
+    ex_of = fields.Float(string="Expected(Offshore)",  required=False, )
+    ex_on = fields.Float(string="Expected(onsite)",  required=False, )
+    current_salary = fields.Float(string="Current Salary",  required=False, )
+
     stage_date = fields.Datetime(string="Stage Time", required=False, )
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     language_ids = fields.Many2many('job.lang')
