@@ -15,14 +15,37 @@ var RecDashboard =  AbstractAction.extend({
             'click .apps':'apps',
             'click .stage_click':'stage_click',
             'click .act':'act',
+            'change #income_expense_values': function(e) {
+                e.stopPropagation();
+                var $target = $(e.target);
+                var value = $target.val();
+                if (value=="this_year"){
+                    this.onclick_this_year($target.val());
+                }else if (value=="this_month"){
+                    this.onclick_this_month($target.val());
+                }
 
             },
+            'change #source_select': function(e) {
+                e.stopPropagation();
+                var $target = $(e.target);
+                var value = $target.val();
+                if (value=="lost_last_12months"){
+                    this.onclick_source_12months($target.val());
+                }else if (value=="lost_last_6months"){
+                    this.onclick_source_6months($target.val());
+                }else if (value=="lost_last_month"){
+                    this.onclick_source_month($target.val());
+                }
+            },
+},
         init: function(parent, context) {
             this._super(parent, context);
             this.dashboards_templates = ['DashboardRec','DashboardStages'];
             this.open_hiring = [];
             this.hr_applicant = [];
-            this.stages = [];
+            this.h_a = [];
+            this.h_com = [];
 
         }   ,
         start: function() {
@@ -35,12 +58,16 @@ var RecDashboard =  AbstractAction.extend({
 
             });
         },
+
     render_graphs: function(){
         var self = this;
         self.get_s();
         self.get_sources();
         self.get_job();
         self.get_act_don();
+//        self.onclick_source_month();
+//        self.onclick_source_6months();
+//        self.onclick_source_12months();
         },
 
     hiring: function(e){
@@ -64,6 +91,116 @@ var RecDashboard =  AbstractAction.extend({
 
 
     },
+    onclick_this_month: function (ev) {
+            var self = this;
+            rpc.query({
+                model: 'hr.applicant',
+                method: 'crm_month',
+                args: [],
+            })
+            .then(function (result) {
+                $('#leads_this_year').hide();
+                $('#hiring_this_year').hide();
+//                $('#exp_rev_this_year').hide();
+//                $('#rev_this_year').hide();
+//                $('#ratio_this_year').hide();
+//                $('#avg_time_this_year').hide();
+//                $('#total_revenue_this_year').hide();
+//                $('#leads_this_quarter').hide();
+//                $('#opp_this_quarter').hide();
+//                $('#exp_rev_this_quarter').hide();
+//                $('#rev_this_quarter').hide();
+//                $('#ratio_this_quarter').hide();
+//                $('#avg_time_this_quarter').hide();
+//                $('#total_revenue_this_quarter').hide();
+//                $('#leads_this_week').hide();
+//                $('#opp_this_week').hide();
+//                $('#exp_rev_this_week').hide();
+//                $('#rev_this_week').hide();
+//                $('#ratio_this_week').hide();
+//                $('#avg_time_this_week').hide();
+//                $('#total_revenue_this_week').hide();
+//
+                $('#leads_this_month').show();
+                $('#hiring_this_month').show();
+//                $('#exp_rev_this_month').show();
+//                $('#rev_this_month').show();
+//                $('#ratio_this_month').show();
+//                $('#avg_time_this_month').show();
+//                $('#total_revenue_this_month').show();
+
+                $('#leads_this_month').empty();
+                $('#hiring_this_month').empty();
+//                $('#exp_rev_this_month').empty();
+//                $('#rev_this_month').empty();
+//                $('#ratio_this_month').empty();
+//                $('#avg_time_this_month').empty();
+//                $('#total_revenue_this_month').empty();
+
+                $('#leads_this_month').append('<span>' + result.leads + '</span>');
+                $('#hiring_this_month').append('<span>' + result.hiring + '</span>');
+//                $('#exp_rev_this_month').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev_exp + '</span>');
+//                $('#rev_this_month').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev + '</span>');
+//                $('#ratio_this_month').append('<span>' + result.record_ratio + '</span>');
+//                $('#avg_time_this_month').append('<span>' + result.avg_time  + '&nbspsec' + '</span>');
+//                $('#total_revenue_this_month').append('<span>' + result.opportunity_ratio_value + '</span>');
+            })
+        },
+    onclick_this_year: function (ev) {
+            var self = this;
+            rpc.query({
+                model: 'hr.applicant',
+                method: 'crm_year',
+                args: [],
+            })
+            .then(function (result) {
+//                $('#leads_this_quarter').hide();
+//                $('#opp_this_quarter').hide();
+//                $('#exp_rev_this_quarter').hide();
+//                $('#rev_this_quarter').hide();
+//                $('#ratio_this_quarter').hide();
+//                $('#avg_time_this_quarter').hide();
+//                $('#total_revenue_this_quarter').hide();
+                $('#leads_this_month').hide();
+                $('#hiring_this_month').hide();
+//                $('#exp_rev_this_month').hide();
+//                $('#rev_this_month').hide();
+//                $('#ratio_this_month').hide();
+//                $('#avg_time_this_month').hide();
+//                $('#total_revenue_this_month').hide();
+//                $('#leads_this_week').hide();
+//                $('#opp_this_week').hide();
+//                $('#exp_rev_this_week').hide();
+//                $('#rev_this_week').hide();
+//                $('#ratio_this_week').hide();
+//                $('#avg_time_this_week').hide();
+//                $('#total_revenue_this_week').hide();
+
+                $('#leads_this_year').show();
+                $('#hiring_this_year').show();
+//                $('#exp_rev_this_year').show();
+//                $('#rev_this_year').show();
+//                $('#ratio_this_year').show();
+//                $('#avg_time_this_year').show();
+//                $('#total_revenue_this_year').show();
+
+                $('#leads_this_year').empty();
+                $('#hiring_this_year').empty();
+//                $('#exp_rev_this_year').empty();
+//                $('#rev_this_year').empty();
+//                $('#ratio_this_year').empty();
+//                $('#avg_time_this_year').empty();
+//                $('#total_revenue_this_year').empty();
+//
+                $('#leads_this_year').append('<span>' + result.leads + '</span>');
+                $('#hiring_this_year').append('<span>' + result.hiring + '</span>');
+//                $('#exp_rev_this_year').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev_exp + '</span>');
+//                $('#rev_this_year').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev + '</span>');
+//                $('#ratio_this_year').append('<span>' + result.record_ratio + '</span>');
+//                $('#avg_time_this_year').append('<span>' + result.avg_time + '&nbspsec' + '</span>');
+//                $('#total_revenue_this_year').append('<span>' + result.opportunity_ratio_value + '</span>');
+            })
+        },
     apps: function(x){
         var self = this;
         x.stopPropagation();
@@ -250,6 +387,133 @@ var RecDashboard =  AbstractAction.extend({
                 });
             });
         },
+        onclick_source_12months: function(ev) {
+            var self = this;
+                rpc.query({
+                    model: "hr.applicant",
+                    method: "get_sources",
+                    args: ['12']
+                }).then(function(result){
+                    var ctx = document.getElementById("canvas").getContext('2d');
+                    // Define the data
+                    var lost_reason = result.month // Add data values to array
+                    var count = result.count;
+                    var myChart = new Chart(ctx, {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: lost_reason,//x axis
+                            datasets: [{
+                                label: 'Count', // Name the series
+                                data: count, // Specify the data values array
+                                backgroundColor: '#66aecf',
+                                borderColor: '#66aecf',
+                                barPercentage: 0.5,
+                                barThickness: 6,
+                                maxBarThickness: 8,
+                                minBarLength: 0,
+                                borderWidth: 1, // Specify bar border width
+                                type: 'horizontalBar', // Set this data to a line chart
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                },
+                            },
+                            responsive: true, // Instruct chart js to respond nicely.
+                            maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                        }
+                    });
+                });
+            },
+
+
+        onclick_source_6months: function(ev) {
+            var self = this;
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_sources",
+                args: ['6']
+            }).then(function(result){
+                var ctx = document.getElementById("canvas").getContext('2d');
+                // Define the data
+                var lost_reason = result.month // Add data values to array
+                var count = result.count;
+                var myChart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: lost_reason,//x axis
+                        datasets: [{
+                            label: 'Count', // Name the series
+                            data: count, // Specify the data values array
+                            backgroundColor: '#66aecf',
+                            borderColor: '#66aecf',
+                            barPercentage: 0.5,
+                            barThickness: 6,
+                            maxBarThickness: 8,
+                            minBarLength: 0,
+                            borderWidth: 1, // Specify bar border width
+                            type: 'horizontalBar', // Set this data to a line chart
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true, // Instruct chart js to respond nicely.
+                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                    }
+                });
+            });
+        },
+
+        onclick_source_month: function(ev) {
+            var self = this;
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_sources",
+                args: ['1']
+            }).then(function(result){
+                var ctx = document.getElementById("canvas").getContext('2d');
+                // Define the data
+                var lost_reason = result.month // Add data values to array
+                var count = result.count;
+                var myChart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: lost_reason,//x axis
+                        datasets: [{
+                            label: 'Count', // Name the series
+                            data: count, // Specify the data values array
+                            backgroundColor: '#66aecf',
+                            borderColor: '#66aecf',
+                            barPercentage: 0.5,
+                            barThickness: 6,
+                            maxBarThickness: 8,
+                            minBarLength: 0,
+                            borderWidth: 1, // Specify bar border width
+                            type: 'horizontalBar', // Set this data to a line chart
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true, // Instruct chart js to respond nicely.
+                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                    }
+                });
+            });
+        },
+
          get_job:function(){
             var self = this
             var ctx = self.$(".get_jobs");
@@ -406,6 +670,8 @@ var RecDashboard =  AbstractAction.extend({
             }).then(function(result) {
                 self.open_hiring = result['open_hiring'];
                 self.hr_applicant = result['hr_applicant'];
+                self.h_a = result['h_a'];
+                self.h_com = result['h_com'];
 
         });
         var def2 = this._rpc({

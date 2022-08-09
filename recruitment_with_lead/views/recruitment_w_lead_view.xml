@@ -161,7 +161,11 @@
                 <field name="current_salary"/>
                 <field name="currency_id"/>
                 <field name="ex_of"/>
+                                                            <field name="currency_of_id" placeholder="Currency"/>
+
                 <field name="ex_on"/>
+                                            <field name="currency_on_id" placeholder="Currency"/>
+
             </field>
             <field name="user_id" position="after">
                 <field name="source_id"/>
