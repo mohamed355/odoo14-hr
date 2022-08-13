@@ -13,12 +13,17 @@ class HrDashboard(models.Model):
         hr_applicant=self.env['hr.applicant'].search([])
         open_hiring=self.env['hiring.request'].search([])
         com_hiring=self.env['hiring.request'].search_count([("stage_id.name",'=',"Completed")])
-
+        h_a = 0
+        if round(len(hr_applicant) / len(open_hiring)):
+            h_a = round(len(hr_applicant) / len(open_hiring))
+        h_com = 0
+        if round(len(hr_applicant) / len(open_hiring)):
+            h_com = round(len(open_hiring) / com_hiring)
         return {
             'open_hiring':len(open_hiring),
             'hr_applicant':len(hr_applicant),
-            'h_a':round(len(hr_applicant) / len(open_hiring)),
-            'h_com':round(len(open_hiring) / com_hiring)
+            'h_a':h_a,
+            'h_com':h_com,
 
         }
 
