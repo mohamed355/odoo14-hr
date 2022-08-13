@@ -36,14 +36,44 @@ odoo.define('gs_portal_attendances.portal_attendance', function (require) {
 	        this.$(".o_hr_attendance_clock").show().text(new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit', second:'2-digit'}));
 	    },
 	    _onClickSignInOut: async function(){
-			this._rpc({
-                    model: 'hr.employee',
-                    method: 'change_attandance_by_user',
-                    args: [[this.employee_id]],
-                    context: session.user_context,
-                }).then(function(result) {
-                    window.location.reload();
-                });
+            var self = this;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position){
+                   var location = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        accuracy: position.coords.accuracy,
+                   }
+                   var context = session.user_context;
+                   context['location'] = location;
+                   self._rpc({
+                        model: 'hr.employee',
+                        method: 'change_attandance_by_user',
+                        args: [[self.employee_id]],
+                        context: context,
+                   }).then(function(result) {
+                        window.location.reload();
+                   })
+                },
+//                function (error) {
+//                    alert(error.message);
+//                },
+//                {
+//                    enableHighAccuracy: true
+//                    , timeout: 5000
+//                }
+                );
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+//			this._rpc({
+//                    model: 'hr.employee',
+//                    method: 'change_attandance_by_user',
+//                    args: [[this.employee_id]],
+//                    context: session.user_context,
+//                }).then(function(result) {
+//                    window.location.reload();
+//                });
 	    },
 	    convertNumToTime: function(number) {
 		    var sign = (number >= 0) ? 1 : -1;

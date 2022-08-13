@@ -12,7 +12,8 @@
     'data': [
         'security/ir.model.access.csv',
         'views/template.xml',
-        'views/portal_attendance.xml'
+        'views/portal_attendance.xml',
+        'views/hr_attendance.xml',
     ],
     'assets': {
         'web.assets_frontend': [

@@ -1,5 +1,6 @@
 from odoo import models
 
+
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
@@ -11,3 +12,19 @@ class HrEmployee(models.Model):
             modified_attendance = self.sudo()._attendance_action_change()
         action_message['attendance'] = modified_attendance.sudo().read()[0]
         return action_message
+
+    def _attendance_action_change(self):
+        context = dict(self._context)
+        if 'location' in context:
+            if self.attendance_state != 'checked_in':
+                context['default_check_in_latitude'] = context['location']['latitude']
+                context['default_check_in_longitude'] = context['location']['longitude']
+                return super(HrEmployee, self.with_context(context))._attendance_action_change()
+            else:
+                attendance = super(HrEmployee, self)._attendance_action_change()
+                attendance.check_out_latitude = context['location']['latitude']
+                attendance.check_out_longitude = context['location']['longitude']
+                return attendance
+
+        else:
+            return super(HrEmployee, self)._attendance_action_change()
