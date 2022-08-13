@@ -45,7 +45,7 @@
                                     <field name="date_from" eval="DateTime.today().strftime('%Y-%m-%d 07:00:00')"/>
 <!--                                    <span class="oe_inline o_form_label mx-3 oe_read_only"> To </span>-->
                                     <!-- Bigger margin on the left because in edit mode the external link button covers the text -->
-                                    <span class="oe_inline o_form_label mr-3 ml-5 oe_edit_only"> To </span>
+                                    <span class="mx-3">To</span>
                                     <field name="date_to"/>
                                 </div>                        </group>
                     </group>

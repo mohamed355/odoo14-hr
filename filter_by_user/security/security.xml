@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <record id="leads_by_user" model="ir.rule">
+           <field name="name">Leads User</field>
+           <field ref="crm.model_crm_lead" name="model_id"/>
+           <field name="domain_force">[('user_id', '=', user.id)]</field>
+           <field name="perm_write" eval="1"/>
+           <field name="perm_create" eval="1"/>
+           <field name="perm_read" eval="1"/>
+           <field name="perm_unlink" eval="1"/>
+           <!-- You can attach this rule to a specific group, Or make it Global -->
+           <field name="global" eval="1"/>
+       </record>
+
+    </data>
+</odoo>

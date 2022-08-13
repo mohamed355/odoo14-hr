@@ -1,21 +1,28 @@
 from odoo import api, fields, models
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import calendar
 
 
 class Dashboard(models.Model):
     _inherit = 'crm.lead'
+    for_date = fields.Date(string="Forecasting Date", required=False, )
 
     @api.model
     def get_data(self):
-        default_data= datetime.today().date()
+        today = datetime.today()
+        datem_1 = datetime(today.year, today.month, 1)
+        last_day= calendar.monthrange(today.year, today.month)[1]
+        datem_2 = datetime(today.year, today.month, last_day)
+        print("Date",datem_1)
+        print("Date Calendar",calendar.monthrange(today.year, today.month)[1])
         # domain = [('date_order','>=',default_data)]
         crm_lead=self.env['crm.lead'].search([])
         crm_activity=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','meeting')])
         crm_activity_meeting=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','meeting')])
         crm_activity_call=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','phonecall')])
         open_opp=self.env['crm.lead'].search([('probability', '!=', 100), ('type', '=', 'opportunity')])
-        close_to=self.env['crm.lead'].search([('date_deadline', '=', default_data)])
+        close_to=self.env['crm.lead'].search([('date_deadline', '>=', datem_1),('date_deadline', '<=', datem_2)])
         crm_opp=self.env['crm.lead'].search([('type','=','opportunity')])
         return {
             'total_lead':len(crm_lead),
@@ -116,6 +123,52 @@ class Dashboard(models.Model):
         return {'activities': activities}
 
     @api.model
+    def get_recent_todo_activities(self):
+        """Recent Activities Table To Do"""
+        today = fields.date.today()
+        recent_week = today - relativedelta(days=7)
+        self._cr.execute('''select mail_activity.activity_type_id,mail_activity.date_deadline,
+            mail_activity.summary,mail_activity.res_name,(SELECT mail_activity_type.name
+            FROM mail_activity_type WHERE mail_activity_type.id = mail_activity.activity_type_id ),
+            mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead'  GROUP BY mail_activity.activity_type_id,
+            mail_activity.date_deadline,mail_activity.summary,mail_activity.res_name,mail_activity.user_id
+            order by mail_activity.date_deadline desc''')
+        data = self._cr.fetchall()
+        activities = []
+        for record in data:
+            if record[4] == 'To Do':
+                print(record)
+                user_id = record[5]
+                user_id_obj = self.env['res.users'].browse(user_id)
+                record_list = list(record)
+                record_list[5] = user_id_obj.name
+                activities.append(record_list)
+        print("activities", activities)
+        return {'activities': activities}
+    # def get_recent_todo_activities(self):
+    #     """Recent Activities Table"""
+    #     today = fields.date.today()
+    #     recent_week = today - relativedelta(days=7)
+    #     self._cr.execute('''select mail_activity.activity_type_id,mail_activity.date_deadline,
+    #     mail_activity.summary,mail_activity.res_name,(SELECT mail_activity_type.name
+    #     FROM mail_activity_type WHERE mail_activity_type.id = mail_activity.activity_type_id ),
+    #     mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead'  GROUP BY mail_activity.activity_type_id,
+    #     mail_activity.date_deadline,mail_activity.summary,mail_activity.res_name,mail_activity.user_id
+    #     order by mail_activity.date_deadline desc''')
+    #     data = self._cr.fetchall()
+    #     activities = []
+    #     for record in data:
+    #
+    #             print(record)
+    #             user_id = record[5]
+    #             user_id_obj = self.env['res.users'].browse(user_id)
+    #             record_list = list(record)
+    #             record_list[5] = user_id_obj.name
+    #             activities.append(record_list)
+    #     print("activities todo",activities)
+    #     return {'activities': activities}
+
+    @api.model
     def get_recent_call_activities(self):
         """Recent Activities Table"""
         today = fields.date.today()
@@ -163,7 +216,7 @@ class Dashboard(models.Model):
         stage_ids = self.env["crm.stage"].search([])
         crm_list = []
         for stage in stage_ids:
-            leads = self.search_count([("stage_id", "=", stage.id)])
+            leads = self.search_count([("stage_id", "=", stage.id),('type','=','opportunity')])
             crm_list.append((stage.name, int(leads)))
         return crm_list
 
@@ -171,17 +224,18 @@ class Dashboard(models.Model):
     def crm_lead_graph(self):
         # """Leads Group By Source Pie"""
         """Lost Leads by Stage Pie"""
-        self._cr.execute('''select stage_id, count(*),(SELECT name FROM crm_stage
+        self._cr.execute('''select stage_id, sum(expected_revenue),(SELECT name FROM crm_stage
                 WHERE id = stage_id) from crm_lead  group by stage_id''')
         data1 = self._cr.dictfetchall()
+
 
         name = []
         for rec in data1:
             name.append(rec.get('name'))
 
-        count = []
+        sum = []
         for rec in data1:
-            count.append(rec.get('count'))
+            sum.append(rec.get('sum'))
 
-        lost_leads_stage = [count, name]
+        lost_leads_stage = [sum, name]
         return lost_leads_stage

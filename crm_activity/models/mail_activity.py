@@ -8,9 +8,17 @@ class MailActivity(models.Model):
     partner_id = fields.Many2one(comodel_name="res.partner", string="Partner", required=False, )
     opportunity_id = fields.Many2one(comodel_name="crm.lead", string="Opportunity", required=False, )
     lead_id = fields.Many2one(comodel_name="crm.lead", string="Leads", required=False, )
-    date_from = fields.Datetime(string="Date From", required=True,default=datetime.today().strftime('%Y-%m-%d 02:00:00'))
-    date_to = fields.Datetime(string="Date To", required=True, default=datetime.today().strftime('%Y-%m-%d 09:00:00'))
+    date_from = fields.Datetime(string="Date From", required=False,)
+    date_to = fields.Datetime(string="Date To", required=False,)
 
+    @api.model
+    def create(self, values):
+        res=  super(MailActivity, self).create(values)
+        for record in res:
+            if record.date_deadline:
+                record.date_from = datetime.strftime(record.date_deadline ,'%Y-%m-%d 02:00:00')
+                record.date_to = datetime.strftime(record.date_deadline ,'%Y-%m-%d 09:00:00')
+        return res
     @api.onchange('partner_id','opportunity_id','lead_id')
     def onchange_fields_filter(self):
         if self.partner_id:

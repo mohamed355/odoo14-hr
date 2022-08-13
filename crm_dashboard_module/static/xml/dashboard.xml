@@ -103,7 +103,7 @@
 <!--                                    <div id="rev_this_month"/>-->
 <div><t t-esc="widget.close_to"/>       </div>                                    </span>
                             </h3>
-                            <h4>Closing Today</h4>
+                            <h4>Closing This Month</h4>
                         </div>
                     </div>
                 </div>
@@ -246,7 +246,8 @@
     <t t-name="DashboardChart">
 
 <div class="row mt-5">
-    <div class="upcoming_activities_div col-12 col-sm-12 col-md-6 calls">
+
+    <div class="upcoming_activities_div col-12 col-sm-12 col-md-4 calls">
                     <div class="chart-container card-shadow">
                         <h3 class="h5">Call</h3>
                         <hr/>
@@ -288,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-    <div class="upcoming_activities_div col-12 col-sm-12 col-md-6 meeting">
+    <div class="upcoming_activities_div col-12 col-sm-12 col-md-4 meeting">
                     <div class="chart-container card-shadow">
                         <h3 class="h5">Meeting</h3>
                         <hr/>
@@ -329,8 +330,51 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
-                <div class="funnel_chart_div col-sm-3 col-md-4 leads">
+    <div class="upcoming_activities_div col-12 col-sm-12 col-md-4">
+                    <div class="chart-container card-shadow">
+                        <h3 class="h5">To Do</h3>
+                        <hr/>
+                        <div class="crm_scroll_table">
+                            <div class="items-table">
+                                <div class="item-container">
+                                    <t t-foreach="widget.get_recent_todo_activities" t-as="activity">
+                                    <div class="item-header">
+                                        <div class="count-container">
+                                            <t t-esc="activity[1]"/>
+                                        </div>
+                                        <div class="item-title pl-3">
+                                            <div class="item-content">
+                                                <ul>
+                                                    <li>
+                                                        Activity:
+                                                        <span style="font-size: 16px;color: #4c4c4c;">
+                                                            <t t-esc="activity[4]"/>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        Name:
+                                                        <span style="font-size: 15px;color: #4c4c4c;">
+                                                            <t t-esc="activity[3]"/>
+                                                        </span>
+                                                    </li>
+                                                    <li t-if="activity[2]">Summary:
+                                                        <span style="font-size: 13px;color: #4c4c4c;">
+                                                            <t t-esc="activity[2]"/>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="funnel_chart_div col-sm-3 col-md-4 opp">
                     <div class="chart-container card-shadow">
                         <h2>Funnel Chart</h2>
                         <hr/>
@@ -341,7 +385,7 @@
                 </div>
                 <div class="year_to_date_graph_div col-sm-3 col-md-3 act">
                     <div class="sales_activity_pie_div half_chart chart-container card-shadow">
-                        <h2>Crm Activities</h2>
+                        <h2>Activities</h2>
                         <hr/>
                         <div class="graph_canvas" style="margin-top: 30px;">
                             <canvas class="activity" width="200px" height="200px"/>
@@ -354,7 +398,21 @@
 <!--                        </div>-->
                     </div>
                 </div>
-
+<div class="year_to_date_graph_div col-sm-3 col-md-3">
+                    <div class="sales_activity_pie_div half_chart chart-container card-shadow">
+                        <h2>Stages</h2>
+                        <hr/>
+                        <div class="graph_canvas" style="margin-top: 30px;">
+                            <canvas class="lost_leads_graph" width="200px" height="200px"/>
+                        </div>
+<!--                        <div style="margin-top: 30px;margin-left: 20px;">-->
+<!--                            <h5 class="sub_title d-flex">Annual Target :&amp;nbsp <div id="target"/></h5>-->
+<!--                            <h5 class="sub_title d-flex">YtD Target :&amp;nbsp <div id="ytd_target"/></h5>-->
+<!--                            <h5 class="sub_title d-flex">Achieved Won :&amp;nbsp <div id="won"/></h5>-->
+<!--                            <h5 class="sub_title d-flex">Difference :&amp;nbsp <div id="difference"/></h5>-->
+<!--                        </div>-->
+                    </div>
+                </div>
              <!--   <div class="col-sm-12 col-md-4">
                     <div class="leads_month_pie_div half_chart chart-container card-shadow">
                         <h2>Leads by Month</h2>

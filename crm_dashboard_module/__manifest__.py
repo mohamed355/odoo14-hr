@@ -2,7 +2,10 @@
     'name': 'Crm Dashboard',
     'author': 'EzzEdin Saleh',
     'depends': ['crm'],
-    'data': ['views/dashboard.xml'],
+    'data': [
+        'views/dashboard.xml',
+        'views/crm_lead.xml',
+    ],
 
 
     'assets': {

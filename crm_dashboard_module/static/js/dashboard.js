@@ -30,6 +30,7 @@ var PosDashboard =  AbstractAction.extend({
             this.total_activity = [];
             this.crm_activity_call = [];
             this.recent_activities = [];
+            this.get_recent_todo_activities = [];
             this.crm_activity_meeting = [];
             this.get_recent_call_activities = [];
             this.close_to = [];
@@ -77,7 +78,7 @@ var PosDashboard =  AbstractAction.extend({
                         }
                     },
                     series: [ {
-                        name: "Number Of Leads",
+                        name: "Number Of Opportunities",
                         data: callbacks,
                     }],
                 });
@@ -325,7 +326,7 @@ render_sales_activity_graph:function(){
 
                 //create Chart class object
                 var chart = new Chart(ctx, {
-                    type: "doughnut",
+                    type: "bar",
                     data: data,
                     options: options
                 });
@@ -371,6 +372,7 @@ render_sales_activity_graph:function(){
                 self.recent_activities = result['activities'];
 //                self.get_recent_call_activities = result['activities'];
             });
+
            var def3 = this._rpc({
                     model: "crm.lead",
                     method: "get_recent_call_activities",
@@ -379,7 +381,23 @@ render_sales_activity_graph:function(){
 //                self.recent_activities = result['activities'];
                 self.get_recent_call_activities = result['activities'];
             });
-            return $.when(def1,def2,def3);
+            var def4 = this._rpc({
+                    model: "crm.lead",
+                    method: "get_recent_todo_activities",
+                })
+                .then(function (result) {
+//                self.recent_activities = result['activities'];
+                self.get_recent_todo_activities = result['activities'];
+            });
+//            var def4 = this._rpc({
+//                    model: "crm.lead",
+//                    method: "get_recent_todo_activities",
+//                })
+//                .then(function (result) {
+//                self.get_recent_call_activities = result['activities'];
+////                self.get_recent_call_activities = result['activities'];
+//            });
+            return $.when(def1,def2,def3,def4);
     },
 
 });
