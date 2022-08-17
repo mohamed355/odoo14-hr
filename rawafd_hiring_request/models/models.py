@@ -97,14 +97,14 @@ class NewModule(models.TransientModel):
                     'required_no': rec.required_no,
                     # 'priority': oppr.priority,
                     'team_id': rec.team_id.id,
-                    'tag_ids': rec.tag_ids.ids,
+                    # 'tag_ids': rec.tag_ids.ids,
                     'country_id': rec.country_id.id,
                     'job_id': rec.job_id.id,
                     'job_level': rec.job_level,
                     'gender': rec.gender,
                     'ex_level': rec.ex_level,
                     'language_ids': rec.language_ids.ids,
-                    'key_ids': rec.key_ids.ids,
+                    # 'key_ids': rec.key_ids.ids,
                     'tec_ids': rec.tec_ids.ids,
                     'job_des': rec.job_des,
                     'impo_level': rec.impo_level,
@@ -120,7 +120,7 @@ class NewModule(models.TransientModel):
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-
+    acc_date = fields.Date(string="Accepted Date", required=False, )
     req_date = fields.Datetime(string="Request Date", required=False, )
     approve_date = fields.Datetime(string="Approve Date", required=False, )
     offered = fields.Integer(string="Offered", required=False)
@@ -362,6 +362,7 @@ class stage(models.Model):
 class HrApplication(models.Model):
     _inherit = 'hr.applicant'
     _rec_name = "partner_name"
+    acc_date = fields.Date(string="Accepted Date", required=False, )
 
     # name = fields.Char("Subject / Application Name", required=False, help="Email subject for applications sent via email")
     # approve_date = fields.Datetime(string="Approve Date", required=False, )
@@ -381,8 +382,9 @@ class HrApplication(models.Model):
 #     #             x.hiring_ids = None
 #
     @api.constrains('stage_id')
-    def _constrains_stage_id(self):
+    def _constrains_stage_id_a(self):
         for x in self:
+            print("adsd",x.stage_id.name)
             if x.stage_id.name in ["Rejected", "No Feedback"]:
                 # x.rej_boolean = True
                 x.stage_id = None
@@ -391,6 +393,9 @@ class HrApplication(models.Model):
                 print(hiring_ids)
                 for h in hiring_ids:
                     h.update({'application_ids': [(3,x.id,False)]})
+            if x.stage_id.name == "Offer Accepted":
+                x.acc_date = fields.Date.today()
+
 
 class AssignApplications(models.Model):
     _name = 'assign.application'
@@ -421,14 +426,17 @@ class AssignApplications(models.Model):
 #     approve_date = fields.Datetime(string="Approve Date", required=False, )
 
 
-class AssignUsers(models.Model):
+class AssignUsers(models.TransientModel):
     _name = 'assign.users'
 
     user_ids = fields.Many2many(comodel_name="res.users", relation="resuser", column1="resuser", column2="ss", string="Users", )
 
     def assign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
-        hiring.approved=True
+        hiring.approved = True
+        print("Hiring")
+        hiring.acc_date = fields.Date.today()
         for user in self.user_ids:
             # user.approve_date = fields.Datetime.now()
             hiring.update({'user_ids': [(4, user.id)]})
+
