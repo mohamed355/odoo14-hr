@@ -22,15 +22,15 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_hr_applicant_tree2_inherit_tree_view">
-        <field name="name">hr.applicant.tree.view</field>
-        <field name="model">hr.applicant</field>
-        <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
-        <field name="arch" type="xml">
-            <field name="stage_id" position="before">
-                <field name="checklist_progress" widget="progressbar"/>
-            </field>
-        </field>
-    </record>
+<!--    <record model="ir.ui.view" id="view_hr_applicant_tree2_inherit_tree_view">-->
+<!--        <field name="name">hr.applicant.tree.view</field>-->
+<!--        <field name="model">hr.applicant</field>-->
+<!--        <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="stage_id" position="before">-->
+<!--                <field name="checklist_progress" widget="progressbar"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
 
 </odoo>
