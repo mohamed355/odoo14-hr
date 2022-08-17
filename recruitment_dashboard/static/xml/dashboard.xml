@@ -20,12 +20,14 @@
                         <div class="col-12 col-sm-12 col-md-4">
                             <form class="form-group">
                                 <select id="income_expense_values" class="form-control">
+                                     <option id="s" selected=""
+                                             value="s">--Select Option--</option>
                                     <option id="this_year"
                                             value="this_year">This Year</option>
-                                    <!--                                    <option id="this_quarter"-->
-                                    <!--                                            value="this_quarter">This Quarter</option>-->
+                                    <option id="this_quarter"
+                                            value="this_quarter">This Quarter</option>
                                     <option id="this_month" value="this_month"
-                                            selected="">This Month</option>
+                                    >This Month</option>
                                     <!--                                    <option id="this_week"-->
                                     <!--                                            value="this_week">This Week</option>-->
                                 </select>
@@ -51,7 +53,7 @@
 
                                 <span>
                                     <div id="hiring_this_year"/>
-                                    <!--                                    <div id="leads_this_quarter"/>-->
+                                    <div id="hiring_this_quarter"/>
                                     <div id="hiring_this_month"/>
                                     <!--                                    <div id="leads_this_week"/>-->
                                 </span>
@@ -71,7 +73,7 @@
                             <h3>
                                   <span>
                                     <div id="leads_this_year"/>
-                                      <!--                                    <div id="leads_this_quarter"/>-->
+                                      <div id="leads_this_quarter"/>
                                       <div id="leads_this_month"/>
                                       <!--                                    <div id="leads_this_week"/>-->
                                 </span>
@@ -101,25 +103,58 @@
   margin-bottom:10px;
   display: inline-block;
   color: #656ab0;}"></i> </span>
-                                       <span style="margin-top:25px"><t t-esc="widget.h_a"/></span>
+                                       <span style="margin-top:25px"><div id="h_a_this_year"/></span>
+                                       <span style="margin-top:25px"><div id="h_a_this_quarter"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
     </div>
 </div>
-                                   <div t-attf-class="c100 p{{widget.h_com}} orange"
+                                   <div t-attf-class="c100 p{{h_com_this_year}} orange"
                                         style="margin-top:10px;margin-left:320px;margin:10px">
 <span style="margin-bottom:15px;"><i class="fa fa-thumbs-up" style="font-size: 30px;
   font-weight: 900;
   display: inline-block;
   color: #656ab0;}"></i> </span>
-                                       <span style="margin-top:25px"><t t-esc="widget.h_com"/>%</span>
+                                       <span style="margin-top:25px"><div id="h_com_this_year"/></span>
+                                       <span style="margin-top:25px"><div id="h_com_this_quarter"/></span>
+                                       <div class="slice">
+        <div class="bar"></div>
+                                           <div class="fill"></div>
+    </div>
+</div>
+                                   <div t-attf-class="c100 p{{id='app_3_this_year'}} left orange"
+                                        style="margin-top:10px;margin-left:320px;margin:10px">
+<!--    <span>-->
+                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                                       <!--  font-weight: 900;-->
+                                       <!--  margin-bottom:10px;-->
+                                       <!--  display: inline-block;-->
+                                       <!--  color: #656ab0;}"></i> </span>-->
+                                       <span><div id="app_3_this_year"/></span>
+                                       <span><div id="app_3_this_quarter"/></span>
+                                       <div class="slice">
+        <div class="bar"></div>
+                                           <div class="fill"></div>
+    </div>
+</div>
+                                   <div t-attf-class="c100 p{{app_4_this_year}} left orange"
+                                        style="margin-top:10px;margin-left:320px;margin:10px">
+<!--    <span>-->
+                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                                       <!--  font-weight: 900;-->
+                                       <!--  margin-bottom:10px;-->
+                                       <!--  display: inline-block;-->
+                                       <!--  color: #656ab0;}"></i> </span>-->
+                                       <span><div id="app_4_this_year"/></span>
+                                       <span><div id="app_4_this_quarter"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
     </div>
 </div>
 </div>
+
 </div>
      <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 row">
     <div class="stages_div col-sm-6 col-lg-6 col-6 stage_click">
@@ -132,6 +167,7 @@
                         <div class="items-table">
                                 <div class="item-container"
                                      style="background-color: var(--grey-lighter);border-radius: 0.3rem;font-weight: 700;">
+
                                     <t t-foreach="widget.stages" t-as="stage">
 
                                         <div class="item-header" style="margin-top:5px">

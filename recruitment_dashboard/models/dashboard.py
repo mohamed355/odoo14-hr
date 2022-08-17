@@ -1,8 +1,22 @@
 from odoo import api, fields, models
-from datetime import datetime
+from datetime import datetime,date
 from dateutil.relativedelta import relativedelta
 import pytz
 from odoo.tools import date_utils
+from datetime import datetime, timedelta
+
+
+class AssignUsers(models.Model):
+    _inherit = 'assign.users'
+
+    def assign_users(self):
+        hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
+        hiring.approved = True
+        print("Hiring")
+        hiring.acc_date = fields.Date.today()
+        for user in self.user_ids:
+            # user.approve_date = fields.Datetime.now()
+            hiring.update({'user_ids': [(4, user.id)]})
 
 
 class HrDashboard(models.Model):
@@ -10,28 +24,163 @@ class HrDashboard(models.Model):
 
     @api.model
     def get_data(self):
-        hr_applicant=self.env['hr.applicant'].search([])
-        open_hiring=self.env['hiring.request'].search([])
-        com_hiring=self.env['hiring.request'].search_count([("stage_id.name",'=',"Completed")])
+        hr_applicant = self.env['hr.applicant'].search([])
+        open_hiring = self.env['hiring.request'].search([])
+        com_hiring = self.env['hiring.request'].search_count([("stage_id.name",'=',"Completed")])
+        com_app = self.env['hr.applicant'].search_count([("stage_id.name",'=',"Offer Accepted")])
+        rej_app = self.env['hr.applicant'].search_count([("stage_id.name",'=',"Offer Rejected")])
+        ac_app = self.env['hr.applicant'].search_count([("stage_id.name",'=',"Offer Accepted")])
         h_a = 0
+        duration_list = []
+        for app in hr_applicant:
+            if app.hiring_ids:
+                print("App",app.acc_date)
+                print("hiring",app.hiring_ids[0].acc_date)
+                if app.acc_date and app.hiring_ids[0].acc_date:
+                    duration = abs(app.acc_date - app.hiring_ids[0].acc_date)
+                    duration_list.append(duration.days)
+        print("Duration",duration_list)
+        print("Duration",sum(duration_list))
+
         if round(len(hr_applicant) / len(open_hiring)):
             h_a = round(len(hr_applicant) / len(open_hiring))
+        try:
+            app_3 = round((com_app / (rej_app+ac_app)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+
+        try:
+            app_4 = round((sum(duration_list) / len(hr_applicant)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+
         h_com = 0
         if round(len(hr_applicant) / len(open_hiring)):
-            h_com = round(len(open_hiring) / com_hiring)
+            h_com = round((len(open_hiring) / com_hiring / 100) * 100)
         return {
             'open_hiring':len(open_hiring),
             'hr_applicant':len(hr_applicant),
             'h_a':h_a,
             'h_com':h_com,
+            'app_3':app_3,
+            'app_4':app_4,
 
         }
 
     @api.model
-    def crm_year(self):
-        """Year CRM Dropdown Filter"""
+    def crm_quarter(self):
+        """Quarter CRM Dropdown Filter"""
+        current_date = datetime.now()
+        current_quarter = round((current_date.month - 1) / 3 + 1)
+        first_date = datetime(current_date.year, 3 * current_quarter - 2, 1)
+        last_date = datetime(current_date.year, 3 * current_quarter + 1, 1) \
+                    + timedelta(days=-1)
+        print(first_date)
+        print(last_date)
+        hr_applicant = self.env['hr.applicant'].search([('create_date', '>=', first_date), ('create_date', '<=', last_date)])
+        open_hiring = self.env['hiring.request'].search([('create_date', '>=', first_date), ('create_date', '<=', last_date)])
+        com_hiring = self.env['hiring.request'].search_count(
+            [("stage_id.name", '=', "Completed"), ('create_date', '>=', first_date), ('create_date', '<=', last_date)])
+        com_app = self.env['hr.applicant'].search_count(
+            [("stage_id.name", '=', "Offer Accepted"), ('create_date', '>=', first_date), ('create_date', '<=', last_date)])
+        rej_app = self.env['hr.applicant'].search_count(
+            [("stage_id.name", '=', "Offer Rejected"), ('create_date', '>=', first_date), ('create_date', '<=', last_date)])
+        ac_app = self.env['hr.applicant'].search_count(
+            [("stage_id.name", '=', "Offer Accepted"), ('create_date', '>=', first_date), ('create_date', '<=', last_date)])
+        h_a = 0
+        duration_list = []
+        for app in hr_applicant:
+            if app.hiring_ids:
+                print("App", app.acc_date)
+                print("hiring", app.hiring_ids[0].acc_date)
+                if app.acc_date and app.hiring_ids[0].acc_date:
+                    duration = abs(app.acc_date - app.hiring_ids[0].acc_date)
+                    duration_list.append(duration.days)
+        print("Duration", duration_list)
+        print("Duration", sum(duration_list))
+
+        if round(len(hr_applicant) / len(open_hiring)):
+            h_a = round(len(hr_applicant) / len(open_hiring))
+        try:
+            app_3 = round((com_app / (rej_app + ac_app)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+
+        try:
+            app_4 = round((sum(duration_list) / len(hr_applicant)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+
+        h_com = 0
+        if round(len(hr_applicant) / len(open_hiring)):
+            h_com = round((len(open_hiring) / com_hiring / 100) * 100)
         # session_user_id = self.env.uid
 
+        self._cr.execute('''select COUNT(id) from hiring_request Where Extract(QUARTER FROM hiring_request.create_date) = Extract(QUARTER FROM DATE(NOW()))
+            AND Extract(Year FROM hiring_request.create_date) = Extract(Year FROM DATE(NOW()))
+            ''')
+        record = self._cr.dictfetchall()
+        rec_ids = [item['count'] for item in record]
+        hiring_request_value = rec_ids[0]
+
+        self._cr.execute('''select COUNT(id) from hr_applicant  Where  Extract(QUARTER FROM hr_applicant.create_date
+            ) = Extract(QUARTER FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date
+            ) = Extract(Year FROM DATE(NOW( )))''' )
+        hr_applicant_data = self._cr.dictfetchall()
+        hr_applicant_data_value = [item['count'] for item in hr_applicant_data]
+        hr_applicant_value = hr_applicant_data_value[0]
+
+
+
+        data_quarter = {
+            'leads': hr_applicant_value,
+            'hiring': hiring_request_value,
+            'h_a': h_a,
+            'h_com': h_com,
+            'app_3': app_3,
+            'app_4': app_4,
+        }
+        return data_quarter
+
+    @api.model
+    def crm_year(self):
+
+        a = date(date.today().year, 1, 1)
+        b = date(date.today().year, 12, 31)
+        """Year CRM Dropdown Filter"""
+        hr_applicant = self.env['hr.applicant'].search([('create_date','>=',a),('create_date','<=',b)])
+        open_hiring = self.env['hiring.request'].search([('create_date','>=',a),('create_date','<=',b)])
+        com_hiring = self.env['hiring.request'].search_count([("stage_id.name", '=', "Completed"),('create_date','>=',a),('create_date','<=',b)])
+        com_app = self.env['hr.applicant'].search_count([("stage_id.name", '=', "Offer Accepted"),('create_date','>=',a),('create_date','<=',b)])
+        rej_app = self.env['hr.applicant'].search_count([("stage_id.name", '=', "Offer Rejected"),('create_date','>=',a),('create_date','<=',b)])
+        ac_app = self.env['hr.applicant'].search_count([("stage_id.name", '=', "Offer Accepted"),('create_date','>=',a),('create_date','<=',b)])
+        h_a = 0
+        duration_list = []
+        for app in hr_applicant:
+            if app.hiring_ids:
+                print("App", app.acc_date)
+                print("hiring", app.hiring_ids[0].acc_date)
+                if app.acc_date and app.hiring_ids[0].acc_date:
+                    duration = abs(app.acc_date - app.hiring_ids[0].acc_date)
+                    duration_list.append(duration.days)
+        print("Duration", duration_list)
+        print("Duration", sum(duration_list))
+
+        if round(len(hr_applicant) / len(open_hiring)):
+            h_a = round(len(hr_applicant) / len(open_hiring))
+        try:
+            app_3 = round((com_app / (rej_app + ac_app)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+
+        try:
+            app_4 = round((sum(duration_list) / len(hr_applicant)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+
+        h_com = 0
+        if round(len(hr_applicant) / len(open_hiring)):
+            h_com = round((len(open_hiring) / com_hiring / 100) * 100)
         self._cr.execute('''select COUNT(id) from hr_applicant WHERE  Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW()))''')
         record = self._cr.dictfetchall()
         rec_ids = [item['count'] for item in record]
@@ -46,6 +195,11 @@ class HrDashboard(models.Model):
         data_year = {
             'leads': hr_applicant_value,
             'hiring': hiring_request_value,
+            'h_a': h_a,
+            'h_com': h_com,
+            'app_3': app_3,
+            'app_4': app_4,
+            'stages_list': stages_list,
         }
         return data_year
 

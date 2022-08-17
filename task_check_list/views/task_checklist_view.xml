@@ -17,7 +17,7 @@
 
     <menuitem id="task_check_list_menu"
               name="Task Checklist"
-              parent="project.menu_project_config"
+              parent="hr_recruitment.menu_hr_recruitment_configuration"
               sequence="3"
               action="action_task_checklist"/>
 

@@ -1,7 +1,7 @@
 {
     'name': 'Recruitment Dashboard',
     'author': 'EzzEdin Saleh',
-    'depends': ['hr_recruitment'],
+    'depends': ['hr_recruitment','rawafd_hiring_request'],
     'data': ['views/dashboard.xml'],
 
 

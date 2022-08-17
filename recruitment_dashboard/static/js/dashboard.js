@@ -23,6 +23,8 @@ var RecDashboard =  AbstractAction.extend({
                     this.onclick_this_year($target.val());
                 }else if (value=="this_month"){
                     this.onclick_this_month($target.val());
+                }else if (value=="this_quarter"){
+                    this.onclick_this_quarter($target.val());
                 }
 
             },
@@ -46,6 +48,9 @@ var RecDashboard =  AbstractAction.extend({
             this.hr_applicant = [];
             this.h_a = [];
             this.h_com = [];
+            this.app_3 = [];
+            this.app_4 = [];
+//            this.stages_year = [];
 
         }   ,
         start: function() {
@@ -91,6 +96,60 @@ var RecDashboard =  AbstractAction.extend({
 
 
     },
+    onclick_this_quarter: function (ev) {
+       var self = this;
+            rpc.query({
+                model: 'hr.applicant',
+                method: 'crm_quarter',
+                args: [],
+            })
+            .then(function (result) {
+               $('#leads_this_month').hide();
+                $('#hiring_this_month').hide();
+                $('#leads_this_year').hide();
+                $('#hiring_this_year').hide();
+                $('#h_a_this_year').hide();
+                $('#h_com_this_year').hide();
+                $('#app_3_this_year').hide();
+                $('#app_4_this_year').hide();
+
+                $('#leads_this_quarter').show();
+                $('#hiring_this_quarter').show();
+                $('#h_a_this_quarter').show();
+                $('#h_com_this_quarter').show();
+                $('#app_3_this_quarter').show();
+                $('#app_4_this_quarter').show();
+//                $('#exp_rev_this_quarter').show();
+//                $('#rev_this_quarter').show();
+//                $('#ratio_this_quarter').show();
+//                $('#avg_time_this_quarter').show();
+//                $('#total_revenue_this_quarter').show();
+
+                $('#leads_this_quarter').empty();
+                $('#hiring_this_quarter').empty();
+                 $('#h_a_this_quarter').empty();
+                $('#h_com_this_quarter').empty();
+                $('#app_3_this_quarter').empty();
+                $('#app_4_this_quarter').empty();
+//                $('#exp_rev_this_quarter').empty();
+//                $('#rev_this_quarter').empty();
+//                $('#ratio_this_quarter').empty();
+//                $('#avg_time_this_quarter').empty();
+//                $('#total_revenue_this_quarter').empty();
+
+                $('#leads_this_quarter').append('<span>' + result.leads + '</span>');
+                $('#hiring_this_quarter').append('<span>' + result.hiring + '</span>');
+                $('#h_a_this_quarter').append('<span>' + result.h_a + '</span>');
+                $('#h_com_this_quarter').append('<span>' + result.h_com + '</span>'+ '%');
+                $('#app_3_this_quarter').append('<span>' + result.app_3 + '</span>'+ '%');
+                $('#app_4_this_quarter').append('<span>' + result.app_4 + '</span>'+ '%');
+//                $('#exp_rev_this_quarter').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev_exp + '</span>');
+//                $('#rev_this_quarter').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev + '</span>');
+//                $('#ratio_this_quarter').append('<span>' + result.record_ratio + '</span>');
+//                $('#avg_time_this_quarter').append('<span>' + result.avg_time  + '&nbspsec' + '</span>');
+//                $('#total_revenue_this_quarter').append('<span>' + result.opportunity_ratio_value + '</span>');
+            })
+        },
     onclick_this_month: function (ev) {
             var self = this;
             rpc.query({
@@ -101,6 +160,16 @@ var RecDashboard =  AbstractAction.extend({
             .then(function (result) {
                 $('#leads_this_year').hide();
                 $('#hiring_this_year').hide();
+                 $('#leads_this_quarter').hide();
+                $('#hiring_this_quarter').hide();
+                $('#h_a_this_year').hide();
+                $('#h_com_this_year').hide();
+                $('#app_3_this_year').hide();
+                $('#app_4_this_year').hide();
+                $('#h_a_this_quarter').hide();
+                $('#h_com_this_quarter').hide();
+                $('#app_3_this_quarter').hide();
+                $('#app_4_this_quarter').hide();
 //                $('#exp_rev_this_year').hide();
 //                $('#rev_this_year').hide();
 //                $('#ratio_this_year').hide();
@@ -163,6 +232,12 @@ var RecDashboard =  AbstractAction.extend({
 //                $('#total_revenue_this_quarter').hide();
                 $('#leads_this_month').hide();
                 $('#hiring_this_month').hide();
+                 $('#leads_this_quarter').hide();
+                $('#hiring_this_quarter').hide();
+                $('#h_a_this_quarter').hide();
+                $('#h_com_this_quarter').hide();
+                $('#app_3_this_quarter').hide();
+                $('#app_4_this_quarter').hide();
 //                $('#exp_rev_this_month').hide();
 //                $('#rev_this_month').hide();
 //                $('#ratio_this_month').hide();
@@ -178,6 +253,11 @@ var RecDashboard =  AbstractAction.extend({
 
                 $('#leads_this_year').show();
                 $('#hiring_this_year').show();
+                $('#h_a_this_year').show();
+                $('#h_com_this_year').show();
+                $('#app_3_this_year').show();
+                $('#app_4_this_year').show();
+                $('#app_4_this_stage').show();
 //                $('#exp_rev_this_year').show();
 //                $('#rev_this_year').show();
 //                $('#ratio_this_year').show();
@@ -186,6 +266,12 @@ var RecDashboard =  AbstractAction.extend({
 
                 $('#leads_this_year').empty();
                 $('#hiring_this_year').empty();
+                $('#h_a_this_year').empty();
+                $('#h_com_this_year').empty();
+                $('#app_3_this_year').empty();
+                $('#app_4_this_year').empty();
+                                $('#app_4_this_stage').empty();
+
 //                $('#exp_rev_this_year').empty();
 //                $('#rev_this_year').empty();
 //                $('#ratio_this_year').empty();
@@ -194,6 +280,14 @@ var RecDashboard =  AbstractAction.extend({
 //
                 $('#leads_this_year').append('<span>' + result.leads + '</span>');
                 $('#hiring_this_year').append('<span>' + result.hiring + '</span>');
+                $('#h_a_this_year').append('<span>' + result.h_a + '</span>');
+                $('#h_com_this_year').append('<span>' + result.h_com + '</span>'+ '%');
+                $('#app_3_this_year').append('<span>' + result.app_3 + '</span>'+ '%');
+                $('#app_4_this_year').append('<span>' + result.app_4 + '</span>'+ '%');
+//                self.stages_year.append(result.stages_list);
+//                $('#app_4_this_stage').append(result.app_4_this_stage);
+                 self.stages_year = result['stages_list'];
+
 //                $('#exp_rev_this_year').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev_exp + '</span>');
 //                $('#rev_this_year').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev + '</span>');
 //                $('#ratio_this_year').append('<span>' + result.record_ratio + '</span>');
@@ -672,6 +766,8 @@ var RecDashboard =  AbstractAction.extend({
                 self.hr_applicant = result['hr_applicant'];
                 self.h_a = result['h_a'];
                 self.h_com = result['h_com'];
+                self.app_3 = result['app_3'];
+                self.app_4 = result['app_4'];
 
         });
         var def2 = this._rpc({
