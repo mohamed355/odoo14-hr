@@ -199,7 +199,7 @@ class HiringRequest(models.Model):
         })
 
     def _read_group_stage_ids(self, stages, domain, order):
-        return self.env['hiring.stage'].search([])
+        return self.env['hiring.stage'].search([],order='sequence asc')
 
     def approve(self):
         self.approved = True
@@ -218,7 +218,7 @@ class HiringRequest(models.Model):
     def create(self, vals):
         vals['name'] = self.env['ir.sequence'].next_by_code(
             'hiring.req.code')
-        vals['req_date'] = fields.Datetime.now()
+        # vals['req_date'] = fields.Datetime.now()
         return super(HiringRequest, self).create(vals)
 
     def create_activities(self):
@@ -355,8 +355,11 @@ class tec(models.Model):
 
 class stage(models.Model):
     _name = 'hiring.stage'
+    _order = 'sequence asc'
 
     name = fields.Char()
+    sequence = fields.Integer("Sequence")
+    # handle = fields.Integer("Handle")
 
 
 class HrApplication(models.Model):
@@ -364,6 +367,13 @@ class HrApplication(models.Model):
     _rec_name = "partner_name"
     acc_date = fields.Date(string="Accepted Date", required=False, )
 
+    def name_get(self):
+        result = []
+
+        for rec in self:
+            result.append((rec.id, '%s - %s' % (rec.partner_name, rec.app_code)))
+
+        return result
     # name = fields.Char("Subject / Application Name", required=False, help="Email subject for applications sent via email")
     # approve_date = fields.Datetime(string="Approve Date", required=False, )
     hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", )

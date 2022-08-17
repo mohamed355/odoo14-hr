@@ -14,7 +14,8 @@ from datetime import datetime
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
-
+    # notes = fields.Text(string="Notes", required=False, )
+    acc_date = fields.Date(string="Accepted Date", required=False, )
     ex_of = fields.Float(string="Expected(Offshore)",  required=False, )
     ex_on = fields.Float(string="Expected(Onsite)",  required=False, )
     current_salary = fields.Float(string="Current Salary",  required=False, )
@@ -40,8 +41,8 @@ class HrApp(models.Model):
     cv_source = fields.Char(string="CV Source", required=False, )
     current_salary = fields.Float(string="Current Salary",  required=False, )
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
-    currency_of_id = fields.Many2one('res.currency', string='Currency', required=False)
-    currency_on_id = fields.Many2one('res.currency', string='Currency', required=False)
+    currency_of_id = fields.Many2one('res.currency', string='Currency Offshore', required=False)
+    currency_on_id = fields.Many2one('res.currency', string='Currency OnSite', required=False)
     partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter", required=False, )
     start_date = fields.Date(string="Start Date", required=False, )
     experience_y = fields.Integer(compute="_calculate_experience",

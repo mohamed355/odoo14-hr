@@ -38,33 +38,40 @@
                 <field name="candidate_location"/>
             </field>
             <field name="type_id" position="after">
-<!--                <field name="country_id"/>-->
+                <!--                <field name="country_id"/>-->
                 <field name="gender"/>
                 <field name="experience_level"/>
                 <field name="language_ids" widget="many2many_tags"/>
                 <field name="linkedin"/>
-<!--                <field name="first_work_ex"/>-->
+                <!--                <field name="first_work_ex"/>-->
                 <field name="tools"/>
+                                <field name="job_id" invisible="1"/>
+                                <field name="company_id" invisible="1"/>
+
                 <field name="notice_period"/>
                 <field name="stage_date" invisible="1"/>
             </field>
-            <field name="availability" position="before">
-                <label for="current_salary"/>
-<div class="o_row">
-                            <field name="current_salary"/>
-                            <field name="currency_id" placeholder="Currency"/>
-                        </div>
-                <label for="ex_on"/>
-<div class="o_row">
-                            <field name="ex_on"/>
-                            <field name="currency_on_id" placeholder="Currency"/>
-                        </div>
-                <label for="ex_of"/>
-<div class="o_row">
-                            <field name="ex_of"/>
-                            <field name="currency_of_id" placeholder="Currency"/>
-                        </div>
-            </field>
+            <xpath expr="//group[1]/group[4]" position="replace">
+                <group string="Contract">
+                    <label for="current_salary"/>
+                    <div class="o_row">
+                        <field name="current_salary"/>
+                        <field name="currency_id" placeholder="Currency"/>
+                    </div>
+                    <label for="ex_on"/>
+                    <div class="o_row">
+                        <field name="ex_on"/>
+                        <field name="currency_on_id" placeholder="Currency"/>
+                    </div>
+                    <label for="ex_of"/>
+                    <div class="o_row">
+                        <field name="ex_of"/>
+                        <field name="currency_of_id" placeholder="Currency"/>
+                    </div>
+                    <field name="availability" invisible="1"/>
+                    <field name="emp_id" invisible="1"/>
+                </group>
+            </xpath>
 
 
             <xpath expr="//group[1]/group[2]" position="after">
@@ -85,75 +92,76 @@
         </field>
     </record>
     <record id="hr_kanban_view_applicant_inherit" model="ir.ui.view">
-            <field name="name">hr_kanban_view_applicant_inherit</field>
-            <field name="model">hr.applicant</field>
-            <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
-            <field name="arch" type="xml">
-                <xpath expr="//div[@class='oe_kanban_content']" position="replace">
-                    <div class="oe_kanban_content">
-                        <div class="o_kanban_record_top">
-                            <div class="o_kanban_record_headings">
+        <field name="name">hr_kanban_view_applicant_inherit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_content']" position="replace">
+                <div class="oe_kanban_content">
+                    <div class="o_kanban_record_top">
+                        <div class="o_kanban_record_headings">
 
-                                <i class="o_kanban_record_title">
-                                    <field name="partner_name"/>
-                                </i>
-                                <br/>
-                                <div class="o_kanban_record_subtitle"
-                                     invisible="context.get('search_default_job_id', False)">
-                                    <field name="job_id"/>
-                                </div>
-                                <div class="o_kanban_record_subtitle"
-                                >
-                                    <field name="app_code"/>
-                                </div>
-                                           <div class="o_kanban_record_subtitle"
-                                >
-<field name="stage_date"/>
-                              </div>
+                            <i class="o_kanban_record_title">
+                                <field name="partner_name"/>
+                            </i>
+                            <br/>
+                            <div class="o_kanban_record_subtitle"
+                                 invisible="context.get('search_default_job_id', False)">
+                                <field name="job_id"/>
+                            </div>
+                            <div class="o_kanban_record_subtitle"
+                            >
+                                <field name="app_code"/>
+                            </div>
+                            <div class="o_kanban_record_subtitle"
+                            >
+                                <field name="stage_date"/>
+                            </div>
 
-
-                            </div>
-                        </div>
-                        <field name="categ_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                        <div class="o_kanban_record_bottom mt4">
-                            <div class="oe_kanban_bottom_left">
-                                <div class="float-left mr4" groups="base.group_user">
-                                    <field name="priority" widget="priority"/>
-                                </div>
-                                <div class="o_kanban_inline_block mr8">
-                                    <field name="activity_ids" widget="kanban_activity"/>
-                                </div>
-                            </div>
-                            <div class="oe_kanban_bottom_right">
-                                <a name="action_get_attachment_tree_view" type="object">
-                                    <span title="Documents">
-                                        <i class="fa fa-paperclip" role="img" aria-label="Documents"/>
-                                        <t t-esc="record.attachment_number.raw_value"/>
-                                    </span>
-                                </a>
-                                <div class="o_kanban_state_with_padding ml-1 mr-2">
-                                    <field name="kanban_state" widget="kanban_state_selection"/>
-                                    <field name="legend_normal" invisible="1"/>
-                                    <field name="legend_blocked" invisible="1"/>
-                                    <field name="legend_done" invisible="1"/>
-                                </div>
-                                <field name="user_id" widget="many2one_avatar_user"/>
-                            </div>
 
                         </div>
                     </div>
-                </xpath>
+                    <field name="categ_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <div class="o_kanban_record_bottom mt4">
+                        <div class="oe_kanban_bottom_left">
+                            <div class="float-left mr4" groups="base.group_user">
+                                <field name="priority" widget="priority"/>
+                            </div>
+                            <div class="o_kanban_inline_block mr8">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                            </div>
+                        </div>
+                        <div class="oe_kanban_bottom_right">
+                            <a name="action_get_attachment_tree_view" type="object">
+                                <span title="Documents">
+                                    <i class="fa fa-paperclip" role="img" aria-label="Documents"/>
+                                    <t t-esc="record.attachment_number.raw_value"/>
+                                </span>
+                            </a>
+                            <div class="o_kanban_state_with_padding ml-1 mr-2">
+                                <field name="kanban_state" widget="kanban_state_selection"/>
+                                <field name="legend_normal" invisible="1"/>
+                                <field name="legend_blocked" invisible="1"/>
+                                <field name="legend_done" invisible="1"/>
+                            </div>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </div>
 
-            </field>
-        </record>
+                    </div>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
     <record id="hr_applicant_view_tree_inherit" model="ir.ui.view">
         <field name="name">hr_recruitment.crm_case_tree_view_job.inherit</field>
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
         <field name="arch" type="xml">
 
-            <field name="name" position="after">
+            <field name="name" position="replace">
                 <field name="linkedin"/>
+                <field name="job_id" invisible="1"/>
                 <field name="first_work_ex"/>
                 <field name="tools"/>
                 <field name="notice_period"/>
@@ -161,10 +169,10 @@
                 <field name="current_salary"/>
                 <field name="currency_id"/>
                 <field name="ex_of"/>
-                                                            <field name="currency_of_id" placeholder="Currency"/>
+                <field name="currency_of_id" placeholder="Currency"/>
 
                 <field name="ex_on"/>
-                                            <field name="currency_on_id" placeholder="Currency"/>
+                <field name="currency_on_id" placeholder="Currency"/>
 
             </field>
             <field name="user_id" position="after">
@@ -180,19 +188,5 @@
 
         </field>
     </record>
-
-<!--    <record id="hr_recruitment_stage_active_state" model="ir.ui.view">-->
-<!--        <field name="name">hr.recruitment.stage.active.state</field>-->
-<!--        <field name="model">hr.recruitment.stage</field>-->
-<!--        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>-->
-<!--        <field name="arch" type="xml">-->
-
-<!--            <xpath expr="//field[@name='job_ids']" position="after">-->
-<!--                <field name="is_active_state"/>-->
-<!--            </xpath>-->
-
-<!--        </field>-->
-<!--    </record>-->
-
 
 </odoo>

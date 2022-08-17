@@ -3,7 +3,7 @@ from odoo import api, fields, models
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
-
+    notes = fields.Text(string="Notes", required=False, )
     re_skill = fields.Char(string="Skill1", required=False,readonly=True,default="Relevant educational background" )
     skill_re_s = fields.Selection(string="Grade1", selection=[('rel', 'Related'), ('oc', 'Only courses'), ('nrel', 'Not related') ], required=False, )
     ro_skill = fields.Char(string="Skill2", required=False,readonly=True,default="Related work experience " )
