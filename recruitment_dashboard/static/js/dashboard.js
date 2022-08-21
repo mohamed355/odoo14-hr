@@ -13,6 +13,7 @@ var RecDashboard =  AbstractAction.extend({
         events: {
             'click .hiring':'hiring',
             'click .apps':'apps',
+//            'click .this_year':'get_stages_this_year',
             'click .stage_click':'stage_click',
             'click .act':'act',
             'change #income_expense_values': function(e) {
@@ -20,11 +21,23 @@ var RecDashboard =  AbstractAction.extend({
                 var $target = $(e.target);
                 var value = $target.val();
                 if (value=="this_year"){
-                    this.onclick_this_year($target.val());
+                    this.onclick_this_year($target.val()),
+                    this.get_act_don_year($target.val()),
+                    this.get_sources_year($target.val()),
+                    this.get_job_year($target.val()),
+                    this.onclick_get_s_year($target.val());
                 }else if (value=="this_month"){
-                    this.onclick_this_month($target.val());
+                    this.onclick_this_month($target.val()),
+                    this.onclick_get_s_month($target.val());
+                    this.get_act_don_month($target.val());
+                    this.get_sources_year($target.val());
+                    this.get_job_month($target.val());
                 }else if (value=="this_quarter"){
                     this.onclick_this_quarter($target.val());
+                    this.get_sources_quarter($target.val());
+                    this.get_act_don_quarter($target.val());
+                    this.get_job_quarter($target.val());
+                    this.onclick_get_s_quarter($target.val());
                 }
 
             },
@@ -53,6 +66,13 @@ var RecDashboard =  AbstractAction.extend({
 //            this.stages_year = [];
 
         }   ,
+
+
+        onclick_toggle_two: function(ev) {
+            this.get_stages_this_year(ev);
+//            this.onclick_income_last_year(ev);
+//            this.onclick_income_this_month(ev);
+    },
         start: function() {
             var self = this;
             this.set("title", 'Dashboardn');
@@ -66,10 +86,10 @@ var RecDashboard =  AbstractAction.extend({
 
     render_graphs: function(){
         var self = this;
-        self.get_s();
-        self.get_sources();
-        self.get_job();
-        self.get_act_don();
+//        self.get_s();
+//        self.get_sources();
+//        self.get_job();
+//        self.get_act_don();
 //        self.onclick_source_month();
 //        self.onclick_source_6months();
 //        self.onclick_source_12months();
@@ -112,6 +132,11 @@ var RecDashboard =  AbstractAction.extend({
                 $('#h_com_this_year').hide();
                 $('#app_3_this_year').hide();
                 $('#app_4_this_year').hide();
+                $('#h_a_this_month').hide();
+                $('#h_com_this_month').hide();
+                $('#app_3_this_month').hide();
+                $('#app_4_this_month').hide();
+
 
                 $('#leads_this_quarter').show();
                 $('#hiring_this_quarter').show();
@@ -192,6 +217,10 @@ var RecDashboard =  AbstractAction.extend({
 //
                 $('#leads_this_month').show();
                 $('#hiring_this_month').show();
+                $('#h_a_this_month').show();
+                $('#h_com_this_month').show();
+                $('#app_3_this_month').show();
+                $('#app_4_this_month').show();
 //                $('#exp_rev_this_month').show();
 //                $('#rev_this_month').show();
 //                $('#ratio_this_month').show();
@@ -200,6 +229,10 @@ var RecDashboard =  AbstractAction.extend({
 
                 $('#leads_this_month').empty();
                 $('#hiring_this_month').empty();
+                $('#h_a_this_month').empty();
+                $('#h_com_this_month').empty();
+                $('#app_3_this_month').empty();
+                $('#app_4_this_month').empty();
 //                $('#exp_rev_this_month').empty();
 //                $('#rev_this_month').empty();
 //                $('#ratio_this_month').empty();
@@ -208,6 +241,10 @@ var RecDashboard =  AbstractAction.extend({
 
                 $('#leads_this_month').append('<span>' + result.leads + '</span>');
                 $('#hiring_this_month').append('<span>' + result.hiring + '</span>');
+                $('#h_a_this_month').append('<span>' + result.h_a + '</span>');
+                $('#h_com_this_month').append('<span>' + result.h_com + '</span>' + '%');
+                $('#app_3_this_month').append('<span>' + result.app_3 + '</span>'+ '%');
+                $('#app_4_this_month').append('<span>' + result.app_4 + '</span>'+ '%');
 //                $('#exp_rev_this_month').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev_exp + '</span>');
 //                $('#rev_this_month').append('<span>' + self.monthly_goals[2] + '&nbsp' + result.record_rev + '</span>');
 //                $('#ratio_this_month').append('<span>' + result.record_ratio + '</span>');
@@ -215,6 +252,89 @@ var RecDashboard =  AbstractAction.extend({
 //                $('#total_revenue_this_month').append('<span>' + result.opportunity_ratio_value + '</span>');
             })
         },
+//    onclick_toggle_two: function(ev) {
+//        this.onclick_income_this_year(ev);
+////        this.onclick_income_last_year(ev);
+////        this.onclick_income_this_month(ev);
+//    },
+    get_stages_this_year: function(ev) {
+//        ev.stopPropagation();
+//        ev.preventDefault();
+        var selected = $('.btn.btn-tool.income');
+        var data = $(selected[0]).data();
+        var posted = false;
+
+        rpc.query({
+                model: 'hr.applicant',
+                method: 'get_stages_this_year',
+                args: [],
+
+            })
+            .then(function(result) {
+
+//                $('#net_profit_current_months').hide();
+//                $('#net_profit_last_year').hide();
+                $('#net_profit_this_year').show();
+
+                var ctx = document.getElementById("canvas").getContext('2d');
+
+                // Define the data
+                var income = result.income; // Add data values to array
+//                    var expense = result.expense;
+                var profit = result.profit;
+
+                var labels = result.month; // Add labels to array
+
+
+                if (window.myCharts != undefined)
+                    window.myCharts.destroy();
+                window.myCharts = new Chart(ctx, {
+                    //var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Months', // Name the series
+                                data: profit, // Specify the data values array
+                                backgroundColor: '#0bd465',
+                                borderColor: '#0bd465',
+
+                                borderWidth: 1, // Specify bar border width
+                                type: 'bar', // Set this data to a line chart
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                    title: false,
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        labels: {
+                            fontColor: "#333",
+                            fontSize: 16
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                                display: false,
+                            },
+                            ticks: {
+                                min: 0,
+                                display: false,
+                            }
+                        }]
+                    }
+                    }
+                });
+
+            })
+    },
+
     onclick_this_year: function (ev) {
             var self = this;
             rpc.query({
@@ -230,6 +350,10 @@ var RecDashboard =  AbstractAction.extend({
 //                $('#ratio_this_quarter').hide();
 //                $('#avg_time_this_quarter').hide();
 //                $('#total_revenue_this_quarter').hide();
+                $('#h_a_this_month').hide();
+                $('#h_com_this_month').hide();
+                $('#app_3_this_month').hide();
+                $('#app_4_this_month').hide();
                 $('#leads_this_month').hide();
                 $('#hiring_this_month').hide();
                  $('#leads_this_quarter').hide();
@@ -350,12 +474,12 @@ var RecDashboard =  AbstractAction.extend({
         }, options)
     },
 
-    get_s:function(){
+    onclick_get_s_year:function(){
             var self = this
             var ctx = self.$(".get_s");
             rpc.query({
                 model: "hr.applicant",
-                method: "get_recruiter",
+                method: "get_recruiter_year",
             }).then(function (arrays) {
             var data = {
             labels: arrays[1],
@@ -416,12 +540,144 @@ var RecDashboard =  AbstractAction.extend({
                 });
             });
         },
-        get_act_don:function(){
+        onclick_get_s_month:function(){
+            var self = this
+            var ctx = self.$(".get_s");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_recruiter_month",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Applications",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+        var options = {
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "horizontalBar",
+                    data: data,
+                    options: options
+                });
+            });
+        },
+        onclick_get_s_quarter:function(){
+            var self = this
+            var ctx = self.$(".get_s");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_recruiter_quarter",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Applications",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+        var options = {
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "horizontalBar",
+                    data: data,
+                    options: options
+                });
+            });
+        },
+        get_act_don_year:function(){
             var self = this
             var ctx = self.$(".get_act_don");
             rpc.query({
                 model: "hr.applicant",
-                method: "get_act_don",
+                method: "get_act_don_year",
             }).then(function (arrays) {
             var data = {
             labels: arrays[1],
@@ -481,139 +737,143 @@ var RecDashboard =  AbstractAction.extend({
                 });
             });
         },
-        onclick_source_12months: function(ev) {
-            var self = this;
-                rpc.query({
-                    model: "hr.applicant",
-                    method: "get_sources",
-                    args: ['12']
-                }).then(function(result){
-                    var ctx = document.getElementById("canvas").getContext('2d');
-                    // Define the data
-                    var lost_reason = result.month // Add data values to array
-                    var count = result.count;
-                    var myChart = new Chart(ctx, {
-                        type: 'horizontalBar',
-                        data: {
-                            labels: lost_reason,//x axis
-                            datasets: [{
-                                label: 'Count', // Name the series
-                                data: count, // Specify the data values array
-                                backgroundColor: '#66aecf',
-                                borderColor: '#66aecf',
-                                barPercentage: 0.5,
-                                barThickness: 6,
-                                maxBarThickness: 8,
-                                minBarLength: 0,
-                                borderWidth: 1, // Specify bar border width
-                                type: 'horizontalBar', // Set this data to a line chart
-                                fill: false
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                },
-                            },
-                            responsive: true, // Instruct chart js to respond nicely.
-                            maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+        get_act_don_quarter:function(){
+            var self = this
+            var ctx = self.$(".get_act_don");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_act_don_quarter",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Activities",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+        var options = {
+                    responsive: true,
+                    title: false,
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        labels: {
+                            fontColor: "#333",
+                            fontSize: 16
                         }
-                    });
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                                display: false,
+                            },
+                            ticks: {
+                                min: 0,
+                                display: false,
+                            }
+                        }]
+                    }
+                };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "doughnut",
+                    data: data,
+                    options: options
                 });
-            },
-
-
-        onclick_source_6months: function(ev) {
-            var self = this;
+            });
+        },
+        get_act_don_month:function(){
+            var self = this
+            var ctx = self.$(".get_act_don");
             rpc.query({
                 model: "hr.applicant",
-                method: "get_sources",
-                args: ['6']
-            }).then(function(result){
-                var ctx = document.getElementById("canvas").getContext('2d');
-                // Define the data
-                var lost_reason = result.month // Add data values to array
-                var count = result.count;
-                var myChart = new Chart(ctx, {
-                    type: 'horizontalBar',
-                    data: {
-                        labels: lost_reason,//x axis
-                        datasets: [{
-                            label: 'Count', // Name the series
-                            data: count, // Specify the data values array
-                            backgroundColor: '#66aecf',
-                            borderColor: '#66aecf',
-                            barPercentage: 0.5,
-                            barThickness: 6,
-                            maxBarThickness: 8,
-                            minBarLength: 0,
-                            borderWidth: 1, // Specify bar border width
-                            type: 'horizontalBar', // Set this data to a line chart
-                            fill: false
-                        }]
+                method: "get_act_don_month",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Activities",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+        var options = {
+                    responsive: true,
+                    title: false,
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        labels: {
+                            fontColor: "#333",
+                            fontSize: 16
+                        }
                     },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                                display: false,
+                            },
+                            ticks: {
+                                min: 0,
+                                display: false,
                             }
-                        },
-                        responsive: true, // Instruct chart js to respond nicely.
-                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                        }]
                     }
+                };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "doughnut",
+                    data: data,
+                    options: options
                 });
             });
         },
 
-        onclick_source_month: function(ev) {
-            var self = this;
-            rpc.query({
-                model: "hr.applicant",
-                method: "get_sources",
-                args: ['1']
-            }).then(function(result){
-                var ctx = document.getElementById("canvas").getContext('2d');
-                // Define the data
-                var lost_reason = result.month // Add data values to array
-                var count = result.count;
-                var myChart = new Chart(ctx, {
-                    type: 'horizontalBar',
-                    data: {
-                        labels: lost_reason,//x axis
-                        datasets: [{
-                            label: 'Count', // Name the series
-                            data: count, // Specify the data values array
-                            backgroundColor: '#66aecf',
-                            borderColor: '#66aecf',
-                            barPercentage: 0.5,
-                            barThickness: 6,
-                            maxBarThickness: 8,
-                            minBarLength: 0,
-                            borderWidth: 1, // Specify bar border width
-                            type: 'horizontalBar', // Set this data to a line chart
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        responsive: true, // Instruct chart js to respond nicely.
-                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
-                    }
-                });
-            });
-        },
-
-         get_job:function(){
+         get_job_year:function(){
             var self = this
             var ctx = self.$(".get_jobs");
             rpc.query({
                 model: "hr.applicant",
-                method: "get_jobs",
+                method: "get_jobs_year",
             }).then(function (arrays) {
             var data = {
             labels: arrays[1],
@@ -674,12 +934,274 @@ var RecDashboard =  AbstractAction.extend({
                 });
             });
         },
-        get_sources:function(){
+        get_job_quarter:function(){
+            var self = this
+            var ctx = self.$(".get_jobs");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_jobs_quarter",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Applications",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+         var options = {
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "horizontalBar",
+                    data: data,
+                    options: options
+                });
+            });
+        },
+        get_job_month:function(){
+            var self = this
+            var ctx = self.$(".get_jobs");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_jobs_month",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Applications",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+         var options = {
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "horizontalBar",
+                    data: data,
+                    options: options
+                });
+            });
+        },
+        get_sources_year:function(){
             var self = this
             var ctx = self.$(".get_sources");
             rpc.query({
                 model: "hr.applicant",
-                method: "get_sources",
+                method: "get_sources_year",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Applications",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+         var options = {
+                    responsive: true,
+                    title: false,
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        labels: {
+                            fontColor: "#333",
+                            fontSize: 16
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                                display: false,
+                            },
+                            ticks: {
+                                min: 0,
+                                display: false,
+                            }
+                        }]
+                    }
+                };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "doughnut",
+                    data: data,
+                    options: options
+                });
+            });
+        },
+        get_sources_quarter:function(){
+            var self = this
+            var ctx = self.$(".get_sources");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_sources_quarter",
+            }).then(function (arrays) {
+            var data = {
+            labels: arrays[1],
+            datasets: [
+              {
+                label: "Applications",
+                data: arrays[0],
+                backgroundColor: [
+                  "rgba(255, 99, 132,1)",
+                  "rgba(54, 162, 235,1)",
+                  "rgba(75, 192, 192,1)",
+                  "rgba(153, 102, 255,1)",
+                  "rgba(10,20,30,1)"
+                ],
+                borderColor: [
+                 "rgba(255, 99, 132, 0.2)",
+                  "rgba(54, 162, 235, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                  "rgba(153, 102, 255, 0.2)",
+                  "rgba(10,20,30,0.3)"
+                ],
+                borderWidth: 1
+              },
+
+            ]
+          };
+         var options = {
+                    responsive: true,
+                    title: false,
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        labels: {
+                            fontColor: "#333",
+                            fontSize: 16
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                                display: false,
+                            },
+                            ticks: {
+                                min: 0,
+                                display: false,
+                            }
+                        }]
+                    }
+                };
+
+                //create Chart class object
+                var chart = new Chart(ctx, {
+                    type: "doughnut",
+                    data: data,
+                    options: options
+                });
+            });
+        },
+        get_sources_month:function(){
+            var self = this
+            var ctx = self.$(".get_sources");
+            rpc.query({
+                model: "hr.applicant",
+                method: "get_sources_month",
             }).then(function (arrays) {
             var data = {
             labels: arrays[1],

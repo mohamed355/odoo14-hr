@@ -121,7 +121,7 @@ class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     acc_date = fields.Date(string="Accepted Date", required=False, )
-    req_date = fields.Datetime(string="Request Date", required=False, )
+    req_date = fields.Date(string="Request Date", required=False, )
     approve_date = fields.Datetime(string="Approve Date", required=False, )
     offered = fields.Integer(string="Offered", required=False)
     awaiting_review= fields.Integer(string="Awaiting Review", required=False)

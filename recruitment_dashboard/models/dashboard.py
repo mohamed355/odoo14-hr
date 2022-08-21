@@ -199,7 +199,7 @@ class HrDashboard(models.Model):
             'h_com': h_com,
             'app_3': app_3,
             'app_4': app_4,
-            'stages_list': stages_list,
+            # 'stages_list': stages_list,
         }
         return data_year
 
@@ -207,7 +207,51 @@ class HrDashboard(models.Model):
     def crm_month(self):
         """Year CRM Dropdown Filter"""
         # session_user_id = self.env.uid
+        last_day_of_prev_month = date.today().replace(day=1) - timedelta(days=1)
+        print(last_day_of_prev_month)
+        start_day_of_prev_month = date.today().replace(day=1) - timedelta(days=last_day_of_prev_month.day)
+        hr_applicant = self.env['hr.applicant'].search([('create_date', '>=', start_day_of_prev_month), ('create_date', '<=', last_day_of_prev_month)])
+        open_hiring = self.env['hiring.request'].search([('create_date', '>=', start_day_of_prev_month), ('create_date', '<=', last_day_of_prev_month)])
+        com_hiring = self.env['hiring.request'].search_count(
+            [("stage_id.name", '=', "Completed"), ('create_date', '>=', start_day_of_prev_month), ('create_date', '<=', last_day_of_prev_month)])
+        com_app = self.env['hr.applicant'].search_count(
+            [("stage_id.name", '=', "Offer Accepted"), ('create_date', '>=', start_day_of_prev_month), ('create_date', '<=', last_day_of_prev_month)])
+        rej_app = self.env['hr.applicant'].search_count(
+            [("stage_id.name", '=', "Offer Rejected"), ('create_date', '>=', start_day_of_prev_month), ('create_date', '<=', last_day_of_prev_month)])
+        ac_app = self.env['hr.applicant'].search_count(
+            [("stage_id.name", '=', "Offer Accepted"), ('create_date', '>=', start_day_of_prev_month), ('create_date', '<=', last_day_of_prev_month)])
+        h_a = 0
+        duration_list = []
+        for app in hr_applicant:
+            if app.hiring_ids:
+                print("App", app.acc_date)
+                print("hiring", app.hiring_ids[0].acc_date)
+                if app.acc_date and app.hiring_ids[0].acc_date:
+                    duration = abs(app.acc_date - app.hiring_ids[0].acc_date)
+                    duration_list.append(duration.days)
+        print("Duration", duration_list)
+        print("Duration", sum(duration_list))
 
+        try:
+            h_a = round(len(hr_applicant) / len(open_hiring))
+        except ZeroDivisionError:
+            h_a = 0
+        app_3=  0
+        try:
+            app_3 = round((com_app / (rej_app + ac_app)) * 100)
+        except ZeroDivisionError:
+            app_3 = 0
+        app_4 = 0
+        try:
+            app_4 = round((sum(duration_list) / len(hr_applicant)) * 100)
+        except ZeroDivisionError:
+            app_4 = 0
+
+        h_com = 0
+        try:
+            h_com = round((len(open_hiring) / com_hiring / 100) * 100)
+        except ZeroDivisionError:
+            h_com=0
         self._cr.execute(
             '''select COUNT(id) from hr_applicant WHERE  Extract(MONTH FROM hr_applicant.create_date
         ) = Extract(MONTH FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date
@@ -226,8 +270,14 @@ class HrDashboard(models.Model):
         data_month = {
             'leads': hr_applicant_value,
             'hiring': hiring_request_value,
+            'h_a': h_a,
+            'h_com': h_com,
+            'app_3': app_3,
+            'app_4': app_4,
         }
         return data_month
+
+
     @api.model
     def get_stages(self):
         """Recent Activities Table"""
@@ -262,12 +312,12 @@ class HrDashboard(models.Model):
         return {'stages_list': stages_list}
 
     @api.model
-    def get_recruiter(self):
+    def get_recruiter_year(self):
         company_id = self.env.company.id
 
         query = '''select count(*) as co,res_partner.name as partner from 
-        hr_applicant inner join res_partner on 
-        res_partner.id =hr_applicant.partner_id group by partner ORDER BY co DESC'''
+        hr_applicant  inner join res_partner on 
+        res_partner.id =hr_applicant.partner_id  WHERE Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW())) group by partner ORDER BY co DESC'''
 
         self._cr.execute(query)
         partners = self._cr.dictfetchall()
@@ -283,12 +333,54 @@ class HrDashboard(models.Model):
         return final
 
     @api.model
-    def get_jobs(self):
+    def get_recruiter_month(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,res_partner.name as partner from 
+            hr_applicant  inner join res_partner on 
+            res_partner.id =hr_applicant.partner_id  WHERE  Extract(MONTH FROM hr_applicant.create_date) = Extract(MONTH FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW( ))) group by partner ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        partners = self._cr.dictfetchall()
+        total_app = []
+        for record in partners:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_app.append(record.get('co'))
+        partner_name = []
+        for record in partners:
+            partner_name.append(record.get('partner'))
+        final = [total_app, partner_name]
+        return final
+
+    @api.model
+    def get_recruiter_quarter(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,res_partner.name as partner from 
+                hr_applicant  inner join res_partner on 
+                res_partner.id =hr_applicant.partner_id  Where Extract(QUARTER FROM hr_applicant.create_date) = Extract(QUARTER FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW())) group by partner ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        partners = self._cr.dictfetchall()
+        total_app = []
+        for record in partners:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_app.append(record.get('co'))
+        partner_name = []
+        for record in partners:
+            partner_name.append(record.get('partner'))
+        final = [total_app, partner_name]
+        return final
+
+    @api.model
+    def get_jobs_year(self):
         company_id = self.env.company.id
 
         query = '''select count(*) as co,hr_job.name as job from 
             hr_applicant inner join hr_job on 
-            hr_job.id =hr_applicant.job_id group by job ORDER BY co DESC'''
+            hr_job.id =hr_applicant.job_id WHERE Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW())) group by job  ORDER BY co DESC'''
 
         self._cr.execute(query)
         jobs = self._cr.dictfetchall()
@@ -304,11 +396,53 @@ class HrDashboard(models.Model):
         return final
 
     @api.model
-    def get_act_don(self):
+    def get_jobs_quarter(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,hr_job.name as job from 
+                hr_applicant inner join hr_job on 
+                hr_job.id =hr_applicant.job_id Where Extract(QUARTER FROM hr_applicant.create_date) = Extract(QUARTER FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW())) group by job  ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        jobs = self._cr.dictfetchall()
+        total_app = []
+        for record in jobs:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_app.append(record.get('co'))
+        job_name = []
+        for record in jobs:
+            job_name.append(record.get('job'))
+        final = [total_app, job_name]
+        return final
+
+    @api.model
+    def get_jobs_month(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,hr_job.name as job from 
+                    hr_applicant inner join hr_job on 
+                    hr_job.id =hr_applicant.job_id WHERE  Extract(MONTH FROM hr_applicant.create_date) = Extract(MONTH FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW( ))) group by job  ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        jobs = self._cr.dictfetchall()
+        total_app = []
+        for record in jobs:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_app.append(record.get('co'))
+        job_name = []
+        for record in jobs:
+            job_name.append(record.get('job'))
+        final = [total_app, job_name]
+        return final
+
+    @api.model
+    def get_act_don_year(self):
         company_id = self.env.company.id
 
         query = '''select count(*) as co,activity_type as type from 
-                mail_activity group by activity_type ORDER BY co DESC'''
+                mail_activity WHERE Extract(Year FROM mail_activity.create_date) = Extract(Year FROM DATE(NOW())) group by activity_type ORDER BY co DESC'''
 
         self._cr.execute(query)
         activties = self._cr.dictfetchall()
@@ -324,12 +458,94 @@ class HrDashboard(models.Model):
         return final
 
     @api.model
-    def get_sources(self):
+    def get_act_don_quarter(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,activity_type as type from 
+                    mail_activity Where Extract(QUARTER FROM mail_activity.create_date) = Extract(QUARTER FROM DATE(NOW())) AND Extract(Year FROM mail_activity.create_date) = Extract(Year FROM DATE(NOW())) group by activity_type ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        activties = self._cr.dictfetchall()
+        total_ac = []
+        for record in activties:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_ac.append(record.get('co'))
+        stat = []
+        for record in activties:
+            stat.append(record.get('type'))
+        final = [total_ac, stat]
+        return final
+
+    @api.model
+    def get_act_don_month(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,activity_type as type from 
+                        mail_activity WHERE  Extract(MONTH FROM mail_activity.create_date) = Extract(MONTH FROM DATE(NOW())) AND Extract(Year FROM mail_activity.create_date) = Extract(Year FROM DATE(NOW( ))) group by activity_type ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        activties = self._cr.dictfetchall()
+        total_ac = []
+        for record in activties:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_ac.append(record.get('co'))
+        stat = []
+        for record in activties:
+            stat.append(record.get('type'))
+        final = [total_ac, stat]
+        return final
+
+    @api.model
+    def get_sources_year(self):
         company_id = self.env.company.id
 
         query = '''select count(*) as co,utm_source.name as source from
                 hr_applicant inner join utm_source on
-                utm_source.id =hr_applicant.source_id group by source ORDER BY co DESC'''
+                utm_source.id =hr_applicant.source_id WHERE Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW())) group by source ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        source = self._cr.dictfetchall()
+        total_app = []
+        for record in source:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_app.append(record.get('co'))
+        source_name = []
+        for record in source:
+            source_name.append(record.get('source'))
+        final = [total_app, source_name]
+        return final
+
+    @api.model
+    def get_sources_month(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,utm_source.name as source from
+                    hr_applicant inner join utm_source on
+                    utm_source.id =hr_applicant.source_id WHERE  Extract(MONTH FROM hr_applicant.create_date) = Extract(MONTH FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW( ))) group by source ORDER BY co DESC'''
+
+        self._cr.execute(query)
+        source = self._cr.dictfetchall()
+        total_app = []
+        for record in source:
+            # if record.get('total_quantity') != 0:
+            #     print(total_quantity.append(record.get('total_quantity')))
+            total_app.append(record.get('co'))
+        source_name = []
+        for record in source:
+            source_name.append(record.get('source'))
+        final = [total_app, source_name]
+        return final
+
+    @api.model
+    def get_sources_quarter(self):
+        company_id = self.env.company.id
+
+        query = '''select count(*) as co,utm_source.name as source from
+                        hr_applicant inner join utm_source on
+                        utm_source.id =hr_applicant.source_id Where Extract(QUARTER FROM hr_applicant.create_date) = Extract(QUARTER FROM DATE(NOW())) AND Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW())) group by source ORDER BY co DESC'''
 
         self._cr.execute(query)
         source = self._cr.dictfetchall()
@@ -387,3 +603,47 @@ class HrDashboard(models.Model):
     #                 'count': list(month_dict.values())}
     #
     #     return test
+
+    @api.model
+    def get_stages_this_year(self):
+
+        month_list = []
+        for i in range(11, -1, -1):
+            l_month = datetime.now() - relativedelta(months=i)
+            text = format(l_month, '%B')
+            month_list.append(text)
+
+
+        states_arg = ""
+
+        self._cr.execute(('''select count(*) as income ,stage_id as stage from hr_applicant where 
+                                to_char(DATE(NOW()), 'YY') = to_char(hr_applicant.create_date, 'YY')
+                                %s  group by month ''') % (states_arg))
+        record = self._cr.dictfetchall()
+
+        records = []
+        for month in month_list:
+            last_month_inc = list(filter(lambda m: m['month'].strip() == month, record))
+
+            if not last_month_inc:
+                records.append({
+                    'month': month,
+                    'profit': 0.0,
+                })
+
+            else:
+
+                last_month_inc[0].update({
+                    'profit': last_month_inc[0]['income']
+                })
+                records.append(last_month_inc[0])
+
+        month = []
+        profit = []
+        for rec in records:
+            month.append(rec['month'])
+            profit.append(rec['profit'])
+        return {
+            'profit': profit,
+            'month': month
+        }

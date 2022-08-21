@@ -105,6 +105,7 @@
   color: #656ab0;}"></i> </span>
                                        <span style="margin-top:25px"><div id="h_a_this_year"/></span>
                                        <span style="margin-top:25px"><div id="h_a_this_quarter"/></span>
+                                       <span style="margin-top:25px"><div id="h_a_this_month"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -118,6 +119,7 @@
   color: #656ab0;}"></i> </span>
                                        <span style="margin-top:25px"><div id="h_com_this_year"/></span>
                                        <span style="margin-top:25px"><div id="h_com_this_quarter"/></span>
+                                       <span style="margin-top:25px"><div id="h_com_this_month"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -133,6 +135,7 @@
                                        <!--  color: #656ab0;}"></i> </span>-->
                                        <span><div id="app_3_this_year"/></span>
                                        <span><div id="app_3_this_quarter"/></span>
+                                       <span><div id="app_3_this_month"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -148,6 +151,7 @@
                                        <!--  color: #656ab0;}"></i> </span>-->
                                        <span><div id="app_4_this_year"/></span>
                                        <span><div id="app_4_this_quarter"/></span>
+                                       <span><div id="app_4_this_month"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -249,7 +253,25 @@
                         </div>
                     </div>
           </div>
-
+<!--         <div class="col-sm-3 col-md-4 apps">-->
+<!--                    <div class="chart-container card-shadow">-->
+<!--                        <h2>Stages-->
+<!--</h2>-->
+<!--                        <hr/>-->
+<!--                        <div class="card-body mt-3" id="in_ex_body_hide">-->
+<!--                                    <div class="row">-->
+<!--&lt;!&ndash;                                        <div class="col-md-12">&ndash;&gt;-->
+<!--                                        <p id="myelement1"> </p>-->
+<!--                                        <div class="chart">-->
+<!--                                                <canvas id="canvas"> </canvas>-->
+<!--                                            <canvas id="canvas" width="100% !important"-->
+<!--                                                    height="auto !important"> </canvas>-->
+<!--                                            </div>-->
+<!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                    </div>-->
+<!--          </div>-->
           </div>
 
 
