@@ -11,11 +11,13 @@
                 <xpath expr="//field[@name='check_in']" position="after">
                      <field name="check_in_latitude" readonly="1" digits="[16, 10]"/>
                      <field name="check_in_longitude" readonly="1" digits="[16, 10]"/>
+                     <button name="action_open_check_in_location" type="object" string="Show Check In Location"/>
                 </xpath>
 
                 <xpath expr="//field[@name='check_out']" position="after">
-                     <field name="check_out_latitude" readonly="1" digits="[16, 10]"/>
-                     <field name="check_out_longitude" readonly="1" digits="[16, 10]"/>
+                     <field name="check_out_latitude" readonly="1" digits="[16, 10]" attrs="{'invisible': [('check_out', '=', False)]}"/>
+                     <field name="check_out_longitude" readonly="1" digits="[16, 10]" attrs="{'invisible': [('check_out', '=', False)]}"/>
+                     <button name="action_open_check_out_location" type="object" string="Show Check Out Location" attrs="{'invisible': [('check_out', '=', False)]}"/>
                 </xpath>
 
             </field>

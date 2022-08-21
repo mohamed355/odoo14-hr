@@ -25,5 +25,20 @@ class HrAttendance(models.Model):
     check_out_latitude = fields.Float()
     check_out_longitude = fields.Float()
 
+    def action_open_location(self, lat, long):
+        return {
+            'type': 'ir.actions.act_url',
+            'name': 'Check In Location',
+            'url': 'http://maps.google.com/maps?q=%s,%s' % (lat, long),
+            'target': 'new'
+        }
+
+    def action_open_check_in_location(self):
+        return self.action_open_location(self.check_in_latitude, self.check_in_longitude)
+
+    def action_open_check_out_location(self):
+        return self.action_open_location(self.check_out_latitude, self.check_out_longitude)
+
+
 
 
