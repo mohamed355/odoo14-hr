@@ -29,7 +29,8 @@ class HrAttendance(models.Model):
         return {
             'type': 'ir.actions.act_url',
             'name': 'Check In Location',
-            'url': 'http://maps.google.com/maps?q=%s,%s' % (lat, long),
+            # 'url': 'http://maps.google.com/maps?q=%s,%s' % (lat, long),
+            'url': 'https://www.mapdevelopers.com/what-is-my-address.php?lat=%s&lng=%s' % (lat, long),
             'target': 'new'
         }
 

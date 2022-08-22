@@ -55,13 +55,13 @@ odoo.define('gs_portal_attendances.portal_attendance', function (require) {
                         window.location.reload();
                    })
                 },
-//                function (error) {
-//                    alert(error.message);
-//                },
-//                {
-//                    enableHighAccuracy: true
-//                    , timeout: 5000
-//                }
+                function (error) {
+                    alert(error.message);
+                },
+                {
+                    enableHighAccuracy: true
+                    , timeout: 5000
+                }
                 );
             } else {
                 alert('Geolocation is not supported by this browser.');
