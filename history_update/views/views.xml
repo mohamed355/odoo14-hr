@@ -12,6 +12,7 @@
                             <group>
                                 <field name="application_ids">
                                     <tree editable="bottom">
+                                        <field name="app_code"/>
                                         <field name="partner_name"/>
                                         <field name="approve_date"/>
                                     </tree>

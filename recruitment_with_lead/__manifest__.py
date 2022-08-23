@@ -12,7 +12,7 @@
     "price": 00.00,
     "currency": 'EUR',
     "depends": [
-    'hr_recruitment'
+    'hr_recruitment',
     ],
 
     "data": [

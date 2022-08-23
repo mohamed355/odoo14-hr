@@ -45,10 +45,18 @@
                 <field name="linkedin"/>
                 <!--                <field name="first_work_ex"/>-->
                 <field name="tools"/>
-                                <field name="job_id" invisible="1"/>
-                                <field name="company_id" invisible="1"/>
+                <field name="job_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
 
-                <field name="notice_period"/>
+                <label for="notice_period_from" string="Notice period 'Days'"/>
+                <div class="o_row">
+                    <span class="mx-3">From</span>
+
+                    <field name="notice_period_from"/>
+                    <span class="mx-3">To</span>
+
+                    <field name="notice_period_to" placeholder="Currency"/>
+                </div>
                 <field name="stage_date" invisible="1"/>
             </field>
             <xpath expr="//group[1]/group[4]" position="replace">

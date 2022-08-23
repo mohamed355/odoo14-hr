@@ -1,103 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-    <!-- Inherit Form View to Modify it -->
-    <record id="crm_form_activity" model="ir.ui.view">
-        <field name="name">crm_form_activity</field>
-        <field name="model">mail.activity</field>
-         <field name="priority" eval="99"/>
-        <field name="arch" type="xml">
+        <!-- Inherit Form View to Modify it -->
+        <record id="crm_form_activity" model="ir.ui.view">
+            <field name="name">crm_form_activity</field>
+            <field name="model">mail.activity</field>
+            <field name="priority" eval="99"/>
+            <field name="arch" type="xml">
 
-            <form string="Activity">
-<header>
-    <field name="activity_type" widget="statusbar" options="{'clickable': '1'}"/>
-</header>
-                <sheet>
-                    <group invisible="1">
-                        <field name="activity_category" invisible="1"/>
-                        <field name="res_model" invisible="1"/>
-                        <field name="res_model_id" invisible="1"/>
-                        <field name="res_id" invisible="1" widget="integer"/>
-                        <field name="chaining_type" invisible="1"/>
-                        <field name="previous_activity_type_id"/>
-                        <field name="has_recommended_activities"/>
-                    </group>
-                    <group attrs="{'invisible': [('has_recommended_activities','=',False)]}">
-                        <div class="o_row">
-                            <strong>Recommended Activities</strong>
-                            <field name="recommended_activity_type_id" widget="selection_badge" domain="[('previous_type_ids', '=', previous_activity_type_id)]" nolabel="1"/>
-                        </div>
-                    </group>
-                    <group>
-                        <group>
-                            <field name="activity_type_id" required="1" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="summary" placeholder="e.g. Discuss proposal"/>
+                <form string="Activity">
+                    <header>
+                        <field name="activity_type" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <group invisible="1">
+                            <field name="activity_category" invisible="1"/>
+                            <field name="res_model" invisible="1"/>
+                            <field name="res_model_id" invisible="1"/>
+                            <field name="res_id" invisible="1" widget="integer"/>
+                            <field name="chaining_type" invisible="1"/>
+                            <field name="previous_activity_type_id"/>
+                            <field name="has_recommended_activities"/>
+                        </group>
+                        <group attrs="{'invisible': [('has_recommended_activities','=',False)]}">
+                            <div class="o_row">
+                                <strong>Recommended Activities</strong>
+                                <field name="recommended_activity_type_id" widget="selection_badge"
+                                       domain="[('previous_type_ids', '=', previous_activity_type_id)]" nolabel="1"/>
+                            </div>
                         </group>
                         <group>
-                            <field name="date_deadline"/>
-                            <field name="create_date"/>
-                            <field name="user_id"/>
- <field name="partner_id" attrs="{'invisible': ['|',('opportunity_id', '!=', False),('lead_id', '!=', False)]}"/>
-                <field name="opportunity_id" attrs="{'invisible': ['|',('partner_id', '!=', False),('lead_id', '!=', False)]}" domain="[('type', '=','opportunity' ), ]"/>
-                <field name="lead_id" attrs="{'invisible': ['|',('opportunity_id', '!=', False),('partner_id', '!=', False)]}" domain="[('type', '=','lead' ), ]"/>
-             <label for="date_from" string="Date"/>
+                            <group>
+                                <field name="activity_type_id" required="1"
+                                       options="{'no_create': True, 'no_open': True}"/>
+                                <field name="summary" placeholder="e.g. Discuss proposal"/>
+                            </group>
+                            <group>
+                                <field name="date_deadline"/>
+                                <field name="create_date"/>
+                                <field name="crm_user_ids" invisible="1"/>
+                                <field name="user_id" domain="[('id', 'in', crm_user_ids), ]"/>
+                                <field name="partner_id"
+                                       attrs="{'invisible': ['|',('opportunity_id', '!=', False),('lead_id', '!=', False)]}"/>
+                                <field name="opportunity_id"
+                                       attrs="{'invisible': ['|',('partner_id', '!=', False),('lead_id', '!=', False)]}"
+                                       domain="[('type', '=','opportunity' ), ]"/>
+                                <field name="lead_id"
+                                       attrs="{'invisible': ['|',('opportunity_id', '!=', False),('partner_id', '!=', False)]}"
+                                       domain="[('type', '=','lead' ), ]"/>
+                                <label for="date_from" string="Date"/>
                                 <div name="date" class="d-flex">
                                     <field name="date_from" eval="DateTime.today().strftime('%Y-%m-%d 07:00:00')"/>
-<!--                                    <span class="oe_inline o_form_label mx-3 oe_read_only"> To </span>-->
+                                    <!--                                    <span class="oe_inline o_form_label mx-3 oe_read_only"> To </span>-->
                                     <!-- Bigger margin on the left because in edit mode the external link button covers the text -->
                                     <span class="mx-3">To</span>
                                     <field name="date_to"/>
-                                </div>                        </group>
-                    </group>
-                    <field name="note" placeholder="Log a note..."/>
-                    <footer>
+                                </div>
+                            </group>
+                        </group>
+                        <field name="note" placeholder="Log a note..."/>
+                        <footer>
 
-                        <field name="id" invisible="1"/>
-                        <button id="mail_activity_schedule" string="Schedule" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '!=', False)]}" data-hotkey="q"/>
-<!--                        <button id="mail_activity_save" string="Save" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '=', False)]}" data-hotkey="q"/>-->
-<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Compeleted')]}" string="Mark as Not Completed" name="type_not" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Cancelled')]}" string="In Progress" name="type_in" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'onhold')]}" string="Complete" name="type_com" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Not Completed')]}" string="On Hold" name="type_on" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button attrs="{'invisible': [('chaining_type', '=', 'trigger')]}" string="Done &amp; Schedule Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button attrs="{'invisible': [('chaining_type', '=', 'suggest')]}" string="Done &amp; Launch Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>-->
-<!--                        <button attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '!=', 'In Progress')]}" string="Mark as Completed" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
-<!--                        <button attrs="{'invisible': [('activity_type', '=', 'Cancelled')]}" string="Cancel" name="type_cancel" type="object" context="{'mail_activity_quick_update': True}"/>-->
+                            <field name="id" invisible="1"/>
+                            <button id="mail_activity_schedule" string="Schedule" name="action_close_dialog"
+                                    type="object" class="btn-primary" attrs="{'invisible': [('id', '!=', False)]}"
+                                    data-hotkey="q"/>
+                            <!--                        <button id="mail_activity_save" string="Save" name="action_close_dialog" type="object" class="btn-primary" attrs="{'invisible': [('id', '=', False)]}" data-hotkey="q"/>-->
+                            <!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Compeleted')]}" string="Mark as Not Completed" name="type_not" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Cancelled')]}" string="In Progress" name="type_in" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button attrs="{'invisible': [('activity_type', '!=', 'onhold')]}" string="Complete" name="type_com" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button attrs="{'invisible': [('activity_type', '!=', 'Not Completed')]}" string="On Hold" name="type_on" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button attrs="{'invisible': [('chaining_type', '=', 'trigger')]}" string="Done &amp; Schedule Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button attrs="{'invisible': [('chaining_type', '=', 'suggest')]}" string="Done &amp; Launch Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>-->
+                            <!--                        <button attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '!=', 'In Progress')]}" string="Mark as Completed" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+                            <!--                        <button attrs="{'invisible': [('activity_type', '=', 'Cancelled')]}" string="Cancel" name="type_cancel" type="object" context="{'mail_activity_quick_update': True}"/>-->
 
-</footer>
-                </sheet>
-            </form>
-        </field>
-    </record>
-         <record id="mail_activity_view_calendar_crm" model="ir.ui.view">
-        <field name="name">mail_activity_view_calendar_inherit</field>
-        <field name="model">mail.activity</field>
-        <field name="arch" type="xml">
-<calendar string="Activity" date_start="date_deadline" color="activity_type" mode="month" quick_add="False">
-                <field name="user_id" avatar_field="avatar_128"/>
-                <field name="res_name"/>
-                <field name="date_deadline"/>
-                <field name="summary"/>
-                <field name="activity_type" filters="1"/>
-                <field name="activity_type_id" invisible="1"/>
-            </calendar>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="mail_activity_view_calendar_crm" model="ir.ui.view">
+            <field name="name">mail_activity_view_calendar_inherit</field>
+            <field name="model">mail.activity</field>
+            <field name="arch" type="xml">
+                <calendar string="Activity" date_start="date_deadline" color="activity_type" mode="month"
+                          quick_add="False">
+                    <field name="user_id" avatar_field="avatar_128"/>
+                    <field name="res_name"/>
+                    <field name="date_deadline"/>
+                    <field name="summary"/>
+                    <field name="activity_type" filters="1"/>
+                    <field name="activity_type_id" invisible="1"/>
+                </calendar>
 
-        </field>
-         </record>
-      <record id="mail_activity_action" model="ir.actions.act_window">
-          <field name="name">Activities</field>
-          <field name="type">ir.actions.act_window</field>
-          <field name="res_model">mail.activity</field>
-          <field name="view_mode">calendar,form</field>
-          <field name="view_id" ref="mail_activity_view_calendar_crm"/>
-           <field name="view_ids" eval="[(5, 0, 0),
+            </field>
+        </record>
+        <record id="mail_activity_action" model="ir.actions.act_window">
+            <field name="name">Activities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mail.activity</field>
+            <field name="view_mode">calendar,form</field>
+            <field name="view_id" ref="mail_activity_view_calendar_crm"/>
+            <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'calendar', 'view_id': ref('mail_activity_view_calendar_crm')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('crm_form_activity')}),
                 ]"/>
 
-      </record>
+        </record>
 
-<menuitem id="crm_lead_activities_menu" name="Activities" parent="crm.crm_menu_root" action="mail_activity_action" sequence="2"/>
+        <menuitem id="crm_lead_activities_menu" name="Activities" parent="crm.crm_menu_root"
+                  action="mail_activity_action" sequence="2"/>
     </data>
 </odoo>

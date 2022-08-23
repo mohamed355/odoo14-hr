@@ -14,6 +14,8 @@ from datetime import datetime
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
+
+    app_code = fields.Char(string="Serial", required=False )
     # notes = fields.Text(string="Notes", required=False, )
     acc_date = fields.Date(string="Accepted Date", required=False, )
     ex_of = fields.Float(string="Expected(Offshore)",  required=False, )
@@ -52,6 +54,8 @@ class HrApp(models.Model):
                                   string="Experience monthes", store=True)
     experience_d = fields.Integer(compute="_calculate_experience",
                                   string="Experience dayes", store=True)
+    notice_period_to = fields.Integer(string="Notice Period To", required=False, )
+    notice_period_from = fields.Integer(string="Notice Period From", required=False, )
 
     @api.onchange('stage_id')
     def onchange_stage_id(self):
