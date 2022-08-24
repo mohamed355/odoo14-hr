@@ -1,76 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-  <data>
-     <record id="create_seq_form" model="ir.ui.view">
-        <field name="name">create_seq_form</field>
-        <field name="model">create.seq</field>
-        <field name="arch" type="xml">
-            <form string="Create Seq">
-                <sheet>
-                    <group>
-                        <group>                        <field name="prefix"/>
-                                              <field name="name_seq"/>
-</group>
+    <data>
+        <record id="create_seq_form" model="ir.ui.view">
+            <field name="name">create_seq_form</field>
+            <field name="model">create.seq</field>
+            <field name="arch" type="xml">
+                <form string="Create Seq">
+                    <sheet>
                         <group>
-                            <field name="code"/>
-                            <field name="padding"/>
+                            <group>
+                                <field name="prefix"/>
+                                <field name="name_seq"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                                <field name="padding"/>
+                            </group>
                         </group>
-                    </group>
-                </sheet>
-                <footer>
-                       <button name="create_seq" type="object" class="oe_highlight" string="Create"/>
-                       <button special="cancel" class="btn-secondary" string="Cancel"/>
-                   </footer>
-            </form>
-        </field>
-    </record>
-    <record id="create_seq_action" model="ir.actions.act_window">
-        <field name="name">Create Seq</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">create.seq</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
+                    </sheet>
+                    <footer>
+                        <button name="create_seq" type="object" class="oe_highlight" string="Create"/>
+                        <button special="cancel" class="btn-secondary" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="create_seq_action" model="ir.actions.act_window">
+            <field name="name">Create Seq</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">create.seq</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
 
-    </record>
-       <record id="view_hr_job_form_inherit" model="ir.ui.view">
-          <field name="name">view_hr_job_form_inherit</field>
-          <field name="model">hr.job</field>
-          <field name="inherit_id" ref="hr.view_hr_job_form"/>
-          <field name="arch" type="xml">
+        </record>
+        <record id="view_hr_job_form_inherit" model="ir.ui.view">
+            <field name="name">view_hr_job_form_inherit</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
 
-              <xpath expr="//header" position="inside">
-                  <field name="seq_added" invisible="1"/>
-<button name="%(create_seq_action)d" type="action" class="oe_highlight" string="Add Sequence" attrs="{'invisible': [('seq_added','=',True)]}"/>              </xpath>
-
-          </field>
-      </record>
-       <record id="hr_applicant_view_tree_inherit" model="ir.ui.view">
-        <field name="name">hr_recruitment.crm_case_tree_view_job.inherit</field>
-        <field name="model">hr.applicant</field>
-        <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
-        <field name="arch" type="xml">
-                        <field name="partner_name" position="before">
-                            <field name="app_code" string="#"/>
-                        </field>
-
-
-        </field>
-    </record>
-       <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
-        <field name="name">hr_recruitment.hr_applicant_view_form.inherit</field>
-        <field name="model">hr.applicant</field>
-        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
-        <field name="arch" type="xml">
-            <field name="source_id" position="after">
-<!--                <field name="app_code"/>-->
-                <field name="code" invisible="1"/>
+                <xpath expr="//header" position="inside">
+                    <field name="seq_added" invisible="1"/>
+                    <button name="%(create_seq_action)d" type="action" class="oe_highlight" string="Add Sequence"
+                            attrs="{'invisible': [('seq_added','=',True)]}"/>
+                </xpath>
 
             </field>
-            <xpath expr="//div[@class='oe_title']" position="inside">
-<label for="app_code" class="oe_edit_only"/>
-                    <h1><field name="app_code" readonly="1"/></h1>
-                             </xpath>
-        </field>
-    </record>
-  </data>
+        </record>
+        <record id="hr_applicant_view_tree_inherit" model="ir.ui.view">
+            <field name="name">hr_recruitment.crm_case_tree_view_job.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+            <field name="arch" type="xml">
+                <field name="partner_name" position="before">
+                    <field name="app_code" string="#"/>
+                </field>
+
+
+            </field>
+        </record>
+        <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr_recruitment.hr_applicant_view_form.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <field name="source_id" position="after">
+                    <!--                <field name="app_code"/>-->
+                    <field name="code" invisible="1"/>
+
+                </field>
+                <xpath expr="//div[@class='oe_title']" position="inside">
+                    <label for="app_code" class="oe_edit_only"/>
+                    <h1>
+                        <field name="app_code"/>
+                    </h1>
+                </xpath>
+            </field>
+        </record>
+    </data>
 </odoo>

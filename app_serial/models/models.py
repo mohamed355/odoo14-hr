@@ -19,15 +19,15 @@ class HrApp(models.Model):
     #             vals['code'])
     #     return super(HrApp, self).create(vals)
 
-    @api.constrains('job_id')
-    def _onchange_job_id(self):
-        self.short_code = self.job_id.short_code
-        self.code = self.job_id.seq_code
-        if self.code:
-            self.app_code = self.env['ir.sequence'].next_by_code(
-                    self.code)
-        else:
-            self.app_code = False
+    # @api.constrains('job_id')
+    # def _onchange_job_id(self):
+    #     self.short_code = self.job_id.short_code
+    #     self.code = self.job_id.seq_code
+    #     if self.code:
+    #         self.app_code = self.env['ir.sequence'].next_by_code(
+    #                 self.code)
+    #     else:
+    #         self.app_code = False
 
     # @api.constrains('job_id')
     # def onchange_job_id(self):
