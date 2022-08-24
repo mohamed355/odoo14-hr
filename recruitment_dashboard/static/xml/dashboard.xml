@@ -253,25 +253,25 @@
                         </div>
                     </div>
           </div>
-<!--         <div class="col-sm-3 col-md-4 apps">-->
-<!--                    <div class="chart-container card-shadow">-->
-<!--                        <h2>Stages-->
-<!--</h2>-->
-<!--                        <hr/>-->
-<!--                        <div class="card-body mt-3" id="in_ex_body_hide">-->
-<!--                                    <div class="row">-->
-<!--&lt;!&ndash;                                        <div class="col-md-12">&ndash;&gt;-->
-<!--                                        <p id="myelement1"> </p>-->
-<!--                                        <div class="chart">-->
-<!--                                                <canvas id="canvas"> </canvas>-->
-<!--                                            <canvas id="canvas" width="100% !important"-->
-<!--                                                    height="auto !important"> </canvas>-->
-<!--                                            </div>-->
-<!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                    </div>-->
-<!--          </div>-->
+         <!--         <div class="col-sm-3 col-md-4 apps">-->
+         <!--                    <div class="chart-container card-shadow">-->
+         <!--                        <h2>Stages-->
+         <!--</h2>-->
+         <!--                        <hr/>-->
+         <!--                        <div class="card-body mt-3" id="in_ex_body_hide">-->
+         <!--                                    <div class="row">-->
+         <!--&lt;!&ndash;                                        <div class="col-md-12">&ndash;&gt;-->
+         <!--                                        <p id="myelement1"> </p>-->
+         <!--                                        <div class="chart">-->
+         <!--                                                <canvas id="canvas"> </canvas>-->
+         <!--                                            <canvas id="canvas" width="100% !important"-->
+         <!--                                                    height="auto !important"> </canvas>-->
+         <!--                                            </div>-->
+         <!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
+         <!--                                    </div>-->
+         <!--                                </div>-->
+         <!--                    </div>-->
+         <!--          </div>-->
           </div>
 
 

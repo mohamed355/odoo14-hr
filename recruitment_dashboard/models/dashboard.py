@@ -52,7 +52,7 @@ class HrDashboard(models.Model):
         try:
             app_4 = round((sum(duration_list) / len(hr_applicant)) * 100)
         except ZeroDivisionError:
-            app_3 = 0
+            app_4 = 0
 
         h_com = 0
         if round(len(hr_applicant) / len(open_hiring)):
