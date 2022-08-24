@@ -26,11 +26,8 @@
                                             value="this_year">This Year</option>
                                     <option id="this_quarter"
                                             value="this_quarter">This Quarter</option>
-                                    <option id="this_month"
-                                            value="this_month">This Month</option>
-                                    <option id="all" value="all"
-                                    >ALL</option>
-
+                                    <option id="this_month" value="this_month"
+                                    >This Month</option>
                                     <!--                                    <option id="this_week"-->
                                     <!--                                            value="this_week">This Week</option>-->
                                 </select>
@@ -58,7 +55,6 @@
                                     <div id="hiring_this_year"/>
                                     <div id="hiring_this_quarter"/>
                                     <div id="hiring_this_month"/>
-                                    <div id="hiring_this_all"/>
                                     <!--                                    <div id="leads_this_week"/>-->
                                 </span>
                             </h3>
@@ -79,7 +75,6 @@
                                     <div id="leads_this_year"/>
                                       <div id="leads_this_quarter"/>
                                       <div id="leads_this_month"/>
-                                      <div id="leads_this_all"/>
                                       <!--                                    <div id="leads_this_week"/>-->
                                 </span>
                             </h3>
@@ -111,7 +106,6 @@
                                        <span style="margin-top:25px"><div id="h_a_this_year"/></span>
                                        <span style="margin-top:25px"><div id="h_a_this_quarter"/></span>
                                        <span style="margin-top:25px"><div id="h_a_this_month"/></span>
-                                       <span style="margin-top:25px"><div id="h_a_this_all"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -126,7 +120,6 @@
                                        <span style="margin-top:25px"><div id="h_com_this_year"/></span>
                                        <span style="margin-top:25px"><div id="h_com_this_quarter"/></span>
                                        <span style="margin-top:25px"><div id="h_com_this_month"/></span>
-                                       <span style="margin-top:25px"><div id="h_com_this_all"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -143,7 +136,6 @@
                                        <span><div id="app_3_this_year"/></span>
                                        <span><div id="app_3_this_quarter"/></span>
                                        <span><div id="app_3_this_month"/></span>
-                                       <span><div id="app_3_this_all"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>
@@ -160,7 +152,6 @@
                                        <span><div id="app_4_this_year"/></span>
                                        <span><div id="app_4_this_quarter"/></span>
                                        <span><div id="app_4_this_month"/></span>
-                                       <span><div id="app_4_this_all"/></span>
                                        <div class="slice">
         <div class="bar"></div>
                                            <div class="fill"></div>

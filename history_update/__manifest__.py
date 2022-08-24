@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "History",
-    'depends': ['base', 'crm', 'recruitment_with_lead', 'mail','hr_recruitment','app_serial'],
+    'depends': ['base', 'crm', 'recruitment_with_lead', 'mail','hr_recruitment','rawafd_hiring_request','app_serial'],
 
     # always loaded
     'data': [
