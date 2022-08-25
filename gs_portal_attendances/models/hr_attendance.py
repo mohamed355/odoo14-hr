@@ -1,7 +1,20 @@
 # -*- coding: utf-8 -*-
 """ init object """
-import math
-from odoo import fields, models, api
+from odoo import fields, models, api, _ ,tools, SUPERUSER_ID
+from odoo.exceptions import ValidationError,UserError
+from datetime import datetime , date ,timedelta
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from dateutil.relativedelta import relativedelta
+from odoo.fields import Datetime as fieldsDatetime
+import calendar
+from odoo import http
+from odoo.http import request
+from odoo import tools
+
+import logging
+
+LOGGER = logging.getLogger(__name__)
 
 
 class HrAttendance(models.Model):
@@ -26,20 +39,6 @@ class HrAttendance(models.Model):
 
     def action_open_check_out_location(self):
         return self.action_open_location(self.check_out_latitude, self.check_out_longitude)
-
-    @api.model
-    def calculate_dist_to_company(self, x, y):
-        R = 6371008.7714
-        lat1 = math.radians(x[0])
-        lon1 = math.radians(x[1])
-        lat2 = math.radians(y[0])
-        lon2 = math.radians(y[1])
-        dlon = lon2 - lon1
-        dlat = lat2 - lat1
-        a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-        distance = R * c
-        return distance
 
 
 

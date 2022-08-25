@@ -14,8 +14,6 @@
         'views/template.xml',
         'views/portal_attendance.xml',
         'views/hr_attendance.xml',
-        'views/hr_employee.xml',
-        'views/company.xml',
     ],
     'assets': {
         'web.assets_frontend': [

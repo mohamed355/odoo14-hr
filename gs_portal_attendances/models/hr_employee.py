@@ -1,10 +1,4 @@
-from odoo import models, fields
-
-
-class HrEmployeeBase(models.AbstractModel):
-    _inherit = "hr.employee.base"
-
-    allow_attendance_check = fields.Boolean(string="Allow Attendance Any Location", default=False  )
+from odoo import models
 
 
 class HrEmployee(models.Model):
@@ -16,24 +10,11 @@ class HrEmployee(models.Model):
             modified_attendance = self.with_user(self.user_id).sudo()._attendance_action_change()
         else:
             modified_attendance = self.sudo()._attendance_action_change()
-        if 'error' in modified_attendance:
-            return modified_attendance
         action_message['attendance'] = modified_attendance.sudo().read()[0]
         return action_message
 
     def _attendance_action_change(self):
         context = dict(self._context)
-        if not self.allow_attendance_check and 'location' in context:
-            lat = context['location']['latitude']
-            long = context['location']['longitude']
-            check_cord = (lat, long)
-            comp_cord = (self.env.company.latitude, self.env.company.longitude)
-            dist = self.env['hr.attendance'].calculate_dist_to_company(check_cord, comp_cord)
-            if abs(dist) > self.env.company.allowed_attendance_distance:
-                return {
-                    'error': "Please Check From The Company Correct Location"
-                }
-
         if 'location' in context:
             if self.attendance_state != 'checked_in':
                 context['default_check_in_latitude'] = context['location']['latitude']
