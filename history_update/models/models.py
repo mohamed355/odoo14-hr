@@ -11,7 +11,7 @@ class HrApplication(models.Model):
 
     name = fields.Char("Subject / Application Name", required=False, help="Email subject for applications sent via email")
     approve_date = fields.Datetime(string="Approve Date", required=False, )
-    hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", )
+    hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", store=True)
     rej_boolean = fields.Boolean("rejected or no feedback")
 
     # @api.depends()
@@ -56,6 +56,7 @@ class AssignApplications(models.Model):
             else:
                 hiring.update({'application_ids': [(4, application.id)]})
                 application.update({'hiring_ids': [(4, hiring.id)]})
+                application.hiring_id =  hiring.id
                 application.approve_date = fields.Datetime.now()
 
         if apps_exist:
@@ -72,13 +73,14 @@ class ResUsers(models.Model):
     @api.depends('approve_date','unapprove_date')
     def _compute_duration(self):
         for record in self:
-            record.duration = abs(record.approve_date - record.unapprove_date)
+            if record.approve_date and record.unapprove_date:
+                record.duration = abs(record.approve_date - record.unapprove_date)
 
 
 class AssignUsers(models.TransientModel):
     _name = 'assign.users'
 
-    user_ids = fields.Many2many(comodel_name="res.users", relation="resuser", column1="resuser", column2="ss", string="Users", )
+    user_ids = fields.Many2many(comodel_name="res.users", relation="resusersdasf", column1="resafduser", column2="afasasafasfas", string="Users", )
 
     def assign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
@@ -92,7 +94,7 @@ class AssignUsers(models.TransientModel):
 class UnAssignUsers(models.TransientModel):
     _name = 'unassign.users'
 
-    user_ids = fields.Many2many(comodel_name="res.users", relation="resdfuser", column1="resufdsfser", column2="ssfs", string="Users", )
+    user_ids = fields.Many2many(comodel_name="res.users", relation="asdff", column1="dafdf", column2="sddf", string="Users", )
 
     def unassign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
