@@ -117,6 +117,7 @@ class NewModule(models.TransientModel):
                     'type_of_job': rec.type_of_job,
                 })
 
+
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -135,6 +136,7 @@ class HiringRequest(models.Model):
     impo_level = fields.Selection(string="Importance Level",
                                   selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], required=False, )
     approved = fields.Boolean(string="Approved",  )
+    user_ids_real = fields.Many2many(comodel_name="res.users", relation="resuserasds", column1="ssad", column2="fasfsadsad", string="Users", )
     user_ids = fields.Many2many(comodel_name="res.users", relation="resusers", column1="res", column2="users", string="Users", )
     tec_ids = fields.Many2many(comodel_name="tec", relation="dewf", column1="wf", column2="tfeec", string="Required Technology", )
     name = fields.Char(string='Serial' ,readonly=True, default="New",track_visibility='onchange')
@@ -376,7 +378,7 @@ class HrApplication(models.Model):
         return result
     # name = fields.Char("Subject / Application Name", required=False, help="Email subject for applications sent via email")
     # approve_date = fields.Datetime(string="Approve Date", required=False, )
-    hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", )
+    hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring",store=True )
     # rej_boolean = fields.Boolean("rejected or no feedback")
 #
 #     # @api.depends()
@@ -427,139 +429,3 @@ class AssignApplications(models.Model):
 
         if apps_exist:
             raise ValidationError('This Applications %s Already Assigned ' % apps_exist)
-
-
-# class ResUsers(models.Model):
-#     _inherit = 'res.users'
-#
-#     approve_date
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#     
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#     = fields.Datetime(string="Approve Date", required=False, )
-
-
-# class AssignUsers(models.TransientModel):
-#     _inherit = 'assign.users'
-#
-#     user_ids = fields.Many2many(comodel_name="res.users", relation="resuser", column1="resuser", column2="ss", string="Users", )
-#
-#     def assign_users(self):
-#         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
-#         hiring.approved = True
-#         print("Hiring")
-#         hiring.acc_date = fields.Date.today()
-#         for user in self.user_ids:
-#             # user.approve_date = fields.Datetime.now()
-#             hiring.update({'user_ids': [(4, user.id)]})
-#
-#
-# class UnAssignUsers(models.TransientModel):
-#     _inherit = 'unassign.users'
-#
-#     user_ids = fields.Many2many(comodel_name="res.users", relation="resdfuser", column1="resufdsfser", column2="ssfs", string="Users", )
-#
-#     def unassign_users(self):
-#         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
-#         hiring.approved = True
-#         print("Hiring")
-#         hiring.acc_date = fields.Date.today()
-#         for user in self.user_ids:
-#             user.unapprove_date = fields.Datetime.now()
-#             hiring.update({'user_ids': [(3, user.id, False)]})

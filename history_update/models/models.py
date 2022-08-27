@@ -75,6 +75,8 @@ class ResUsers(models.Model):
         for record in self:
             if record.approve_date and record.unapprove_date:
                 record.duration = abs(record.approve_date - record.unapprove_date)
+            else:
+                record.duration = 0
 
 
 class AssignUsers(models.TransientModel):
@@ -89,6 +91,7 @@ class AssignUsers(models.TransientModel):
         for user in self.user_ids:
             user.approve_date = fields.Datetime.now()
             hiring.update({'user_ids': [(4, user.id)]})
+            hiring.update({'user_ids_real': [(4, user.id)]})
 
 
 class UnAssignUsers(models.TransientModel):
@@ -103,4 +106,4 @@ class UnAssignUsers(models.TransientModel):
         hiring.acc_date = fields.Date.today()
         for user in self.user_ids:
             user.unapprove_date = fields.Datetime.now()
-            hiring.update({'user_ids': [(3, user.id , False)]})
+            hiring.update({'user_ids_real': [(3, user.id , False)]})
