@@ -59,7 +59,14 @@
                 </form>
             </field>
         </record>
+<record id="assign_users_action" model="ir.actions.act_window">
+            <field name="name">Assign Users</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">assign.users</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
 
+        </record>
         <record id="unassign_users_action" model="ir.actions.act_window">
             <field name="name">UnAssign Users</field>
             <field name="type">ir.actions.act_window</field>
@@ -243,14 +250,7 @@
 
             </field>
         </record>
-        <record id="assign_users_action" model="ir.actions.act_window">
-            <field name="name">Assign Users</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">assign.users</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
 
-        </record>
         <record id="hiring_request_tree_inherit" model="ir.ui.view">
             <field name="name">hiring_request_tree_inherit</field>
             <field name="model">hiring.request</field>
