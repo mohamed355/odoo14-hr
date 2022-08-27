@@ -124,7 +124,8 @@
             <field name="inherit_id" ref="rawafd_hiring_request.hiring_request_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//form" position="replace">
+                <xpath expr="//sheet" position="replace">
+                    <sheet>
                     <form>
                         <header>
                             <field name="job_id" invisible="1"/>
@@ -246,6 +247,37 @@
                             <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
                         </div>
                     </form>
+                        <field name="job_id" invisible="1"/>
+                    <notebook>
+                        <page string="Applications">
+                            <group>
+                                <field name="application_ids">
+                                    <tree editable="bottom">
+                                        <field name="job_id" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+
+                                        <field name="app_code"/>
+                                        <field name="partner_name"/>
+                                        <field name="approve_date"/>
+                                        <field name="stage_id"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Users">
+                            <group>
+                                <field name="user_ids">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="approve_date"/>
+                                        <field name="unapprove_date"/>
+
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                    </sheet>
                 </xpath>
 
             </field>
