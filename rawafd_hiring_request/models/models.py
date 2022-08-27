@@ -413,7 +413,6 @@ class AssignApplications(models.Model):
     name = fields.Char(default="Assign Applications")
     applications_ids = fields.Many2many(comodel_name="hr.applicant", relation="hrapplicant", column1="hr", column2="applicant", string="Applications", )
 
-
     def assign_applications(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
         apps_exist = []
@@ -433,20 +432,134 @@ class AssignApplications(models.Model):
 # class ResUsers(models.Model):
 #     _inherit = 'res.users'
 #
-#     approve_date = fields.Datetime(string="Approve Date", required=False, )
+#     approve_date
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#     
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#     = fields.Datetime(string="Approve Date", required=False, )
 
 
-class AssignUsers(models.TransientModel):
-    _name = 'assign.users'
-
-    user_ids = fields.Many2many(comodel_name="res.users", relation="resuser", column1="resuser", column2="ss", string="Users", )
-
-    def assign_users(self):
-        hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
-        hiring.approved = True
-        print("Hiring")
-        hiring.acc_date = fields.Date.today()
-        for user in self.user_ids:
-            # user.approve_date = fields.Datetime.now()
-            hiring.update({'user_ids': [(4, user.id)]})
-
+# class AssignUsers(models.TransientModel):
+#     _inherit = 'assign.users'
+#
+#     user_ids = fields.Many2many(comodel_name="res.users", relation="resuser", column1="resuser", column2="ss", string="Users", )
+#
+#     def assign_users(self):
+#         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
+#         hiring.approved = True
+#         print("Hiring")
+#         hiring.acc_date = fields.Date.today()
+#         for user in self.user_ids:
+#             # user.approve_date = fields.Datetime.now()
+#             hiring.update({'user_ids': [(4, user.id)]})
+#
+#
+# class UnAssignUsers(models.TransientModel):
+#     _inherit = 'unassign.users'
+#
+#     user_ids = fields.Many2many(comodel_name="res.users", relation="resdfuser", column1="resufdsfser", column2="ssfs", string="Users", )
+#
+#     def unassign_users(self):
+#         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
+#         hiring.approved = True
+#         print("Hiring")
+#         hiring.acc_date = fields.Date.today()
+#         for user in self.user_ids:
+#             user.unapprove_date = fields.Datetime.now()
+#             hiring.update({'user_ids': [(3, user.id, False)]})

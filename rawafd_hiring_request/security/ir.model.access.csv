@@ -5,5 +5,3 @@ access_tec,access.tec,model_tec,,1,1,1,1
 access_key,access.key,model_key,,1,1,1,1
 access_stage,access.stage,model_hiring_stage,,1,1,1,1
 access_hiring_customer,access.hiring.customer,model_hiring_customer,,1,1,1,1
-access_assign_application,access.assign.application,model_assign_application,,1,1,1,1
-access_assign_users,access.assign.users,model_assign_users,,1,1,1,1
