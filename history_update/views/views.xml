@@ -238,15 +238,7 @@
                                 </group>
                                 <group></group>
                             </group>
-
-                        </sheet>
-                        <div class="oe_chatter">
-                            <field name="message_follower_ids" widget="mail_followers"/>
-                            <field name="activity_ids" widget="mail_activity"/>
-                            <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
-                        </div>
-                    </form>
-                        <field name="job_id" invisible="1"/>
+    <field name="job_id" invisible="1"/>
                     <notebook>
                         <page string="Applications">
                             <group>
@@ -277,6 +269,14 @@
                             </group>
                         </page>
                     </notebook>
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </form>
+
                 </xpath>
             </field>
         </record>
