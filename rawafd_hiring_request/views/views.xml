@@ -446,7 +446,7 @@
                                 <tree editable="bottom">
                                     <field name="name" string="Code"/>
                                     <field name="approve_date"/>
-                                    <field name="stage_id"/>
+                                    <field name="stage_id" string="Last Status"/>
 
                                 </tree>
                             </field>

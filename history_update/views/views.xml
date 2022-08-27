@@ -124,8 +124,7 @@
             <field name="inherit_id" ref="rawafd_hiring_request.hiring_request_form"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//sheet" position="replace">
-                    <sheet>
+                <xpath expr="//form" position="replace">
                     <form>
                         <header>
                             <field name="job_id" invisible="1"/>
@@ -259,7 +258,7 @@
                                         <field name="app_code"/>
                                         <field name="partner_name"/>
                                         <field name="approve_date"/>
-                                        <field name="stage_id"/>
+                                        <field name="stage_id" string="Last Status"/>
                                     </tree>
                                 </field>
                             </group>
@@ -271,15 +270,14 @@
                                         <field name="name"/>
                                         <field name="approve_date"/>
                                         <field name="unapprove_date"/>
+                                        <field name="duration"/>
 
                                     </tree>
                                 </field>
                             </group>
                         </page>
                     </notebook>
-                    </sheet>
                 </xpath>
-
             </field>
         </record>
 
