@@ -68,13 +68,13 @@ class ResUsers(models.Model):
 
     approve_date = fields.Datetime(string="Start Date", required=False, )
     unapprove_date = fields.Datetime(string="End Date", required=False, )
-    duration = fields.Datetime(string="Duration", required=False, compute='_compute_duration')
+    duration = fields.Integer(string="Duration", required=False, compute='_compute_duration')
 
     @api.depends('approve_date','unapprove_date')
     def _compute_duration(self):
         for record in self:
             if record.approve_date and record.unapprove_date:
-                record.duration = abs(record.approve_date - record.unapprove_date)
+                record.duration = abs(record.approve_date - record.unapprove_date).days
             else:
                 record.duration = 0
 
