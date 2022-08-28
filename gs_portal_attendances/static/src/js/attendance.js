@@ -52,6 +52,9 @@ odoo.define('gs_portal_attendances.portal_attendance', function (require) {
                         args: [[self.employee_id]],
                         context: context,
                    }).then(function(result) {
+                        if(result.error){
+                            alert(result.error);
+                        }
                         window.location.reload();
                    })
                 },
