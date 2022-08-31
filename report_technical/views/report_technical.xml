@@ -2,10 +2,10 @@
 <odoo>
     <data>
         <record id="report_technical_tree" model="ir.ui.view">
-            <field name="name">report.technical.tree</field>
-            <field name="model">report.technical</field>
+            <field name="name">report.technical.app.tree</field>
+            <field name="model">report.technical.app</field>
             <field name="arch" type="xml">
-                <tree string="Report">
+                <tree string="Report" editable="bottom" create="0">
                     <field name="hiring"/>
                     <field name="client"/>
                     <field name="job_title"/>
@@ -20,7 +20,9 @@
                     <field name="can_na"/>
                     <field name="interview_date" />
                     <field name="assign_to" />
-<!--                    <field name="interview" />-->
+                    <field name="interview" />
+                    <field name="stage" string="Last Activity"/>
+                    <field name="notes"/>
 <!--                    <field name="interview_date" t-options="{'format': 'HH:mm'}" string="Time"/>-->
                 </tree>
             </field>
@@ -28,7 +30,7 @@
         <record id="report_technical_action" model="ir.actions.act_window">
             <field name="name">Report Technical</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">report.technical</field>
+            <field name="res_model">report.technical.app</field>
             <field name="view_mode">tree</field>
         </record>
         <!-- This Menu Item must have a parent and an action -->

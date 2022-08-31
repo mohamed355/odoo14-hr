@@ -4,17 +4,53 @@ from odoo import api, fields, models, tools
 class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
 
-    hiring_id = fields.Many2one(comodel_name="hiring.request", string="Hiring", required=False, )
+    is_tec = fields.Boolean(string="Technical",  )
 
-    @api.onchange('hiring_ids')
-    def onchange_hiring_ids(self):
+    @api.constrains('stage_id')
+    def constrains_stage_id(self):
+        if self.stage_id.name == 'Technical Offer':
+            self.is_tec = True
+            self.env['report.technical.app'].create({
+                'name':self.partner_name,
+                'stage':self.stage_id.name,
+                'hiring':self.hiring_ids[0].name,
+                'job_title':self.hiring_ids[0].job_id.name,
+                'location':self.hiring_ids[0].location,
+                'client':self.hiring_ids[0].client.name,
+                'serial':self.app_code,
+                'notice_period_from':self.notice_period_from,
+                'notice_period_to':self.notice_period_to,
+                'current_salary':self.current_salary,
+                'ex_salary':self.ex_of + self.ex_on,
+                'can_loc':self.candidate_location,
+                'can_na':self.nationality,
+                'interview_date':self.interview_date,
+            })
+
+    @api.constrains('hiring_ids')
+    def constrains_hiring(self):
         if self.hiring_ids:
-            self.hiring_id = self.hiring_ids[0].id
+            if self.is_tec == True:
+                self.env['report.technical.app'].create({
+                    'name': self.partner_name,
+                    'stage': self.stage_id.name,
+                    'hiring': self.hiring_ids[0].name,
+                    'job_title': self.hiring_ids[0].job_id.name,
+                    'location': self.hiring_ids[0].location,
+                    'client': self.hiring_ids[0].client.name,
+                    'serial': self.app_code,
+                    'notice_period_from': self.notice_period_from,
+                    'notice_period_to': self.notice_period_to,
+                    'current_salary': self.current_salary,
+                    'ex_salary': self.ex_of + self.ex_on,
+                    'can_loc': self.candidate_location,
+                    'can_na': self.nationality,
+                    'interview_date': self.interview_date,
+                })
 
 
-class ReportTechnical(models.Model):
-    _name = 'report.technical'
-    _auto = False
+class ReportTechnicalApp(models.Model):
+    _name = 'report.technical.app'
 
     name = fields.Char(string="Name", required=False, )
     stage = fields.Char(string="Stage", required=False)
@@ -31,40 +67,6 @@ class ReportTechnical(models.Model):
     can_na = fields.Char(string="Candidate Nationality", required=False)
     interview_date = fields.Datetime(string="Interview Date", required=False)
     assign_to = fields.Char(string="Assigned Interviewer", required=False)
-    interview = fields.Char(string="Interview", required=False)
-
-    def init(self):
-        tools.drop_view_if_exists(self.env.cr, self._table)
-
-        self.env.cr.execute("""
-            CREATE OR REPLACE VIEW %s AS (
-                (
-                    SELECT 
-                    hr_applicant.id as id,
-                    ' ' as interview,
-                    hr_applicant.nationality as can_na,
-                    hr_applicant.candidate_location as can_loc,
-                    hr_applicant.app_code as serial,
-                    hr_applicant.partner_name as name,
-                    hr_applicant.interview_date as interview_date,
-                    hr_applicant.inter_by as assign_to,
-                    hr_applicant.notice_period_from as notice_period_from,
-                    hr_applicant.notice_period_to as notice_period_to,
-                    hr_applicant.current_salary as current_salary,
-                    hr_applicant.ex_on + ex_of as ex_salary,
-                    stage.name as stage,
-                    hiring.name as hiring,
-                    hiring.location as location,
-                    hiring.client as client,
-                    job.name as job_title
-                    
-                    FROM hr_applicant
-                   	LEFT JOIN hiring_request hiring ON hiring.id = hr_applicant.hiring_id 
-                   	LEFT JOIN hr_job job ON job.id = hiring.job_id 
-                   	LEFT JOIN res_partner client ON client.id = hiring.client 
-                    LEFT JOIN hr_recruitment_stage stage on stage.id = hr_applicant.stage_id
-
-                    WHERE stage.name = 'Technical'
-                                 )
-            )
-        """ % (self._table))
+    notes = fields.Char(string="Notes", required=False)
+    # interview = fields.Char(string="Interview", required=False)
+    interview = fields.Selection(string="Interview", selection=[('invited', 'Invited'), ('attend', 'Attend'), ('no', 'No Show'), ('passed', 'Passed'), ('failed', 'Failed'), ('waiting', 'Waiting'), ('app', 'Apologized'), ('re', 'Reschedule'), ('pos', 'Postponed') ], required=False, )
