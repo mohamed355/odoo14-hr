@@ -17,6 +17,7 @@ class HrApp(models.Model):
 
     app_code = fields.Char(string="Serial", required=False )
     # notes = fields.Text(string="Notes", required=False, )
+    ref_employee_id = fields.Many2one(comodel_name="hr.employee", string="Referred By Employee", required=False, )
     acc_date = fields.Date(string="Accepted Date", required=False, )
     ex_of = fields.Float(string="Expected(Offshore)",  required=False, )
     ex_on = fields.Float(string="Expected(Onsite)",  required=False, )

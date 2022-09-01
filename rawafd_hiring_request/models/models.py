@@ -273,6 +273,7 @@ class HiringRequest(models.Model):
                       ],
             'domain': [('res_model_id.model', '=', 'hr.applicant'),('res_id','in',self.application_ids.ids)],
         }
+    
     def activity_no(self):
         self.ensure_one()
         action = {

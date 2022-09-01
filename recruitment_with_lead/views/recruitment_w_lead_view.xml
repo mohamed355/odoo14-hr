@@ -34,6 +34,7 @@
 
             </xpath>
             <field name="source_id" position="after">
+                <field name="ref_employee_id"/>
                 <field name="nationality"/>
                 <field name="candidate_location"/>
             </field>
@@ -174,7 +175,7 @@
                 <field name="tools"/>
 <!--                <field name="notice_period"/>-->
                 <field name="notice_period_from" string="NB From"/>
-                <field name="notice_period_from" string="NB To"/>
+                <field name="notice_period_to" string="NB To"/>
                 <field name="salary_expected"/>
                 <field name="current_salary"/>
                 <field name="currency_id"/>

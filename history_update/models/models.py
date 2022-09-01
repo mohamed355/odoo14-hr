@@ -5,6 +5,12 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
+class HiringRequest(models.Model):
+    _inherit = 'hiring.request'
+
+    user_ids = fields.One2many(comodel_name="user.history", inverse_name="hiring_id", string="Users", required=False, )
+
+
 class HrApplication(models.Model):
     _inherit = 'hr.applicant'
     _rec_name = "partner_name"
@@ -56,25 +62,27 @@ class AssignApplications(models.Model):
             else:
                 hiring.update({'application_ids': [(4, application.id)]})
                 application.update({'hiring_ids': [(4, hiring.id)]})
-                application.hiring_id =  hiring.id
+                # application.hiring_id =  hiring.id
                 application.approve_date = fields.Datetime.now()
 
         if apps_exist:
             raise ValidationError('This Applications %s Already Assigned ' % apps_exist)
 
 
-class ResUsers(models.Model):
-    _inherit = 'res.users'
+class usershistory(models.Model):
+    _name = 'user.history'
 
-    approve_date = fields.Datetime(string="Start Date", required=False, )
-    unapprove_date = fields.Datetime(string="End Date", required=False, )
+    hiring_id = fields.Many2one(comodel_name="hiring.request", string="Hiring", required=False, )
+    user_id = fields.Many2one(comodel_name="res.users", string="User", required=False, )
+    start_date = fields.Datetime(string="Start Date", required=False, )
+    end_date = fields.Datetime(string="End Date", required=False, )
     duration = fields.Integer(string="Duration", required=False, compute='_compute_duration')
 
-    @api.depends('approve_date','unapprove_date')
+    @api.depends('start_date', 'end_date')
     def _compute_duration(self):
         for record in self:
-            if record.approve_date and record.unapprove_date:
-                record.duration = abs(record.approve_date - record.unapprove_date).days
+            if record.start_date and record.end_date:
+                record.duration = abs(record.start_date - record.end_date).days
             else:
                 record.duration = 0
 
@@ -89,8 +97,11 @@ class AssignUsers(models.TransientModel):
         hiring.approved=True
         hiring.acc_date= fields.Date.today()
         for user in self.user_ids:
-            user.approve_date = fields.Datetime.now()
-            hiring.update({'user_ids': [(4, user.id)]})
+            self.env['user.history'].create({
+                'user_id': user.id,
+                'start_date': fields.Datetime.today(),
+                'hiring_id': hiring.id,
+            })
             hiring.update({'user_ids_real': [(4, user.id)]})
 
 
@@ -105,5 +116,7 @@ class UnAssignUsers(models.TransientModel):
         print("Hiring")
         hiring.acc_date = fields.Date.today()
         for user in self.user_ids:
-            user.unapprove_date = fields.Datetime.now()
+            user = self.env['user.history'].search([('user_id','=',user.id),('end_date','=',False),('hiring_id','=',hiring.id)])
+            if user:
+                user.end_date = fields.Datetime.today()
             hiring.update({'user_ids_real': [(3, user.id , False)]})

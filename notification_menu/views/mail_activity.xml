@@ -113,5 +113,6 @@
 <menuitem id="notification_menu_root" name="Activities" sequence="2" web_icon="notification_menu,static/web_icon.png"/>
         <!-- This Menu Item must have a parent and an action -->
         <menuitem id="notification_menu_categ" name="Activities" parent="notification_menu_root" action="mail_activity_action" />
+        <menuitem id="notification_menu_categ_re" name="Activities" parent="hr_recruitment.menu_hr_recruitment_root" action="mail_activity_action" />
 
 </odoo>

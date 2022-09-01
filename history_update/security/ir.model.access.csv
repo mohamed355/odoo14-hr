@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_assign_users,access.assign.users,model_assign_users,,1,1,1,1
+access_assign_apps,access.assign.apps,model_assign_application,,1,1,1,1
 access_unassign_users,access.unassign.users,model_unassign_users,,1,1,1,1
+access_user_history,access.user.history,model_user_history,,1,1,1,1
