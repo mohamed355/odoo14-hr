@@ -59,187 +59,19 @@
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Your Application: {{ object.partner_name }}</field>
             <field name="email_to">{{ object.email_from }}</field>
+            <field name="report_template" ref="saudi_offer_report"/>
             <field name="partner_to"></field>
-            <field name="body_html" type="html">
-                <table border="0" cellpadding="0" cellspacing="0" width="590"
-                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
-                    <tr>
-                        <td valign="top">
-                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
-                                Date :
-                                <t t-out="object.create_date"></t>
-                                <br/>
-                                <br/>
-                                <b>
-                                    Dear
-                                    <t t-out="object.partner_name"></t>
-                                </b>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <b>
-                                    In reference to your application for employment and the recent discussion with
-                                    RawafedTech for information
-                                    technology, we are pleased to extend the following employment offer with the
-                                    following terms and conditions.
-                                </b>
-                                <br></br>
-                                <br></br>
-                                <b>Job Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Company RawafdTech
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>JobTitle
-                                <t t-out="object.offer_job_id.name"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract Country
-                                <t t-out="object.hiring_ids[0].location"></t>
-                                <br></br>
-                                <br></br>
-                                <b>Payment Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Total Package
-                                <t t-out="object.package_salary"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Basic Salary
-                                <t t-out="object.basic"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Housing Allowance
-                                <t t-out="object.housing"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Transportation
-                                <t t-out="object.transportation"></t>
-                                <br></br>
-                                <b>Other Benefits Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Medical Insurance
-                                    Family Plan - You, Your wife  children
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
-                                    offered a
-                                    legal contract once you submit your employment prerequisites that will be identified
-                                    during
-                                    your meeting with the Administration Manager, and ultimately join Rawafed Tech.
-                                </p>
-                                <br></br>
-                                <p><b>Rawafed Tech offers paid annual vacation,</b>which is 22 working days. In addition
-                                    to all official vacations and religious holidays in Saudi Arabia.
-                                </p>
-                                <br></br>
-                                <p><b>The place of work</b>will be at our office in Saudi Arabia or one of our client’s
-                                    offices in Saudi
-                                    Arabia.
-                                </p>
-                                <br></br>
-                                <p>
-                                    <b>Please read it carefully and reply with your acceptance</b>
-                                    by signing a copy of this letter as an acknowledgment of your acceptance or simply
-                                    reply
-                                    to this mail with your acceptance no later than 3 working days
-                                    from the date of the offer letter received.
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </field>
+            <field name="report_name">{{ (object.partner_name or '').replace('/','_') }}</field>
         </record>
         <record id="application_ksa_offer_template_ksa" model="mail.template">
             <field name="name">Applicant: Ksa Offer Template</field>
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Your Application: {{ object.partner_name }}</field>
             <field name="email_to">{{ object.email_from }}</field>
+            <field name="report_template" ref="ksa_offer_report"/>
             <field name="partner_to"></field>
-            <field name="body_html" type="html">
-                <table border="0" cellpadding="0" cellspacing="0" width="590"
-                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
-                    <tr>
-                        <td valign="top">
-                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
-                                Date :
-                                <t t-out="object.create_date"></t>
-                                <br/>
-                                <br/>
-                                <b>
-                                    Dear
-                                    <t t-out="object.partner_name"></t>
-                                </b>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <b>
-                                    In reference to your application for employment and the recent discussion with
-                                    RawafedTech for information
-                                    technology, we are pleased to extend the following employment offer with the
-                                    following terms and conditions.
-                                </b>
-                                <br></br>
-                                <br></br>
-                                <b>Job Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Company RawafdTech
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>JobTitle
-                                <t t-out="object.offer_job_id.name"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract Country
-                                <t t-out="object.hiring_ids[0].location"></t>
-                                <br></br>
-                                <br></br>
-                                <b>Payment Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Total Package
-                                <t t-out="object.package_salary"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Basic Salary
-                                <t t-out="object.basic"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Housing Allowance
-                                <t t-out="object.housing"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Transportation
-                                <t t-out="object.transportation"></t>
-                                <br></br>
-                                <b>Other Benefits Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Medical Insurance
-                                    Family Plan - You, Your wife  children
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Airlines Tickets
-                                You, Your wife  up to 3 children
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
-                                    offered a
-                                    legal contract once you submit your employment prerequisites that will be identified
-                                    during
-                                    your meeting with the Administration Manager, and ultimately join Rawafed Tech.
-                                </p>
-                                <br></br>
-                                <p><b>Rawafed Tech offers paid annual vacation,</b>which is 22 working days. In addition
-                                    to all official vacations and religious holidays in Saudi Arabia.
-                                </p>
-                                <br></br>
-                                <p><b>The place of work</b>will be at our office in Saudi Arabia or one of our client’s
-                                    offices in Saudi
-                                    Arabia.
-                                </p>
-                                <br></br>
-                                <p>
-                                    <b>Please read it carefully and reply with your acceptance</b>
-                                    by signing a copy of this letter as an acknowledgment of your acceptance or simply
-                                    reply
-                                    to this mail with your acceptance no later than 3 working days
-                                    from the date of the offer letter received.
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </field>
+            <field name="report_name">{{ (object.partner_name or '').replace('/','_') }}</field>
+
             <field name="auto_delete" eval="True"/>
             <field name="lang">{{ object.partner_id.lang or '' }}</field>
         </record>
@@ -249,77 +81,9 @@
             <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
             <field name="subject">Your Application: {{ object.partner_name }}</field>
             <field name="email_to">{{ object.email_from }}</field>
+            <field name="report_template" ref="egy_offer_report"/>
             <field name="partner_to"></field>
-            <field name="body_html" type="html">
-                <table border="0" cellpadding="0" cellspacing="0" width="590"
-                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
-                    <tr>
-                        <td valign="top">
-                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
-                                Date :
-                                <t t-out="object.create_date"></t>
-                                <br/>
-                                <br/>
-                                Dear
-                                <t t-out="object.partner_name"></t>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <b>
-                                    In reference to your application for employment and the recent discussion with
-                                    RawafedTech for information
-                                    technology, we are pleased to extend the following employment offer with the
-                                    following terms and conditions.
-                                </b>
-                                <br></br>
-                                <br></br>
-                                <b>Job Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]> <![CDATA[&nbsp;]]> <![CDATA[&nbsp;]]>         Company RawafdTech
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>           JobTitle
-                                <t t-out="object.offer_job_id.name"></t>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>            Contract Country
-                                <t t-out="object.hiring_ids[0].location"></t>
-                                <br></br>
-                                <br></br>
-                                <b>Payment Details:</b>
-                                <br></br>
-                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>        Basic Salary
-                                <t t-out="object.package_salary"></t>
-
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
-                                    offered a
-                                    legal contract once you submit your employment prerequisites that will be identified
-                                    during
-                                    your meeting with the Administration Manager, and ultimately join Rawafed Tech.
-                                </p>
-                                <br></br>
-                                <p><b>Rawafed Tech offers paid annual vacation,</b>which is 22 working days. In addition
-                                    to all official vacations and religious holidays in Saudi Arabia.
-                                </p>
-                                <br></br>
-                                <p><b>The place of work</b>will be at our office in Saudi Arabia or one of our client’s
-                                    offices in Saudi
-                                    Arabia.
-                                </p>
-                                <br></br>
-                                <p>
-                                    <b>Please read it carefully and reply with your acceptance</b>
-                                    by signing a copy of this letter as an acknowledgment of your acceptance or simply
-                                    reply
-                                    to this mail with your acceptance no later than 3 working days
-                                    from the date of the offer letter received.
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </field>
+            <field name="report_name">{{ (object.partner_name or '').replace('/','_') }}</field>
             <field name="auto_delete" eval="True"/>
             <field name="lang">{{ object.partner_id.lang or '' }}</field>
         </record>

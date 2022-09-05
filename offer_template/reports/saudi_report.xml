@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="saudi_offer_report" model="ir.actions.report">
+        <field name="name">Saudi Offer</field>
+        <field name="model">hr.applicant</field>
+        <!--        <field name="height">1000</field>-->
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">'%s - %s' % (object.partner_name,object.app_code)</field>
+        <field name="report_name">offer_template.saudi_offer_template</field>
+        <field name="report_file">offer_template.saudi_offer_template</field>
+        <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="saudi_offer_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <table border="0" cellpadding="0" cellspacing="0" width="590"
+                           style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                        <tr>
+                            <td valign="top">
+                                <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                    Date :
+                                    <t t-out="docs.create_date"></t>
+                                    <br/>
+                                    <br/>
+                                    <b>
+                                        Dear
+                                        <t t-out="docs.partner_name"></t>
+                                    </b>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <b>
+                                        In reference to your application for employment and the recent discussion with
+                                        RawafedTech for information
+                                        technology, we are pleased to extend the following employment offer with the
+                                        following terms and conditions.
+                                    </b>
+                                    <br></br>
+                                    <br></br>
+                                    <b>Job Details:</b>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Company RawafdTech
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>JobTitle
+                                    <t t-out="docs.offer_job_id.name"></t>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract Country
+                                    <t t-out="docs.hiring_ids[0].location"></t>
+                                    <br></br>
+                                    <br></br>
+                                    <b>Payment Details:</b>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Total Package
+                                    <t t-out="docs.package_salary"></t>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Basic Salary
+                                    <t t-out="docs.basic"></t>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Housing Allowance
+                                    <t t-out="docs.housing"></t>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Transportation
+                                    <t t-out="docs.transportation"></t>
+                                    <br></br>
+                                    <b>Other Benefits Details:</b>
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Medical Insurance
+                                    Family Plan - You, Your wife children
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
+                                        offered a
+                                        legal contract once you submit your employment prerequisites that will be
+                                        identified
+                                        during
+                                        your meeting with the Administration Manager, and ultimately join Rawafed Tech.
+                                    </p>
+                                    <br></br>
+                                    <p><b>Rawafed Tech offers paid annual vacation,</b>which is 22 working days. In
+                                        addition
+                                        to all official vacations and religious holidays in Saudi Arabia.
+                                    </p>
+                                    <br></br>
+                                    <p><b>The place of work</b>will be at our office in Saudi Arabia or one of our
+                                        client’s
+                                        offices in Saudi
+                                        Arabia.
+                                    </p>
+                                    <br></br>
+                                    <p>
+                                        <b>Please read it carefully and reply with your acceptance</b>
+                                        by signing a copy of this letter as an acknowledgment of your acceptance or
+                                        simply
+                                        reply
+                                        to this mail with your acceptance no later than 3 working days
+                                        from the date of the offer letter received.
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </t>
+        </t>
+    </template>
+
+
+</odoo>
