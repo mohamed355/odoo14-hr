@@ -12,7 +12,7 @@ class HrApplicant(models.Model):
                 'job_title':self.hiring_ids[0].job_id.name,
                 'location':self.hiring_ids[0].location,
                 'client':self.hiring_ids[0].client.name,
-                'offer_job_title':self.offer_job_id.name,
+                'offer_job_title':self.offer_job_id,
                 'offer_date':fields.Datetime.now(),
                 'package_salary':self.package_salary,
                 'housing':self.housing,

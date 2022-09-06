@@ -6,11 +6,18 @@ class HrApplicant(models.Model):
 
     template = fields.Selection(string="Template", selection=[('ksa', 'KSA'), ('egy', 'EGY'), ('saudi', 'Saudi Offer Job')],
                                 required=False, )
-    offer_job_id = fields.Many2one(comodel_name="hr.job", string="Job Title", required=False, )
+    offer_job_id = fields.Char(string="Job Title", required=False, )
     package_salary = fields.Integer(string="Package", required=False, compute='_compute_package_salary')
     housing = fields.Integer(string="Housing", required=False, compute='_compute_package_salary')
     basic = fields.Integer(string="Basic", required=False, compute='_compute_package_salary')
     transportation = fields.Integer(string="Transportation", required=False, compute='_compute_package_salary')
+    type_of_job = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],compute='_compute_type_of_job')
+
+    @api.depends('hiring_ids')
+    def _compute_type_of_job(self):
+        for record in self:
+            if record.hiring_ids:
+                record.type_of_job = record.hiring_ids[0].type_of_job
 
     @api.depends('ex_of', 'ex_on', 'hiring_ids')
     def _compute_package_salary(self):

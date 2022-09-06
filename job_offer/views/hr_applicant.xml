@@ -13,7 +13,8 @@
                         <group>
                             <group>
                                 <field name="offer_job_id"/>
-                                <field name="template"/>
+<!--                                <field name="template"/>-->
+                                <field name="type_of_job"/>
                             </group>
                             <group>
                                 <field name="package_salary"/>

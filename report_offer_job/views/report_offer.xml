@@ -63,7 +63,7 @@
             <field name="view_mode">tree,kanban</field>
         </record>
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="report_offer_menu" name="Job Offer Report" parent="hr_recruitment.menu_hr_recruitment_root"
+        <menuitem id="report_offer_menu" name="Job Offer Report" parent="hr_recruitment.report_hr_recruitment"
                   action="report_offer_action" sequence="5"/>
     </data>
 </odoo>

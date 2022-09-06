@@ -112,7 +112,9 @@
 <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
 <menuitem id="notification_menu_root" name="Activities" sequence="2" web_icon="notification_menu,static/web_icon.png"/>
         <!-- This Menu Item must have a parent and an action -->
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="all_activities" name="All Activities" parent="hr_recruitment.menu_hr_recruitment_root" sequence="1"/>
         <menuitem id="notification_menu_categ" name="Activities" parent="notification_menu_root" action="mail_activity_action" />
-        <menuitem id="notification_menu_categ_re" name="Activities" parent="hr_recruitment.menu_hr_recruitment_root" action="mail_activity_action" />
+        <menuitem id="notification_menu_categ_re" name="Notifications" parent="notification_menu.all_activities" action="mail_activity_action" />
 
 </odoo>
