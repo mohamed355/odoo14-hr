@@ -18,6 +18,8 @@ class HrApplicant(models.Model):
         for record in self:
             if record.hiring_ids:
                 record.type_of_job = record.hiring_ids[0].type_of_job
+            else:
+                record.type_of_job = None
 
     @api.depends('ex_of', 'ex_on', 'hiring_ids')
     def _compute_package_salary(self):

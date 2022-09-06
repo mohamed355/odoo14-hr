@@ -69,13 +69,13 @@
             </field>
         </record>
         <record id="report_technical_action" model="ir.actions.act_window">
-            <field name="name">Report Technical</field>
+            <field name="name">Technical Interviews Report</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">report.technical.app</field>
             <field name="view_mode">tree,kanban</field>
         </record>
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="report_technical_menu" name="Report Technical" parent="hr_recruitment.report_hr_recruitment"
+        <menuitem id="report_technical_menu" name="Technical Interviews Report" parent="hr_recruitment.report_hr_recruitment"
                   action="report_technical_action" sequence="5"/>
     </data>
 </odoo>
