@@ -10,22 +10,24 @@ class HrApplicant(models.Model):
     def constrains_stage_id(self):
         if self.stage_id.name == 'Technical Offer':
             self.is_tec = True
-            self.env['report.technical.app'].create({
-                'name':self.partner_name,
-                'stage':self.stage_id.name,
-                'hiring':self.hiring_ids[0].name,
-                'job_title':self.hiring_ids[0].job_id.name,
-                'location':self.hiring_ids[0].location,
-                'client':self.hiring_ids[0].client.name,
-                'serial':self.app_code,
-                'notice_period_from':self.notice_period_from,
-                'notice_period_to':self.notice_period_to,
-                'current_salary':self.current_salary,
-                'ex_salary':self.ex_of + self.ex_on,
-                'can_loc':self.candidate_location,
-                'can_na':self.nationality,
-                'interview_date':self.interview_date,
-            })
+            if self.hiring_ids:
+                self.env['report.technical.app'].create({
+                    'name':self.partner_name,
+                    'stage':self.stage_id.name,
+                    'hiring':self.hiring_ids[0].name,
+                    'job_title':self.hiring_ids[0].job_id.name,
+                    'location':self.hiring_ids[0].location,
+                    'client':self.hiring_ids[0].client.name,
+                    'serial':self.app_code,
+                    'notice_period_from':self.notice_period_from,
+                    'notice_period_to':self.notice_period_to,
+                    'current_salary':self.current_salary,
+                    'ex_salary':self.ex_of + self.ex_on,
+                    'can_loc':self.candidate_location,
+                    'can_na':self.nationality,
+                    'interview_date':self.interview_date,
+                })
+
 
     @api.constrains('hiring_ids')
     def constrains_hiring(self):
