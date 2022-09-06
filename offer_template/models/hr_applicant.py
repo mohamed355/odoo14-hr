@@ -27,7 +27,7 @@ class MailComposeMessage(models.TransientModel):
             template_ksa = self.env.ref('offer_template.application_ksa_offer_template_ksa')
             template_egy = self.env.ref('offer_template.application_ksa_offer_template_egy')
             template_sa = self.env.ref('offer_template.application_ksa_offer_template_saudi_job')
-            app =self.env['hr.applicant'].browse(self.res_id)
+            app = self.env['hr.applicant'].browse(self.res_id)
             if app.template == 'ksa':
                 default = template_ksa.id
             if app.template == 'egy':
