@@ -398,7 +398,7 @@ class HrApplication(models.Model):
     def _constrains_stage_id_a(self):
         for x in self:
             print("adsd",x.stage_id.name)
-            if x.stage_id.name in ["Rejected", "No Feedback"]:
+            if x.stage_id.name in ["Hold", "Completed"]:
                 # x.rej_boolean = True
                 x.stage_id = None
                 x.hiring_ids = None

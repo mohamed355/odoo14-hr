@@ -281,19 +281,19 @@
             </field>
         </record>
 
-        <record id="hiring_request_tree_inherit" model="ir.ui.view">
-            <field name="name">hiring_request_tree_inherit</field>
-            <field name="model">hiring.request</field>
-            <field name="inherit_id" ref="rawafd_hiring_request.hiring_request_tree"/>
-            <field name="arch" type="xml">
+<!--        <record id="hiring_request_tree_inherit" model="ir.ui.view">-->
+<!--            <field name="name">hiring_request_tree_inherit</field>-->
+<!--            <field name="model">hiring.request</field>-->
+<!--            <field name="inherit_id" ref="rawafd_hiring_request.hiring_request_tree"/>-->
+<!--            <field name="arch" type="xml">-->
 
-                <xpath expr="//field[@name='stage_id']" position="after">
-                    <field name="user_ids" widget="many2many_tags"/>
-                    <!--                    <field name="application_ids" widget="many2many_tags"/>-->
-                </xpath>
+<!--                <xpath expr="//field[@name='stage_id']" position="after">-->
+<!--                    <field name="user_real_ids" widget="many2many_tags"/>-->
+<!--                    &lt;!&ndash;                    <field name="application_ids" widget="many2many_tags"/>&ndash;&gt;-->
+<!--                </xpath>-->
 
-            </field>
-        </record>
+<!--            </field>-->
+<!--        </record>-->
 
         <record id="crm_case_tree_view_job_inherit" model="ir.ui.view">
             <field name="name">crm_case_tree_view_job_inherit</field>

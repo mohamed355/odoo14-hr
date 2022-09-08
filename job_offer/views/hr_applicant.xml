@@ -13,8 +13,13 @@
                         <group>
                             <group>
                                 <field name="offer_job_id"/>
-<!--                                <field name="template"/>-->
+                                <field name="template"/>
                                 <field name="type_of_job"/>
+                                <label for="proposed_salary_offer"/>
+                                <div class="o_row">
+                                    <field name="proposed_salary_offer"/>
+                                    <field name="proposed_currency" placeholder="Currency"/>
+                                </div>
                             </group>
                             <group>
                                 <field name="package_salary"/>

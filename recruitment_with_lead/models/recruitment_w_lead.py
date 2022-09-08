@@ -6,15 +6,11 @@ from datetime import timedelta, date,datetime
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
 
-# class Stage(models.Model):
-#     _inherit = 'hr.recruitment.stage'
-#
-#     is_active_state = fields.Boolean(string="Active State")
-
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
 
+    last_update_applicant = fields.Date(string="Last Update", required=False, )
     app_code = fields.Char(string="Serial", required=False )
     # notes = fields.Text(string="Notes", required=False, )
     ref_employee_id = fields.Many2one(comodel_name="hr.employee", string="Referred By Employee", required=False, )

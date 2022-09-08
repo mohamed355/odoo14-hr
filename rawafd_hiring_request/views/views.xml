@@ -288,6 +288,7 @@
 
                     <field name="offered"/>
                     <field name="stage_id"/>
+                    <field name="user_ids_real" widget="many2many_tags"/>
                     <field name="note"/>
                     <!--                    <field name="approved" />-->
 

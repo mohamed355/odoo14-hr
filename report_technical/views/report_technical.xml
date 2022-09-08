@@ -12,12 +12,12 @@
                     <field name="location"/>
                     <field name="serial"/>
                     <field name="name"/>
-                    <field name="notice_period_from"/>
-                    <field name="notice_period_to"/>
-                    <field name="current_salary"/>
-                    <field name="ex_salary"/>
-                    <field name="can_loc"/>
-                    <field name="can_na"/>
+                    <field name="notice_period_from" optional="hide"/>
+                    <field name="notice_period_to" optional="hide"/>
+                    <field name="current_salary" optional="hide"/>
+                    <field name="ex_salary" optional="hide"/>
+                    <field name="can_loc" optional="hide"/>
+                    <field name="can_na" optional="hide"/>
                     <field name="interview_date"/>
                     <field name="assign_to"/>
                     <field name="interview"/>
@@ -31,7 +31,7 @@
             <field name="name">report.technical.app.kanban</field>
             <field name="model">report.technical.app</field>
             <field name="arch" type="xml">
-                <kanban>
+                <kanban default_group_by="interview">
                     <field name="name"/>
                     <templates>
                         <t t-name="kanban-box">

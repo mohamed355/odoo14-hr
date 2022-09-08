@@ -17,9 +17,19 @@
             </label>
             <xpath expr="//header/button[@name='archive_applicant']" position="replace">
                 <button string="Rejected" name="archive_applicant" type="object"
-                        attrs="{'invisible': [('active', '=', False)]}" data-hotkey="x"/>
+                        attrs="{'invisible': [('active', '=', False)]}" data-hotkey="x" invisible="1"/>
             </xpath>
             <xpath expr="//div[@name='button_box']/button[@name='action_makeMeeting']" position="replace">
+                <button name="action_makeMeeting" class="oe_stat_button" icon="fa-calendar" type="object" invisible="1">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="meeting_display_text"/>
+                        </span>
+                        <span class="o_stat_text">
+                            <field name="meeting_display_date" readonly="1"/>
+                        </span>
+                    </div>
+                </button>
                 <button name="action_activities" class="oe_stat_button" icon="fa-calendar" type="object">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">Activities</span>
@@ -36,6 +46,7 @@
             <field name="source_id" position="after">
                 <field name="ref_employee_id"/>
                 <field name="nationality"/>
+                <field name="last_update_applicant"/>
                 <field name="candidate_location"/>
             </field>
             <field name="type_id" position="after">
@@ -173,7 +184,7 @@
                 <field name="job_id" invisible="1"/>
                 <field name="first_work_ex"/>
                 <field name="tools"/>
-<!--                <field name="notice_period"/>-->
+                <!--                <field name="notice_period"/>-->
                 <field name="notice_period_from" string="NB From"/>
                 <field name="notice_period_to" string="NB To"/>
                 <field name="salary_expected"/>
@@ -183,6 +194,7 @@
                 <field name="currency_of_id" placeholder="Currency"/>
 
                 <field name="ex_on"/>
+                <field name="last_update_applicant"/>
                 <field name="currency_on_id" placeholder="Currency"/>
 
             </field>
@@ -196,6 +208,18 @@
 
             </field>
 
+
+        </field>
+    </record>
+    <record id="hr_applicant_survey" model="ir.ui.view">
+        <field name="name">hr_applicant_view_form_inherit</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment_survey.hr_applicant_view_form_inherit"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_send_survey']" position="replace">
+                <button name="action_send_survey" string="SEND INTERVIEW" type="object" invisible="1"/>
+            </xpath>
 
         </field>
     </record>

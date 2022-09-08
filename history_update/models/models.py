@@ -116,7 +116,7 @@ class UnAssignUsers(models.TransientModel):
         print("Hiring")
         hiring.acc_date = fields.Date.today()
         for user in self.user_ids:
-            user = self.env['user.history'].search([('user_id','=',user.id),('end_date','=',False),('hiring_id','=',hiring.id)])
-            if user:
-                user.end_date = fields.Datetime.today()
+            user_s = self.env['user.history'].search([('user_id','=',user.id),('end_date','=',False),('hiring_id','=',hiring.id)])
+            if user_s:
+                user_s.end_date = fields.Datetime.today()
             hiring.update({'user_ids_real': [(3, user.id , False)]})

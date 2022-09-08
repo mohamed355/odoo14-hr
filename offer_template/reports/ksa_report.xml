@@ -16,15 +16,14 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                <div class="page">
-                    <table border="0" cellpadding="0" cellspacing="0" width="590"
+                    <table border="0" cellpadding="0" cellspacing="0" width="1000"
                            style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
                         <tr>
                             <td valign="top">
                                 <div style="font-size:19px; margin: 0px; padding: 0px;">
                                     Date :
                                     <t t-out="docs.create_date"></t>
-                                    <br/>
-                                    <br/>
+                                    <br></br>
                                     <b>
                                         Dear
                                         <t t-out="docs.partner_name"></t>
@@ -32,13 +31,11 @@
                                     <br></br>
                                     <br></br>
                                     <b>
-                                        In reference to your application for employment and the recent discussion with
-                                        RawafedTech for information
-                                        technology, we are pleased to extend the following employment offer with the
-                                        following terms and conditions.
+                                        In reference to your application for employment and the recent discussion with RawafedTech for information
+                                        technology, we are pleased to extend the following employment offer with the following terms and conditions.
                                     </b>
                                     <br></br>
-
+                                    <br></br>
                                     <b style="font-size: 20px;">Job Details:</b>
                                     <br></br>
                                     <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Company RawafdTech
@@ -51,6 +48,8 @@
                                         <t t-out="docs.hiring_ids[0].location"></t>
                                     </t>
 
+                                    <br></br>
+                                    <br></br>
                                     <br></br>
                                     <b style="font-size: 20px;">Payment Details:</b>
                                     <br></br>
@@ -66,10 +65,14 @@
                                     <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Transportation
                                     <t t-out="docs.transportation"></t>
                                     <br></br>
+                                    <br></br>
+                                    <br></br>
                                     <b style="font-size: 20px;">Other Benefits Details:</b>
                                     <br></br>
                                     <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Medical Insurance
                                     Family Plan - You, Your wife children
+                                    <br></br>
+                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Airlines Tickets You, Your wife  up to 3 children
                                     <br></br>
                                     <br></br>
                                     <p><b>This letter constitutes a formal offer of employment.</b>However, you will be

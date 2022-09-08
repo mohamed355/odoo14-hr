@@ -8,7 +8,7 @@ class HrApplicant(models.Model):
 
     @api.constrains('stage_id')
     def constrains_stage_id(self):
-        if self.stage_id.name == 'Technical Offer':
+        if self.stage_id.name == 'Technical Interview':
             self.is_tec = True
             if self.hiring_ids:
                 self.env['report.technical.app'].create({

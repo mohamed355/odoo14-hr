@@ -6,6 +6,7 @@ from odoo import _, api, fields, models, tools, Command
 from odoo.exceptions import UserError
 from odoo.tools import email_re
 
+
 class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
 
@@ -14,12 +15,36 @@ class HrApplicant(models.Model):
         template_ksa = self.env.ref('offer_template.application_ksa_offer_template_ksa')
         template_egy = self.env.ref('offer_template.application_ksa_offer_template_egy')
         template_sa = self.env.ref('offer_template.application_ksa_offer_template_saudi_job')
+        template = None
         if self.template == 'ksa':
-            self.env['mail.template'].browse(template_ksa.id).send_mail(self.id, force_send=True)
+            template = self.env['mail.template'].browse(template_ksa.id).id
         if self.template == 'egy':
-            self.env['mail.template'].browse(template_egy.id).send_mail(self.id, force_send=True)
+            template = self.env['mail.template'].browse(template_egy.id).id
         if self.template == 'saudi':
-            self.env['mail.template'].browse(template_sa.id).send_mail(self.id, force_send=True)
+            template = self.env['mail.template'].browse(template_sa.id).id
+        print(template)
+        if template:
+            ctx = {
+                'default_model': 'hr.applicant',
+                'default_res_id': self.id,
+                'default_use_template': bool(template),
+                'default_template_id': template,
+                'default_composition_mode': 'comment',
+                'mark_so_as_sent': True,
+                'custom_layout': "mail.mail_notification_paynow",
+                # 'proforma': sale.env.context.get('proforma', False),
+                'force_email': True,
+                # 'model_description': sale.with_context(lang=lang).type_name,
+            }
+            return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'mail.compose.message',
+                'views': [(False, 'form')],
+                'view_id': False,
+                'target': 'new',
+                'context': ctx,
+            }
 
 
 class MailComposeMessage(models.TransientModel):
@@ -58,8 +83,9 @@ class MailComposeMessage(models.TransientModel):
         for wizard in self:
             if wizard.model == 'hr.applicant':
                 app = self.env['hr.applicant'].browse(wizard.res_id)
+                offer = None
                 if app.hiring_ids:
-                    self.env['report.job.offer'].create({
+                     offer = self.env['report.job.offer'].create({
                         'name': app.partner_name,
                         'hiring': app.hiring_ids[0].name,
                         'job_title': app.hiring_ids[0].job_id.name,
@@ -73,12 +99,8 @@ class MailComposeMessage(models.TransientModel):
                         'transportation': app.transportation,
                     })
                 else:
-                    self.env['report.job.offer'].create({
+                    offer = self.env['report.job.offer'].create({
                         'name': app.partner_name,
-                        # 'hiring': app.hiring_ids[0].name,
-                        # 'job_title': app.hiring_ids[0].job_id.name,
-                        # 'location': app.hiring_ids[0].location,
-                        # 'client': app.hiring_ids[0].client.name,
                         'offer_job_title': app.offer_job_id,
                         'offer_date': fields.Datetime.now(),
                         'package_salary': app.package_salary,
@@ -86,6 +108,9 @@ class MailComposeMessage(models.TransientModel):
                         'basic': app.basic,
                         'transportation': app.transportation,
                     })
+                if app.proposed_currency:
+                    offer.write({'currency_id':app.proposed_currency.id})
+
                 if app.package_salary != 0:
                      print("Ss")
                 elif app.package_salary == 0:

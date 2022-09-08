@@ -8,10 +8,13 @@ class HrApplicant(models.Model):
                                 required=False, )
     offer_job_id = fields.Char(string="Job Title", required=False, )
     package_salary = fields.Integer(string="Package", required=False, compute='_compute_package_salary')
+    proposed_salary_offer = fields.Integer(string="Proposed Salary", required=False,)
+    proposed_currency = fields.Many2one(comodel_name="res.currency", string="Proposed Currency", required=False, )
     housing = fields.Integer(string="Housing", required=False, compute='_compute_package_salary')
     basic = fields.Integer(string="Basic", required=False, compute='_compute_package_salary')
     transportation = fields.Integer(string="Transportation", required=False, compute='_compute_package_salary')
-    type_of_job = fields.Selection( string='Type Of Job',required=True, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],compute='_compute_type_of_job')
+    type_of_job = fields.Selection( string='Type Of Job',required=False, selection=[('eg', 'Contract Eg'), ('ksa', 'Contract Ksa'),('visit', 'Visit'),('iqama', 'Iqama Transfer') ],compute='_compute_type_of_job')
+
 
     @api.depends('hiring_ids')
     def _compute_type_of_job(self):
@@ -21,17 +24,17 @@ class HrApplicant(models.Model):
             else:
                 record.type_of_job = None
 
-    @api.depends('ex_of', 'ex_on', 'hiring_ids')
+    @api.depends('proposed_salary_offer', 'hiring_ids')
     def _compute_package_salary(self):
         for x in self:
             if x.hiring_ids:
                 if x.hiring_ids[0].location == 'Egypt':
-                    x.package_salary = x.ex_on
+                    x.package_salary = x.proposed_salary_offer
                     x.housing = 0
                     x.basic = 0
                     x.transportation = 0
                 elif x.hiring_ids[0].location == 'Saudi Arabia':
-                    x.package_salary = x.ex_of
+                    x.package_salary = x.proposed_salary_offer
                     x.basic = x.package_salary / 1.35
                     x.housing = x.basic / 4
                     x.transportation = x.basic / 10

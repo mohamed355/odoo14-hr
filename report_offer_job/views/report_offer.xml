@@ -5,17 +5,22 @@
             <field name="name">report.job.offer.tree</field>
             <field name="model">report.job.offer</field>
             <field name="arch" type="xml">
-                <tree string="Job Offer Report" editable="bottom" create="0">
+                <tree string="Job Offers Report" editable="bottom" create="0">
                     <field name="hiring"/>
                     <field name="client"/>
                     <field name="job_title"/>
                     <field name="location"/>
                     <field name="offer_date"/>
                     <field name="name"/>
-                    <field name="package_salary"/>
-                    <field name="basic"/>
-                    <field name="housing"/>
-                    <field name="transportation"/>
+                    <field name="currency_id" optional="hide"/>
+                    <field name="package_salary" optional="hide"/>
+                    <field name="basic" optional="hide"/>
+                    <field name="housing" optional="hide"/>
+                    <field name="transportation" optional="hide"/>
+                    <field name="offer_state"/>
+                    <field name="joining_date" optional="hide"/>
+                    <field name="decline_state" optional="hide"/>
+                    <field name="comments"/>
                 </tree>
             </field>
         </record>
@@ -23,7 +28,7 @@
             <field name="name">report.job.offer.kanban</field>
             <field name="model">report.job.offer</field>
             <field name="arch" type="xml">
-                <kanban>
+                <kanban default_group_by="offer_state" sample="1">
                     <field name="name"/>
                     <templates>
                         <t t-name="kanban-box">
@@ -57,13 +62,13 @@
             </field>
         </record>
         <record id="report_offer_action" model="ir.actions.act_window">
-            <field name="name">Report Offer</field>
+            <field name="name">Job Offers Report</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">report.job.offer</field>
             <field name="view_mode">tree,kanban</field>
         </record>
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="report_offer_menu" name="Job Offer Report" parent="hr_recruitment.report_hr_recruitment"
+        <menuitem id="report_offer_menu" name="Job Offers Report" parent="hr_recruitment.report_hr_recruitment"
                   action="report_offer_action" sequence="5"/>
     </data>
 </odoo>
