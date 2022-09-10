@@ -4,7 +4,6 @@
     <record id="ksa_offer_report" model="ir.actions.report">
         <field name="name">KSA Offer</field>
         <field name="model">hr.applicant</field>
-        <!--        <field name="height">1000</field>-->
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'%s - %s' % (object.partner_name,object.app_code)</field>
         <field name="report_name">offer_template.ksa_offer_template</field>
@@ -12,12 +11,70 @@
         <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
         <field name="binding_type">report</field>
     </record>
+    <template id="internal_layout">
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id.sudo()"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+        <div class="header o_boxed_header">
+            <div class="row mb8">
+                <div class="col-xs-6">
+                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"/>
+                </div>
+                <div class="col-xs-6 text-right mb4">
+                    <h4 class="mt0" t-field="company.report_header"/>
+                    <div name="company_address" class="mb4">
+                        <span style="color: #000;font-color:#000000;" class="company_address"
+                              t-field="company.partner_id"
+                              t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                    </div>
+                </div>
+            </div>
+            <div style="border-bottom: 1px solid black;"/>
+        </div>
+        <div class="article o_report_layout_background">
+            <t t-raw="0"/>
+        </div>
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="company.phone">Phone:
+                        <span t-field="company.phone"/>
+                    </li>
+                    <li t-if="company.email">Email:
+                        <span t-field="company.email"/>
+                    </li>
+                    <li t-if="company.website">Web:
+                        <span t-field="company.website"/>
+                    </li>
+                    <li t-if="company.vat"><t t-esc="company.country_id.vat_label or 'TIN'"/>:
+                        <span t-field="company.vat"/>
+                    </li>
+                </ul>
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+                <div class="text-muted">
+                    Page:
+                    <span class="page"/>
+                    /
+                    <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
     <template id="ksa_offer_template">
         <t t-call="web.html_container">
-            <t t-call="web.external_layout">
-               <div class="page">
-                    <table border="0" cellpadding="0" cellspacing="0" width="1000"
-                           style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+            <t t-call="offer_template.internal_layout">
+                <div class="page" style="background-color: white;">
+                    <table border="0" width="1000"
+                           style="min-width: 590px; background-color: white; border-collapse:separate;">
                         <tr>
                             <td valign="top">
                                 <div style="font-size:19px; margin: 0px; padding: 0px;">
@@ -29,50 +86,125 @@
                                         <t t-out="docs.partner_name"></t>
                                     </b>
                                     <br></br>
-                                    <br></br>
                                     <b>
-                                        In reference to your application for employment and the recent discussion with RawafedTech for information
-                                        technology, we are pleased to extend the following employment offer with the following terms and conditions.
+                                        In reference to your application for employment and the recent discussion with
+                                        RawafedTech for information
+                                        technology, we are pleased to extend the following employment offer with the
+                                        following terms and conditions.
                                     </b>
                                     <br></br>
                                     <br></br>
-                                    <b style="font-size: 20px;">Job Details:</b>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Company RawafdTech
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>JobTitle
-                                    <t t-out="docs.offer_job_id"></t>
-                                    <br></br>
-                                    <t t-if="docs.hiring_ids">
-                                        <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract Country
-                                        <t t-out="docs.hiring_ids[0].location"></t>
-                                    </t>
+                                    <h2>Job Details:</h2>
+                                    <table border="0" cellpadding="0" cellspacing="0"
+                                           style="min-width: 400px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Company
+                                            </td>
+                                            <td>Rawafd Tech</td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>JobTitle
+                                            </td>
+                                            <td>
+                                                <t t-out="docs.offer_job_id"></t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <t t-if="docs.hiring_ids">
+                                                <td valign="top">
+                                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract
+                                                    Country<![CDATA[&nbsp;]]>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <t t-out="docs.hiring_ids[0].location"></t>
+                                                    </div>
+                                                </td>
 
+                                            </t>
+
+
+                                        </tr>
+                                    </table>
                                     <br></br>
+
+                                    <h2>Payment Details:</h2>
+                                    <table border="0" cellpadding="0" cellspacing="0"
+                                           style="min-width: 340px; background-color: white; border-collapse:separate;">
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Total Package
+                                            </td>
+                                            <td>
+                                                <t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                                <t t-out="docs.package_salary"></t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Basic Salary
+                                            </td>
+                                            <td valign="left">
+                                                <t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                                <t t-out="docs.basic"></t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Housing Allowance
+                                            </td>
+                                            <td>
+                                                <t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                                <t t-out="docs.housing"></t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Transportation
+                                            </td>
+                                            <td>
+                                                <t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                                <t t-out="docs.transportation"></t>
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <br></br>
-                                    <br></br>
-                                    <b style="font-size: 20px;">Payment Details:</b>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Total Package
-                                    <t t-out="docs.package_salary"></t>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Basic Salary
-                                    <t t-out="docs.basic"></t>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Housing Allowance
-                                    <t t-out="docs.housing"></t>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Transportation
-                                    <t t-out="docs.transportation"></t>
-                                    <br></br>
-                                    <br></br>
-                                    <br></br>
-                                    <b style="font-size: 20px;">Other Benefits Details:</b>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Medical Insurance
-                                    Family Plan - You, Your wife children
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Airlines Tickets You, Your wife  up to 3 children
+                                    <h2>Other Benefits Details:</h2>
+                                    <table border="0" cellpadding="0" cellspacing="0"
+                                           style="min-width: 400px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Medical Insurance
+                                            </td>
+                                            <td>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Family Plan - You, Your wife &amp;
+                                                children
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Airlines Tickets
+                                            </td>
+                                            <td>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]> You, Your wife
+                                                &amp; up
+                                                to 3 children
+                                            </td>
+                                        </tr>
+
+                                    </table>
                                     <br></br>
                                     <br></br>
                                     <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
@@ -106,7 +238,37 @@
                             </td>
                         </tr>
                     </table>
-               </div>
+                    <br></br>
+
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-3">
+                            <span>
+                                On Behalf of The Company
+                            </span>
+                            <br/>
+                            <br/>
+                            <hr></hr>
+
+                            <span style="font-weight: bolder;">Mohamed Zein</span>
+                            <br></br>
+                            <span>HR Manager</span>
+
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-3">
+                            <span>
+                                Approved &amp; Accepted
+                            </span>
+                            <br/>
+                            <br/>
+                            <hr></hr>
+
+                            <span style="font-weight: bolder;">Employee Number &amp; Signature</span>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                </div>
             </t>
         </t>
     </template>

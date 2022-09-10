@@ -4,7 +4,6 @@
     <record id="egy_offer_report" model="ir.actions.report">
         <field name="name">Egy Offer</field>
         <field name="model">hr.applicant</field>
-        <!--        <field name="height">1000</field>-->
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'%s - %s' % (object.partner_name,object.app_code)</field>
         <field name="report_name">offer_template.egy_offer_template</field>
@@ -16,25 +15,18 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <table border="0" cellpadding="0" cellspacing="0" width="700"
-                           style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                    <table border="0" width="1000"
+                           style="min-width: 590px; background-color: white; border-collapse:separate;">
                         <tr>
                             <td valign="top">
-                                <div style="font-size: 13px; margin: 0px; padding: 0px;font-size:20px">
-                                    <span>Date :
-                                        <t t-out="docs.create_date"></t>
-                                    </span>
-
-                                    <br/>
-                                    <br/>
+                                <div style="font-size:19px; margin: 0px; padding: 0px;">
+                                    Date :
+                                    <t t-out="docs.create_date"></t>
+                                    <br></br>
                                     <b>
-                                        <span>Dear
-                                            <t t-out="docs.partner_name"></t>
-                                        </span>
+                                        Dear
+                                        <t t-out="docs.partner_name"></t>
                                     </b>
-
-                                    <br></br>
-                                    <br></br>
                                     <br></br>
                                     <b>
                                         In reference to your application for employment and the recent discussion with
@@ -44,29 +36,59 @@
                                     </b>
                                     <br></br>
                                     <br></br>
-                                    <b style="font-sizer:22px">Job Details:</b>
-                                    <br></br>
-                                    <span><![CDATA[&nbsp;]]> <![CDATA[&nbsp;]]> <![CDATA[&nbsp;]]>         Company
-                                        RawafdTech
-                                    </span>
-                                    <br></br>
-                                    <span><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>           JobTitle
-                                        <t t-out="docs.offer_job_id"/>
-                                    </span>
-                                    <br></br>
-                                    <t t-if="docs.hiring_ids">
-                                        <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract Country
-                                        <t t-out="docs.hiring_ids[0].location"></t>
-                                    </t>
+                                    <h2>Job Details:</h2>
+                                    <table border="0" cellpadding="0" cellspacing="0"
+                                           style="min-width: 400px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Company
+                                            </td>
+                                            <td>Rawafd Tech</td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>JobTitle
+                                            </td>
+                                            <td>
+                                                <t t-out="docs.offer_job_id"></t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <t t-if="docs.hiring_ids">
+                                                <td valign="top">
+                                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract
+                                                    Country<![CDATA[&nbsp;]]>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <t t-out="docs.hiring_ids[0].location"></t>
+                                                    </div>
+                                                </td>
 
-                                    <br></br>
-                                    <br></br>
-                                    <b style="font-sizer:22px">Payment Details:</b>
-                                    <br></br>
-                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>        Basic Salary
-                                    <t t-out="docs.package_salary"/>
+                                            </t>
 
+
+                                        </tr>
+                                    </table>
                                     <br></br>
+
+                                    <h2>Payment Details:</h2>
+                                    <table border="0" cellpadding="0" cellspacing="0"
+                                           style="min-width: 340px; background-color: white; border-collapse:separate;">
+                                        <tr>
+                                            <td valign="top">
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]>Basic Salary
+                                            </td>
+                                            <td>
+                                                <t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                                <t t-out="docs.package_salary"></t>
+                                            </td>
+                                        </tr>
+                                    </table>
                                     <br></br>
                                     <br></br>
                                     <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
@@ -100,6 +122,36 @@
                             </td>
                         </tr>
                     </table>
+                    <br></br>
+
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-3">
+                            <span>
+                                On Behalf of The Company
+                            </span>
+                            <br/>
+                            <br/>
+                            <hr></hr>
+
+                            <span style="font-weight: bolder;">Mohamed Zein</span>
+                            <br></br>
+                            <span>HR Manager</span>
+
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-3">
+                            <span>
+                                Approved &amp; Accepted
+                            </span>
+                            <br/>
+                            <br/>
+                            <hr></hr>
+
+                            <span style="font-weight: bolder;">Employee Number &amp; Signature</span>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
                 </div>
 
             </t>
