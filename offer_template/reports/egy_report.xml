@@ -36,59 +36,60 @@
                                     </b>
                                     <br></br>
                                     <br></br>
-                                    <h2>Job Details:</h2>
-                                    <table border="0" cellpadding="0" cellspacing="0"
-                                           style="min-width: 400px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
-                                        <tr>
-                                            <td valign="top">
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]>Company
-                                            </td>
-                                            <td>Rawafd Tech</td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top">
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]>JobTitle
-                                            </td>
-                                            <td>
+                                    <h3>Job Details:</h3>
+                                    <div style="display: flex;flex-direction: row;">
+                                        <h4 style="padding: 0 60px">Company</h4>
+                                        <div style="width:60%">
+                                            <span>
+                                                Rawafd Tech
+                                            </span>
+                                            <hr style="width:100%;text-align:left;margin-left:0;margin-top:5px;padding:0;background-color:black"></hr>
+                                        </div>
+                                    </div>
+
+                                    <div style="display: flex;flex-direction: row;">
+                                        <h4 style="padding: 0 68px">JobTitle</h4>
+
+                                        <div style="width:60%;">
+                                            <span>
                                                 <t t-out="docs.offer_job_id"></t>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <t t-if="docs.hiring_ids">
-                                                <td valign="top">
-                                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                    <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Contract
-                                                    Country<![CDATA[&nbsp;]]>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <t t-out="docs.hiring_ids[0].location"></t>
-                                                    </div>
-                                                </td>
+                                            </span>
+                                            <hr style="width:100%;text-align:left;margin-top:5px;padding:0;background-color:black"></hr>
+                                        </div>
+                                    </div>
+                                    <t t-if="docs.hiring_ids">
 
-                                            </t>
+                                        <div style="display: flex;flex-direction: row;">
+                                            <h4 style="padding: 0 60px">Contract</h4>
+                                            <div style="width:60%">
+                                                <h5>
+                                                    <t t-out="docs.hiring_ids[0].location"></t>
+                                                </h5>
+                                                <hr style="width:100%;text-align:left;margin-left:0;margin-top:5px;padding:0;background-color:black"></hr>
 
-
-                                        </tr>
-                                    </table>
+                                            </div>
+                                        </div>
+                                    </t>
                                     <br></br>
 
-                                    <h2>Payment Details:</h2>
-                                    <table border="0" cellpadding="0" cellspacing="0"
-                                           style="min-width: 340px; background-color: white; border-collapse:separate;">
-                                        <tr>
-                                            <td valign="top">
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]>Basic Salary
-                                            </td>
-                                            <td>
-                                                <t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                    <h3>Payment Details:</h3>
+                                    <div style="display: flex;flex-direction: row;">
+                                        <h4 style="padding: 0 60px">Basic Salary</h4>
+                                        <div style="width:60%">
+                                            <span>
+                                                <t t-out="docs.proposed_currency.name"></t>
+                                                <![CDATA[&nbsp;]]>
                                                 <t t-out="docs.package_salary"></t>
-                                            </td>
-                                        </tr>
-                                    </table>
+
+                                            </span>
+                                            <hr style="width:100%;text-align:left;margin-left:0;margin-top:5px;padding:0;background-color:black"></hr>
+
+                                        </div>
+
+
+                                    </div>
+
+
                                     <br></br>
                                     <br></br>
                                     <p><b>This letter constitutes a formal offer of employment.</b>However, you will be
