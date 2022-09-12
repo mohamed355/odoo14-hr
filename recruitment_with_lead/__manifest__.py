@@ -12,11 +12,12 @@
     "price": 00.00,
     "currency": 'EUR',
     "depends": [
-    'hr_recruitment',
+        'hr_recruitment',
     ],
 
     "data": [
         'security/ir.model.access.csv',
+        'security/security.xml',
         "views/recruitment_w_lead_view.xml",
         # "data/ir_sequence.xml",
 
@@ -25,4 +26,3 @@
     "installable": True,
     "auto_install": False,
 }
-
