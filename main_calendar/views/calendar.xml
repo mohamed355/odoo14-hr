@@ -20,5 +20,5 @@
     </data>
 
     <menuitem id="menu_action_calendar" name="Main Calendar" parent="crm.crm_menu_root" action="action_calendar_event_crm" sequence="5"/>
-    <menuitem id="menu_action_calendar_recruitment" name="Main Calendar" parent="notification_menu.all_activities" action="action_calendar_event_crm" sequence="5"/>
+    <menuitem id="menu_action_calendar_recruitment" name="Meeting Calendar" parent="notification_menu.all_activities" action="action_calendar_event_crm" sequence="5"/>
 </odoo>

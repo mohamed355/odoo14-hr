@@ -178,37 +178,36 @@
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
         <field name="arch" type="xml">
-
-            <field name="name" position="replace">
-                <field name="linkedin"/>
-                <field name="job_id" invisible="1"/>
-                <field name="first_work_ex"/>
-                <field name="tools"/>
-                <!--                <field name="notice_period"/>-->
-                <field name="notice_period_from" string="NB From"/>
-                <field name="notice_period_to" string="NB To"/>
-                <field name="salary_expected"/>
-                <field name="current_salary"/>
-                <field name="currency_id"/>
-                <field name="ex_of"/>
-                <field name="currency_of_id" placeholder="Currency"/>
-
-                <field name="ex_on"/>
-                <field name="last_update_applicant"/>
-                <field name="currency_on_id" placeholder="Currency"/>
-
-            </field>
-            <field name="user_id" position="after">
-                <field name="source_id"/>
-                <field name="description"/>
-                <field name="write_date"/>
-            </field>
-            <field name="user_id" position="replace">
-                <field name="partner_id"/>
-
-            </field>
-
-
+            <xpath expr="//tree" position="replace">
+                <tree>
+                    <field name="job_id" string="Job Title"/>
+                    <field name="app_code" string="Code"/>
+                    <field name="partner_name" string="Name"/>
+                    <field name="partner_phone" string="Phone"/>
+                    <field name="email_from" string="Email"/>
+                    <field name="linkedin" string="Linkedin"/>
+                    <field name="experience_level"/>
+                    <field name="start_date" string="Experience"/>
+                    <field name="tools"/>
+                    <field name="notice_period_from" optional="hide"/>
+                    <field name="notice_period_to" optional="hide"/>
+                    <field name="current_salary" string="Current Salary" optional="hide"/>
+                    <field name="currency_id" string="CU-Currency" optional="hide"/>
+                    <field name="ex_of" optional="hide"/>
+                    <field name="currency_of_id" string="Off-Currency" optional="hide"/>
+                    <field name="ex_on" optional="hide"/>
+                    <field name="currency_on_id" string="On-Currency" optional="hide"/>
+                    <field name="nationality"/>
+                    <field name="candidate_location"/>
+                    <field name="source_id"/>
+                    <field name="ref_employee_id" string="Referred" optional="hide"/>
+                    <field name="description"/>
+                    <field name="__last_update"/>
+                    <field name="stage_id"/>
+                    <field name="priority" invisible="1"/>
+                    <field name="create_date"/>
+                </tree>
+            </xpath>
         </field>
     </record>
     <record id="hr_applicant_survey" model="ir.ui.view">

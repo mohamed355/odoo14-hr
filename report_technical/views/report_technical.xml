@@ -19,11 +19,16 @@
                     <field name="can_loc" optional="hide"/>
                     <field name="can_na" optional="hide"/>
                     <field name="interview_date"/>
+                    <field name="changed" invisible="1"/>
                     <field name="assign_to"/>
                     <field name="interview"/>
                     <field name="stage" string="Last Activity"/>
                     <field name="notes"/>
-                    <!--                    <field name="interview_date" t-options="{'format': 'HH:mm'}" string="Time"/>-->
+                    <field name="meeting_id" invisible="1"/>
+                    <button name="create_meeting" type="object" string="Create Meeting"
+                            attrs="{'invisible': [('changed', '=', False)]}" class="oe_highlight"/>
+                    <button name="open_meeting" type="object" string="Open Meeting"
+                            attrs="{'invisible': [('meeting_id', '=', False)]}" class="oe_highlight"/>
                 </tree>
             </field>
         </record>
@@ -75,7 +80,8 @@
             <field name="view_mode">tree,kanban</field>
         </record>
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="report_technical_menu" name="Technical Interviews Report" parent="hr_recruitment.report_hr_recruitment"
+        <menuitem id="report_technical_menu" name="Technical Interviews Report"
+                  parent="hr_recruitment.report_hr_recruitment"
                   action="report_technical_action" sequence="5"/>
     </data>
 </odoo>

@@ -95,7 +95,7 @@
         </record>
 
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="hr_applicant_menu_activities" name="Activities" parent="notification_menu.all_activities"
+        <menuitem id="hr_applicant_menu_activities" name="Activities Calendar" parent="notification_menu.all_activities"
                   action="mail_activity_rec_action" sequence="2"/>
     </data>
 </odoo>
