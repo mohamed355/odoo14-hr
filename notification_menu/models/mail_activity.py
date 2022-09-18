@@ -1,12 +1,15 @@
 from odoo import api, fields, models, Command
 from collections import defaultdict
-from  datetime import date,datetime
+from datetime import date, datetime
+
 
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
-    activity_type = fields.Selection(string="Type", selection=[('In Progress',"In Progress"),('Compeleted', 'Completed'),('Not Completed', 'Not Completed'),('On Hold', 'On Hold'),('Cancelled', 'Cancelled') ], required=False, default='In Progress' )
-
+    activity_type = fields.Selection(string="Type",
+                                     selection=[('In Progress', "In Progress"), ('Completed', 'Completed'),
+                                                ('Not Completed', 'Not Completed'), ('On Hold', 'On Hold'),
+                                                ('Cancelled', 'Cancelled')], required=False, default='In Progress')
 
     def _action_done(self, feedback=False, attachment_ids=None):
         """ Private implementation of marking activity as done: posting a message, deleting activity
@@ -36,7 +39,8 @@ class MailActivity(models.Model):
         for activity in self:
             # extract value to generate next activities
             if activity.chaining_type == 'trigger':
-                vals = activity.with_context(activity_previous_deadline=activity.date_deadline)._prepare_next_activity_values()
+                vals = activity.with_context(
+                    activity_previous_deadline=activity.date_deadline)._prepare_next_activity_values()
                 next_activities_values.append(vals)
 
             # post message on activity, before deleting it
@@ -50,7 +54,8 @@ class MailActivity(models.Model):
                 },
                 subtype_id=self.env['ir.model.data']._xmlid_to_res_id('mail.mt_activities'),
                 mail_activity_type_id=activity.activity_type_id.id,
-                attachment_ids=[Command.link(attachment_id) for attachment_id in attachment_ids] if attachment_ids else [],
+                attachment_ids=[Command.link(attachment_id) for attachment_id in
+                                attachment_ids] if attachment_ids else [],
             )
 
             # Moving the attachments in the message
@@ -68,6 +73,6 @@ class MailActivity(models.Model):
 
         next_activities = self.env['mail.activity'].create(next_activities_values)
         # self.unlink()  # will unlink activity, dont access `self` after that
-        self.activity_type = 'Compeleted'
+        self.activity_type = 'Completed'
 
         return messages, next_activities

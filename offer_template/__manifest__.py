@@ -6,7 +6,7 @@
         'reports/egy_report.xml',
         'reports/ksa_report.xml',
         'reports/saudi_report.xml',
-        # 'views/hr_applicant.xml',
+        'views/hr_applicant.xml',
         'data/email_template.xml',
     ],
 }

@@ -2,18 +2,30 @@
 <odoo>
     <data>
 
-                <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
-                    <field name="name">hr_applicant_view_form_inherit</field>
-                    <field name="model">hr.applicant</field>
-                    <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
-                    <field name="arch" type="xml">
+<!--        <record id="hr_applicant_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">hr_applicant_view_form_inherit</field>-->
+<!--            <field name="model">hr.applicant</field>-->
+<!--            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
 
-                        <xpath expr="//header" position="inside">
-                            <button name="action_send_offer" type="object" string="Send Offer"/>
-                        </xpath>
+<!--                <xpath expr="//header" position="inside">-->
+<!--                    <button name="action_send_offer" type="object" string="Send Offer"/>-->
+<!--                </xpath>-->
 
-                    </field>
-                </record>
+<!--            </field>-->
+<!--        </record>-->
+        <record id="email_compose_message_wizard_form_form_inherit" model="ir.ui.view">
+            <field name="name">email_compose_message_wizard_form_form_inherit</field>
+            <field name="model">mail.compose.message</field>
+            <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+            <field name="arch" type="xml">
 
+               <field name="subject" position="after">
+                   <field name="show_templates" invisible="1"/>
+                   <field name="template_ids" invisible="1"/>
+               </field>
+
+            </field>
+        </record>
     </data>
 </odoo>

@@ -66,9 +66,33 @@ class MailComposeMessage(models.TransientModel):
                 default = template_sa.id
             print(default)
         return default
+
+    template_ids = fields.Many2many(comodel_name="mail.template", relation="mailtemplate", column1="mail",
+                                    column2="tempalte", string="templates", compute='_compute_template')
+
     template_id = fields.Many2one(
         'mail.template', 'Use template', index=True,
-        domain="[('model', '=', model)]",default = default_template_id)
+        domain="[('id', 'in', template_ids)]", default=default_template_id)
+
+    show_templates = fields.Boolean(string="Show Templates", )
+
+    @api.depends('show_templates')
+    def _compute_template(self):
+        for record in self:
+            print("Yes")
+            if self.env.user.has_group('hr_recruitment.group_hr_recruitment_user') and not self.env.user.has_group(
+                    'hr_recruitment.group_hr_recruitment_manager'):
+                print("Yes Group")
+
+                record.template_ids = self.env['mail.template'].search(
+                    [('model', '=', record.model),
+                     ('name', 'not in', ['Applicant: Saudi job Offer Template', 'Applicant: Ksa Offer Template',
+                                         'Applicant: Egypt Offer Template'])]).ids
+            else:
+                record.template_ids = self.env['mail.template'].search(
+                    [('model', '=', record.model),
+                     ]).ids
+
     def _action_send_mail(self, auto_commit=False):
         """ Process the wizard content and proceed with sending the related
             email(s), rendering any template patterns on the fly if needed. """
@@ -81,41 +105,42 @@ class MailComposeMessage(models.TransientModel):
         # back on the regular display_name retrieved in '_notify_prepare_template_context'.
         model_description = self._context.get('model_description')
         for wizard in self:
-            if wizard.model == 'hr.applicant':
-                app = self.env['hr.applicant'].browse(wizard.res_id)
-                offer = None
-                if app.hiring_ids:
-                     offer = self.env['report.job.offer'].create({
-                        'name': app.partner_name,
-                        'hiring': app.hiring_ids[0].name,
-                        'job_title': app.hiring_ids[0].job_id.name,
-                        'location': app.hiring_ids[0].location,
-                        'client': app.hiring_ids[0].client.name,
-                        'offer_job_title': app.offer_job_id,
-                        'offer_date': fields.Datetime.now(),
-                        'package_salary': app.package_salary,
-                        'housing': app.housing,
-                        'basic': app.basic,
-                        'transportation': app.transportation,
-                    })
-                else:
-                    offer = self.env['report.job.offer'].create({
-                        'name': app.partner_name,
-                        'offer_job_title': app.offer_job_id,
-                        'offer_date': fields.Datetime.now(),
-                        'package_salary': app.package_salary,
-                        'housing': app.housing,
-                        'basic': app.basic,
-                        'transportation': app.transportation,
-                    })
-                if app.proposed_currency:
-                    offer.write({'currency_id':app.proposed_currency.id})
+            if wizard.attachment_ids and wizard.composition_mode != 'mass_mail' and wizard.template_id:
+                if wizard.model == 'hr.applicant':
+                    app = self.env['hr.applicant'].browse(wizard.res_id)
+                    offer = None
+                    if app.hiring_ids:
+                        offer = self.env['report.job.offer'].create({
+                            'name': app.partner_name,
+                            'hiring': app.hiring_ids[0].name,
+                            'job_title': app.hiring_ids[0].job_id.name,
+                            'location': app.hiring_ids[0].location,
+                            'client': app.hiring_ids[0].client.name,
+                            'offer_job_title': app.offer_job_id,
+                            'offer_date': fields.Datetime.now(),
+                            'package_salary': app.package_salary,
+                            'housing': app.housing,
+                            'basic': app.basic,
+                            'transportation': app.transportation,
+                        })
+                    else:
+                        offer = self.env['report.job.offer'].create({
+                            'name': app.partner_name,
+                            'offer_job_title': app.offer_job_id,
+                            'offer_date': fields.Datetime.now(),
+                            'package_salary': app.package_salary,
+                            'housing': app.housing,
+                            'basic': app.basic,
+                            'transportation': app.transportation,
+                        })
+                    if app.proposed_currency:
+                        offer.write({'currency_id': app.proposed_currency.id})
 
-                if app.package_salary != 0:
-                     print("Ss")
-                elif app.package_salary == 0:
-                    raise UserError("The Packaging Should Be More Than 0")
-                    break
+                    if app.package_salary != 0:
+                        print("Ss")
+                    elif app.package_salary == 0:
+                        raise UserError("The Packaging Should Be More Than 0")
+                        break
             # Duplicate attachments linked to the email.template.
             # Indeed, basic mail.compose.message wizard duplicates attachments in mass
             # mailing mode. But in 'single post' mode, attachments of an email template
@@ -124,7 +149,8 @@ class MailComposeMessage(models.TransientModel):
                 new_attachment_ids = []
                 for attachment in wizard.attachment_ids:
                     if attachment in wizard.template_id.attachment_ids:
-                        new_attachment_ids.append(attachment.sudo().copy({'res_model': 'mail.compose.message', 'res_id': wizard.id}).id)
+                        new_attachment_ids.append(
+                            attachment.sudo().copy({'res_model': 'mail.compose.message', 'res_id': wizard.id}).id)
                     else:
                         new_attachment_ids.append(attachment.id)
                 new_attachment_ids.reverse()
@@ -133,7 +159,9 @@ class MailComposeMessage(models.TransientModel):
             # Mass Mailing
             mass_mode = wizard.composition_mode in ('mass_mail', 'mass_post')
 
-            ActiveModel = self.env[wizard.model] if wizard.model and hasattr(self.env[wizard.model], 'message_post') else self.env['mail.thread']
+            ActiveModel = self.env[wizard.model] if wizard.model and hasattr(self.env[wizard.model],
+                                                                             'message_post') else self.env[
+                'mail.thread']
             if wizard.composition_mode == 'mass_post':
                 # do not send emails directly but use the queue instead
                 # add context key to avoid subscribing the author
@@ -149,7 +177,8 @@ class MailComposeMessage(models.TransientModel):
             batch_size = int(self.env['ir.config_parameter'].sudo().get_param('mail.batch_size')) or self._batch_size
             sliced_res_ids = [res_ids[i:i + batch_size] for i in range(0, len(res_ids), batch_size)]
 
-            if wizard.composition_mode == 'mass_mail' or wizard.is_log or (wizard.composition_mode == 'mass_post' and not wizard.notify):  # log a note: subtype is False
+            if wizard.composition_mode == 'mass_mail' or wizard.is_log or (
+                    wizard.composition_mode == 'mass_post' and not wizard.notify):  # log a note: subtype is False
                 subtype_id = False
             elif wizard.subtype_id:
                 subtype_id = wizard.subtype_id.id
@@ -172,7 +201,8 @@ class MailComposeMessage(models.TransientModel):
                             subtype_id=subtype_id,
                             email_layout_xmlid=notif_layout,
                             add_sign=not bool(wizard.template_id),
-                            mail_auto_delete=wizard.template_id.auto_delete if wizard.template_id else self._context.get('mail_auto_delete', True),
+                            mail_auto_delete=wizard.template_id.auto_delete if wizard.template_id else self._context.get(
+                                'mail_auto_delete', True),
                             model_description=model_description)
                         post_params.update(mail_values)
                         if ActiveModel._name == 'mail.thread':
@@ -187,4 +217,3 @@ class MailComposeMessage(models.TransientModel):
 
                 if wizard.composition_mode == 'mass_mail':
                     batch_mails_sudo.send(auto_commit=auto_commit)
-

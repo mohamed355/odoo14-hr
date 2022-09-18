@@ -2,22 +2,23 @@
 
 from odoo.exceptions import ValidationError, RedirectWarning, UserError
 from odoo import models, fields, api, _
-from datetime import timedelta, date,datetime
+from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
+from lxml import etree
 
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
 
     last_update_applicant = fields.Date(string="Last Update", required=False, )
-    app_code = fields.Char(string="Serial", required=False )
+    app_code = fields.Char(string="Serial", required=False)
     # notes = fields.Text(string="Notes", required=False, )
     ref_employee_id = fields.Many2one(comodel_name="hr.employee", string="Referred By Employee", required=False, )
     acc_date = fields.Date(string="Accepted Date", required=False, )
-    ex_of = fields.Float(string="Expected(Offshore)",  required=False, )
-    ex_on = fields.Float(string="Expected(Onsite)",  required=False, )
-    current_salary = fields.Float(string="Current Salary",  required=False, )
+    ex_of = fields.Float(string="Expected(Offshore)", required=False, )
+    ex_on = fields.Float(string="Expected(Onsite)", required=False, )
+    current_salary = fields.Float(string="Current Salary", required=False, )
     stage_date = fields.Datetime(string="Stage Time", required=False, )
     country_id = fields.Many2one('res.country', string='Country', ondelete='restrict')
     language_ids = fields.Many2many('job.lang')
@@ -38,7 +39,7 @@ class HrApp(models.Model):
     nationality = fields.Char(string="Nationality", required=False, )
     candidate_location = fields.Char(string="Candidate Location", required=False, )
     cv_source = fields.Char(string="CV Source", required=False, )
-    current_salary = fields.Float(string="Current Salary",  required=False, )
+    current_salary = fields.Float(string="Current Salary", required=False, )
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
     currency_of_id = fields.Many2one('res.currency', string='Currency Offshore', required=False)
     currency_on_id = fields.Many2one('res.currency', string='Currency OnSite', required=False)
@@ -68,6 +69,31 @@ class HrApp(models.Model):
             'domain': [('res_id', '=', self.id)],
 
         }
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form',
+                        toolbar=False, submenu=False):
+        result = super(HrApp, self).fields_view_get(
+            view_id=view_id, view_type=view_type,
+            toolbar=toolbar, submenu=submenu)
+        # Disabling the import button for users who are not in import group
+        if view_type == 'tree':
+            doc = etree.XML(result['arch'])
+            if self.env.user.has_group('hr_recruitment.group_hr_recruitment_manager'):
+                # When the user is not part of the import group
+                print('yes')
+                for node in doc.xpath("//tree"):
+                    # Set the import to false
+                    node.set('import', 'true')
+            if not self.env.user.has_group('hr_recruitment.group_hr_recruitment_manager'):
+                print('no')
+                for node in doc.xpath("//tree"):
+                    # Set the import to false
+                    node.set('import', 'false')
+            result['arch'] = etree.tostring(doc)
+
+
+        return result
 
     @api.depends("start_date")
     def _calculate_experience(self):
@@ -102,7 +128,6 @@ class HrApp(models.Model):
     #                 raise ValidationError("Email is Duplicated")
 
 
-
 class TypeJob(models.Model):
     _name = 'type.job'
 
@@ -122,5 +147,3 @@ class JobLang(models.Model):
     _name = 'job.lang'
 
     name = fields.Char('Name')
-
-

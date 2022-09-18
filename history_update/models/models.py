@@ -15,9 +15,11 @@ class HrApplication(models.Model):
     _inherit = 'hr.applicant'
     _rec_name = "partner_name"
 
-    name = fields.Char("Subject / Application Name", required=False, help="Email subject for applications sent via email")
+    name = fields.Char("Subject / Application Name", required=False,
+                       help="Email subject for applications sent via email")
     approve_date = fields.Datetime(string="Approve Date", required=False, )
-    hiring_ids = fields.Many2many(comodel_name="hiring.request",relation="asd", column1="df", column2="das", string="Hiring", store=True)
+    hiring_ids = fields.Many2many(comodel_name="hiring.request", relation="asd", column1="df", column2="das",
+                                  string="Hiring", store=True)
     rej_boolean = fields.Boolean("rejected or no feedback")
 
     # @api.depends()
@@ -39,17 +41,18 @@ class HrApplication(models.Model):
                 # x.rej_boolean = True
                 x.stage_id = None
                 x.hiring_ids = None
-                hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)])
+                hiring_ids = self.env['hiring.request'].search([('application_ids', 'in', x.id)])
                 print(hiring_ids)
                 for h in hiring_ids:
-                    h.update({'application_ids': [(3,x.id,False)]})
+                    h.update({'application_ids': [(3, x.id, False)]})
 
 
 class AssignApplications(models.Model):
     _name = 'assign.application'
 
     name = fields.Char(default="Assign Applications")
-    applications_ids = fields.Many2many(comodel_name="hr.applicant", relation="hrapplicant", column1="hr", column2="applicant", string="Applications", )
+    applications_ids = fields.Many2many(comodel_name="hr.applicant", relation="hrapplicant", column1="hr",
+                                        column2="applicant", string="Applications", )
 
     def assign_applications(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
@@ -90,12 +93,13 @@ class usershistory(models.Model):
 class AssignUsers(models.TransientModel):
     _name = 'assign.users'
 
-    user_ids = fields.Many2many(comodel_name="res.users", relation="resusersdasf", column1="resafduser", column2="afasasafasfas", string="Users", )
+    user_ids = fields.Many2many(comodel_name="res.users", relation="resusersdasf", column1="resafduser",
+                                column2="afasasafasfas", string="Users", )
 
     def assign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
-        hiring.approved=True
-        hiring.acc_date= fields.Date.today()
+        hiring.approved = True
+        hiring.acc_date = fields.Date.today()
         for user in self.user_ids:
             self.env['user.history'].create({
                 'user_id': user.id,
@@ -108,7 +112,8 @@ class AssignUsers(models.TransientModel):
 class UnAssignUsers(models.TransientModel):
     _name = 'unassign.users'
 
-    user_ids = fields.Many2many(comodel_name="res.users", relation="asdff", column1="dafdf", column2="sddf", string="Users", )
+    user_ids = fields.Many2many(comodel_name="res.users", relation="asdff", column1="dafdf", column2="sddf",
+                                string="Users", )
 
     def unassign_users(self):
         hiring = self.env['hiring.request'].browse(self.env.context.get('active_id'))
@@ -116,7 +121,8 @@ class UnAssignUsers(models.TransientModel):
         print("Hiring")
         hiring.acc_date = fields.Date.today()
         for user in self.user_ids:
-            user_s = self.env['user.history'].search([('user_id','=',user.id),('end_date','=',False),('hiring_id','=',hiring.id)])
+            user_s = self.env['user.history'].search(
+                [('user_id', '=', user.id), ('end_date', '=', False), ('hiring_id', '=', hiring.id)])
             if user_s:
                 user_s.end_date = fields.Datetime.today()
-            hiring.update({'user_ids_real': [(3, user.id , False)]})
+            hiring.update({'user_ids_real': [(3, user.id, False)]})
