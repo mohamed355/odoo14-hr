@@ -443,7 +443,7 @@
                 <xpath expr="//notebook" position="inside">
                     <page string="Hiring Requests">
                         <group>
-                            <field name="hiring_ids">
+                            <field name="hiring_ids" attrs="{'readonly': [('admin_boolean', '=', False)]}">
                                 <tree editable="bottom">
                                     <field name="name" string="Code"/>
                                     <field name="approve_date"/>

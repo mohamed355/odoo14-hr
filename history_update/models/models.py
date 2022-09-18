@@ -9,6 +9,15 @@ class HiringRequest(models.Model):
     _inherit = 'hiring.request'
 
     user_ids = fields.One2many(comodel_name="user.history", inverse_name="hiring_id", string="Users", required=False, )
+    admin = fields.Boolean(string="Admin", compute='_compute_admin')
+
+    @api.depends()
+    def _compute_admin(self):
+        for record in self:
+            if self.env.user.has_group('hr_recruitment.group_hr_recruitment_manager'):
+                record.admin = True
+            else:
+                record.admin = False
 
 
 class HrApplication(models.Model):
@@ -21,18 +30,15 @@ class HrApplication(models.Model):
     hiring_ids = fields.Many2many(comodel_name="hiring.request", relation="asd", column1="df", column2="das",
                                   string="Hiring", store=True)
     rej_boolean = fields.Boolean("rejected or no feedback")
-
+    # admin = fields.Boolean(string="Admin", compute='_compute_admin')
+    #
     # @api.depends()
-    # def _compute_hiring_ids(self):
-    #     for x in self:
-    #         if x.rej_boolean == False:
-    #             x.hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)]).ids
+    # def _compute_admin(self):
+    #     for record in self:
+    #         if self.env.user.has_group('hr_recruitment.group_hr_recruitment_manager'):
+    #             record.admin = True
     #         else:
-    #             hiring_ids = self.env['hiring.request'].search([('application_ids','in',x.id)])
-    #             print(hiring_ids)
-    #             for h in hiring_ids:
-    #                 h.update({'application_ids': [(3,x.id,False)]})
-    #             x.hiring_ids = None
+    #             record.admin = False
 
     @api.constrains('stage_id')
     def _constrains_stage_id(self):
