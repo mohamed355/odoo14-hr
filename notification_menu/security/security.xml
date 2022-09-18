@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-       <record id="mail_notification_record_rule" model="ir.rule">
-           <field name="name">Notification Rule</field>
-           <field ref="mail.model_mail_activity" name="model_id"/>
-           <field name="domain_force">[('user_id', '=',user.id )]</field>
-           <field name="perm_write" eval="1"/>
-           <field name="perm_create" eval="1"/>
-           <field name="perm_read" eval="1"/>
-           <field name="perm_unlink" eval="1"/>
-           <!-- You can attach this rule to a specific group, Or make it Global -->
-<!--           <field name="groups" eval="[(4, ref('activity_menu_group_User'))]"/>-->
-           <field name="global" eval="1"/>
-       </record>
+        <record id="mail_notification_record_rule" model="ir.rule">
+            <field name="name">Notification Rule</field>
+            <field ref="mail.model_mail_activity" name="model_id"/>
+            <field name="domain_force">[('user_id', '=',user.id )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <!-- You can attach this rule to a specific group, Or make it Global -->
+            <field name="groups"
+                   eval="[Command.link(ref('recruitment_with_lead.group_hr_recruitment_man')), Command.link(ref('hr_recruitment.group_hr_recruitment_user')), Command.link(ref('recruitment_with_lead.group_hr_recruitment_senior'))]"/>
+            <!--           <field name="global" eval="1"/>-->
+        </record>
+        <record id="mail_notification_record_rule_admin" model="ir.rule">
+            <field name="name">Notification Rule Admin</field>
+            <field ref="mail.model_mail_activity" name="model_id"/>
+            <field name="domain_force">[(1, '=',1)]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <!-- You can attach this rule to a specific group, Or make it Global -->
+            <field name="groups"
+                   eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+            <!--           <field name="global" eval="1"/>-->
+        </record>
 
     </data>
 </odoo>
