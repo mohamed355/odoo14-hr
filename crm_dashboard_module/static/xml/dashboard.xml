@@ -4,7 +4,7 @@
     <t t-name="Dashboard">
 
     <div class="oh_dashboards" style="max-height: 100%;overflow-y: auto;">
-        <div class="container-fluid my-5 o_pos_dashboard" >
+        <div class="container-fluid my-5 o_pos_dashboard">
          </div>
     </div>
     </t>
@@ -12,7 +12,9 @@
  <section class="dashboard_main_section" id="main_section_manager">
 
             <div class="crm_dash_cards row">
-                <div class="col-sm-12 col-md-3 leads" >
+                <div class="col-sm-12 col-md-3 leads">
+                                 <a href="#">
+
                     <div class="dashboard-card card-shadow" style="background:orange">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -22,17 +24,20 @@
                             <h3>
                                 <span>
 <!--                                    <div id="leads_this_year"/>-->
-<!--                                    <div id="leads_this_quarter"/>-->
-<!--                                    <div id="leads_this_month"/>-->
-<div><t t-esc="widget.total_lead"/>       </div>
+                                    <!--                                    <div id="leads_this_quarter"/>-->
+                                    <!--                                    <div id="leads_this_month"/>-->
+                                    <div><t t-esc="widget.total_lead"/>       </div>
                      </span>
                             </h3>
                             <h4>My Leads</h4>
                         </div>
                     </div>
+                                 </a>
                 </div>
 
                 <div class="col-sm-12 col-md-3 opp">
+                                 <a href="#">
+
                     <div class="dashboard-card card-shadow opportunity" style="background:skyblue">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -42,16 +47,19 @@
                             <h3>
                                 <span>
 <div><t t-esc="widget.total_opp"/>       </div>    <!--                                    <div id="opp_this_quarter"/>-->
-<!--                                    <div id="opp_this_month"/>-->
-<!--                                    <div id="opp_this_week"/>-->
+                                    <!--                                    <div id="opp_this_month"/>-->
+                                    <!--                                    <div id="opp_this_week"/>-->
                                 </span>
                             </h3>
                             <h4>My Opportunities</h4>
                         </div>
                     </div>
+                                 </a>
                 </div>
 
                 <div class="col-sm-12 col-md-3 meeting">
+                                 <a href="#">
+
                     <div class="dashboard-card card-shadow exp_revenue" style="background:green">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -61,17 +69,20 @@
                             <h3>
                                 <span>
 <!--                                    <div id="exp_rev_this_year"/>-->
-<!--                                    <div id="exp_rev_this_quarter"/>-->
-<!--                                    <div id="exp_rev_this_month"/>-->
+                                    <!--                                    <div id="exp_rev_this_quarter"/>-->
+                                    <!--                                    <div id="exp_rev_this_month"/>-->
                                     <div><t t-esc="widget.total_activity"/>       </div>
                                 </span>
                             </h3>
                             <h4>Meetings</h4>
                         </div>
                     </div>
+                                 </a>
                 </div>
 
                 <div class="col-sm-12 col-md-3 calls">
+                                 <a href="#">
+
                     <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:red">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -81,16 +92,19 @@
                             <h3>
                                 <span>
 <!--                                    <div id="rev_this_year"/>-->
-<!--                                    <div id="rev_this_quarter"/>-->
-<!--                                    <div id="rev_this_month"/>-->
-<div><t t-esc="widget.crm_activity_call"/>       </div>                                    </span>
+                                    <!--                                    <div id="rev_this_quarter"/>-->
+                                    <!--                                    <div id="rev_this_month"/>-->
+                                    <div><t t-esc="widget.crm_activity_call"/>       </div>                                    </span>
                             </h3>
                             <h4>Calls</h4>
                         </div>
                     </div>
+                                 </a>
                 </div>
-                <div class="col-sm-12 col-md-3">
-                    <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:pink">
+                <div class="col-sm-12 col-md-3 close">
+                                 <a href="#">
+
+                    <div class="dashboard-card card-shadow revenue_card revenue_card " style="background:pink">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
                             <i class="fa fa-ban"></i>
@@ -99,15 +113,18 @@
                             <h3>
                                 <span>
 <!--                                    <div id="rev_this_year"/>-->
-<!--                                    <div id="rev_this_quarter"/>-->
-<!--                                    <div id="rev_this_month"/>-->
-<div><t t-esc="widget.close_to"/>       </div>                                    </span>
+                                    <!--                                    <div id="rev_this_quarter"/>-->
+                                    <!--                                    <div id="rev_this_month"/>-->
+                                    <div><t t-esc="widget.close_to"/>       </div>                                    </span>
                             </h3>
                             <h4>Closing This Month</h4>
                         </div>
                     </div>
+                                 </a>
                 </div>
                 <div class="col-sm-20 col-md-3 openopp">
+                                 <a href="#">
+
                     <div class="dashboard-card card-shadow revenue_card revenue_card" style="background:blue">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
@@ -117,130 +134,132 @@
                             <h3>
                                 <span>
 <!--                                    <div id="rev_this_year"/>-->
-<!--                                    <div id="rev_this_quarter"/>-->
-<!--                                    <div id="rev_this_month"/>-->
-<div><t t-esc="widget.open_opp"/>       </div>                                    </span>
+                                    <!--                                    <div id="rev_this_quarter"/>-->
+                                    <!--                                    <div id="rev_this_month"/>-->
+                                    <div><t t-esc="widget.open_opp"/>       </div>                                    </span>
                             </h3>
                             <h4>Open Opportunity</h4>
                         </div>
                     </div>
+                                 </a>
                 </div>
+
             </div>
 
-<!--     <div class="col-sm-12 col-md-3">-->
-<!--                    <div class="dashboard-card card-shadow win_ratio">-->
-<!--                        <div-->
-<!--                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">-->
-<!--                            <i class="fa fa-percent text-mauve"/>-->
-<!--                        </div>-->
-<!--                        <div class="dashboard-card__details">-->
-<!--                            <h3>-->
-<!--                                <span>-->
-<!--                                    <div id="ratio_this_year"/>-->
-<!--                                    <div id="ratio_this_quarter"/>-->
-<!--                                    <div id="ratio_this_month"/>-->
-<!--                                    <div id="ratio_this_week"/>-->
-<!--                                </span>-->
-<!--                            </h3>-->
-<!--                            <h4>Win Ratio</h4>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+     <!--     <div class="col-sm-12 col-md-3">-->
+     <!--                    <div class="dashboard-card card-shadow win_ratio">-->
+     <!--                        <div-->
+     <!--                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">-->
+     <!--                            <i class="fa fa-percent text-mauve"/>-->
+     <!--                        </div>-->
+     <!--                        <div class="dashboard-card__details">-->
+     <!--                            <h3>-->
+     <!--                                <span>-->
+     <!--                                    <div id="ratio_this_year"/>-->
+     <!--                                    <div id="ratio_this_quarter"/>-->
+     <!--                                    <div id="ratio_this_month"/>-->
+     <!--                                    <div id="ratio_this_week"/>-->
+     <!--                                </span>-->
+     <!--                            </h3>-->
+     <!--                            <h4>Win Ratio</h4>-->
+     <!--                        </div>-->
+     <!--                    </div>-->
+     <!--                </div>-->
 
-<!--                <div class="col-sm-12 col-md-3">-->
-<!--                    <div class="dashboard-card card-shadow avg_close_time">-->
-<!--                        <div-->
-<!--                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">-->
-<!--                            <i class="fa fa-clock-o text-mauve"/>-->
-<!--                        </div>-->
-<!--                        <div class="dashboard-card__details">-->
-<!--                            <h3>-->
-<!--                                <span>-->
-<!--                                   -->
-<!--                                    <div id="avg_time_this_week"/>-->
-<!--                                </span>-->
-<!--                            </h3>-->
-<!--                            <h4>Average Closing Time</h4>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+     <!--                <div class="col-sm-12 col-md-3">-->
+     <!--                    <div class="dashboard-card card-shadow avg_close_time">-->
+     <!--                        <div-->
+     <!--                                class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">-->
+     <!--                            <i class="fa fa-clock-o text-mauve"/>-->
+     <!--                        </div>-->
+     <!--                        <div class="dashboard-card__details">-->
+     <!--                            <h3>-->
+     <!--                                <span>-->
+     <!--                                   -->
+     <!--                                    <div id="avg_time_this_week"/>-->
+     <!--                                </span>-->
+     <!--                            </h3>-->
+     <!--                            <h4>Average Closing Time</h4>-->
+     <!--                        </div>-->
+     <!--                    </div>-->
+     <!--                </div>-->
  </section>
-<!--<div class="row main-section" style="margin-left: 14px;margin-top: 14px" >-->
+        <!--<div class="row main-section" style="margin-left: 14px;margin-top: 14px" >-->
 
-<!--<div class="col-md-2 col-sm-4 crm_lead oh-payslip" style="background:#5BCBD0;display:inline-block;">-->
-<!--    <div class="oh-card" style="width: 100px;display:inline-block">-->
-<!--<div class="oh-card-body">-->
-<!--    <div class="stat-widget-one">-->
-<!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
-<!--<i style="color:white" class="fa fa-shopping-bag"/>-->
-<!--    </div>-->
-<!--       <div class="stat-content">-->
-<!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Leads</div>-->
-<!--           <div class="stat_count" style="margin-top: -115px;margin-left:200px;font-size:48px"><t t-esc="widget.total_lead"/></div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--</div>-->
+        <!--<div class="col-md-2 col-sm-4 crm_lead oh-payslip" style="background:#5BCBD0;display:inline-block;">-->
+        <!--    <div class="oh-card" style="width: 100px;display:inline-block">-->
+        <!--<div class="oh-card-body">-->
+        <!--    <div class="stat-widget-one">-->
+        <!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
+        <!--<i style="color:white" class="fa fa-shopping-bag"/>-->
+        <!--    </div>-->
+        <!--       <div class="stat-content">-->
+        <!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Leads</div>-->
+        <!--           <div class="stat_count" style="margin-top: -115px;margin-left:200px;font-size:48px"><t t-esc="widget.total_lead"/></div>-->
+        <!--    </div>-->
+        <!--    </div>-->
+        <!--</div>-->
 
-<!--    </div>-->
-<!--    </div>-->
-<!--&lt;!&ndash;    <div class="row main-section" style="margin-left: 14px;background:#5BCBD0" >&ndash;&gt;-->
+        <!--    </div>-->
+        <!--    </div>-->
+        <!--&lt;!&ndash;    <div class="row main-section" style="margin-left: 14px;background:#5BCBD0" >&ndash;&gt;-->
 
-<!--    <div class="col-md-3 col-sm-4 crm_lead_opp oh-payslip" style="background:#5BCBD0;margin-left: 30px">-->
+        <!--    <div class="col-md-3 col-sm-4 crm_lead_opp oh-payslip" style="background:#5BCBD0;margin-left: 30px">-->
 
-<!--    <div class="oh-card" style="width: 100px">-->
-<!--<div class="oh-card-body" style="background:#5BCBD0">-->
-<!--    <div class="stat-widget-one">-->
-<!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
-<!--<i style="color:white" class="fa fa-shopping-bag"/>-->
-<!--    </div>-->
-<!--       <div class="stat-content" style="background:#5BCBD0">-->
-<!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Opp</div>-->
-<!--           <div class="stat_count" style="margin-top: -111px;margin-left:150px;font-size:48px;background:#5BCBD0"><t t-esc="widget.total_opp"/></div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--    <div class="col-md-2 col-sm-4 crm_lead_opp oh-payslip" style="background:#5BCBD0;margin-left: 30px">-->
+        <!--    <div class="oh-card" style="width: 100px">-->
+        <!--<div class="oh-card-body" style="background:#5BCBD0">-->
+        <!--    <div class="stat-widget-one">-->
+        <!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
+        <!--<i style="color:white" class="fa fa-shopping-bag"/>-->
+        <!--    </div>-->
+        <!--       <div class="stat-content" style="background:#5BCBD0">-->
+        <!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Opp</div>-->
+        <!--           <div class="stat_count" style="margin-top: -111px;margin-left:150px;font-size:48px;background:#5BCBD0"><t t-esc="widget.total_opp"/></div>-->
+        <!--    </div>-->
+        <!--    </div>-->
+        <!--</div>-->
+        <!--    </div>-->
+        <!--    </div>-->
+        <!--    <div class="col-md-2 col-sm-4 crm_lead_opp oh-payslip" style="background:#5BCBD0;margin-left: 30px">-->
 
-<!--    <div class="oh-card" style="width: 100px">-->
-<!--<div class="oh-card-body" style="background:#5BCBD0">-->
-<!--    <div class="stat-widget-one">-->
-<!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
-<!--<i style="color:white" class="fa fa-bell"/>-->
-<!--    </div>-->
-<!--       <div class="stat-content" style="background:#5BCBD0">-->
-<!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Meetings</div>-->
-<!--           <div class="stat_count" style="margin-top: -111px;margin-left:150px;font-size:48px;background:#5BCBD0"><t t-esc="widget.total_activity"/></div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--</div>-->
+        <!--    <div class="oh-card" style="width: 100px">-->
+        <!--<div class="oh-card-body" style="background:#5BCBD0">-->
+        <!--    <div class="stat-widget-one">-->
+        <!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
+        <!--<i style="color:white" class="fa fa-bell"/>-->
+        <!--    </div>-->
+        <!--       <div class="stat-content" style="background:#5BCBD0">-->
+        <!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Meetings</div>-->
+        <!--           <div class="stat_count" style="margin-top: -111px;margin-left:150px;font-size:48px;background:#5BCBD0"><t t-esc="widget.total_activity"/></div>-->
+        <!--    </div>-->
+        <!--    </div>-->
+        <!--</div>-->
 
-<!--    </div>-->
-<!--</div>-->
-<!--&lt;!&ndash;        <div class="row main-section" style="margin-left: 14px;margin-top: 14px" >&ndash;&gt;-->
+        <!--    </div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;        <div class="row main-section" style="margin-left: 14px;margin-top: 14px" >&ndash;&gt;-->
 
-<!--&lt;!&ndash;    <div class="row main-section" style="margin-left: 14px;background:#5BCBD0" >&ndash;&gt;-->
+        <!--&lt;!&ndash;    <div class="row main-section" style="margin-left: 14px;background:#5BCBD0" >&ndash;&gt;-->
 
-<!--    <div class="col-md-2 col-sm-4 crm_lead_opp oh-payslip" style="background:#5BCBD0;margin-left:30px">-->
+        <!--    <div class="col-md-2 col-sm-4 crm_lead_opp oh-payslip" style="background:#5BCBD0;margin-left:30px">-->
 
-<!--    <div class="oh-card" style="width: 100px">-->
-<!--<div class="oh-card-body" style="background:#5BCBD0">-->
-<!--    <div class="stat-widget-one">-->
-<!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
-<!--<i style="color:white" class="fa fa-phone"/>-->
-<!--    </div>-->
-<!--       <div class="stat-content" style="background:#5BCBD0">-->
-<!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Calls</div>-->
-<!--           <div class="stat_count" style="margin-top: -111px;margin-left:150px;font-size:48px;background:#5BCBD0"><t t-esc="widget.crm_activity_call"/></div>-->
-<!--    </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--    </div>-->
-<!--    </div>-->
+        <!--    <div class="oh-card" style="width: 100px">-->
+        <!--<div class="oh-card-body" style="background:#5BCBD0">-->
+        <!--    <div class="stat-widget-one">-->
+        <!--<div class="stat-icon" style="background:#5bcbd0;width:20px">-->
+        <!--<i style="color:white" class="fa fa-phone"/>-->
+        <!--    </div>-->
+        <!--       <div class="stat-content" style="background:#5BCBD0">-->
+        <!--           <div class="stat-head" style="text-align: left !important;font-weight:300;font-size:25px;margin-bottom:60px;margin-left:35px;width:100%;margin-top:57px">Calls</div>-->
+        <!--           <div class="stat_count" style="margin-top: -111px;margin-left:150px;font-size:48px;background:#5BCBD0"><t t-esc="widget.crm_activity_call"/></div>-->
+        <!--    </div>-->
+        <!--    </div>-->
+        <!--</div>-->
+        <!--    </div>-->
+        <!--    </div>-->
 
-<!--</div>-->
-<!--&lt;!&ndash;&ndash;&gt;-->
+        <!--</div>-->
+        <!--&lt;!&ndash;&ndash;&gt;-->
 
     </t>
     <t t-name="DashboardChart">
@@ -374,7 +393,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="funnel_chart_div col-sm-3 col-md-4 opp">
+    <div class="funnel_chart_div col-sm-3 col-md-4 opp">
                     <div class="chart-container card-shadow">
                         <h2>Funnel Chart</h2>
                         <hr/>
@@ -383,79 +402,79 @@
                         </div>
                     </div>
                 </div>
-                <div class="year_to_date_graph_div col-sm-3 col-md-3 act">
+    <div class="year_to_date_graph_div col-sm-3 col-md-3 act">
                     <div class="sales_activity_pie_div half_chart chart-container card-shadow">
                         <h2>Activities</h2>
                         <hr/>
                         <div class="graph_canvas" style="margin-top: 30px;">
                             <canvas class="activity" width="200px" height="200px"/>
                         </div>
-<!--                        <div style="margin-top: 30px;margin-left: 20px;">-->
-<!--                            <h5 class="sub_title d-flex">Annual Target :&amp;nbsp <div id="target"/></h5>-->
-<!--                            <h5 class="sub_title d-flex">YtD Target :&amp;nbsp <div id="ytd_target"/></h5>-->
-<!--                            <h5 class="sub_title d-flex">Achieved Won :&amp;nbsp <div id="won"/></h5>-->
-<!--                            <h5 class="sub_title d-flex">Difference :&amp;nbsp <div id="difference"/></h5>-->
-<!--                        </div>-->
+                        <!--                        <div style="margin-top: 30px;margin-left: 20px;">-->
+                        <!--                            <h5 class="sub_title d-flex">Annual Target :&amp;nbsp <div id="target"/></h5>-->
+                        <!--                            <h5 class="sub_title d-flex">YtD Target :&amp;nbsp <div id="ytd_target"/></h5>-->
+                        <!--                            <h5 class="sub_title d-flex">Achieved Won :&amp;nbsp <div id="won"/></h5>-->
+                        <!--                            <h5 class="sub_title d-flex">Difference :&amp;nbsp <div id="difference"/></h5>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
-<div class="year_to_date_graph_div col-sm-3 col-md-3">
+    <div class="year_to_date_graph_div col-sm-3 col-md-3">
                     <div class="sales_activity_pie_div half_chart chart-container card-shadow">
-                        <h2>Stages</h2>
+                        <h2>Amount By Stage</h2>
                         <hr/>
                         <div class="graph_canvas" style="margin-top: 30px;">
                             <canvas class="lost_leads_graph" width="200px" height="200px"/>
                         </div>
-<!--                        <div style="margin-top: 30px;margin-left: 20px;">-->
-<!--                            <h5 class="sub_title d-flex">Annual Target :&amp;nbsp <div id="target"/></h5>-->
-<!--                            <h5 class="sub_title d-flex">YtD Target :&amp;nbsp <div id="ytd_target"/></h5>-->
-<!--                            <h5 class="sub_title d-flex">Achieved Won :&amp;nbsp <div id="won"/></h5>-->
-<!--                            <h5 class="sub_title d-flex">Difference :&amp;nbsp <div id="difference"/></h5>-->
-<!--                        </div>-->
+                        <!--                        <div style="margin-top: 30px;margin-left: 20px;">-->
+                        <!--                            <h5 class="sub_title d-flex">Annual Target :&amp;nbsp <div id="target"/></h5>-->
+                        <!--                            <h5 class="sub_title d-flex">YtD Target :&amp;nbsp <div id="ytd_target"/></h5>-->
+                        <!--                            <h5 class="sub_title d-flex">Achieved Won :&amp;nbsp <div id="won"/></h5>-->
+                        <!--                            <h5 class="sub_title d-flex">Difference :&amp;nbsp <div id="difference"/></h5>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
-             <!--   <div class="col-sm-12 col-md-4">
-                    <div class="leads_month_pie_div half_chart chart-container card-shadow">
-                        <h2>Leads by Month</h2>
-                        <hr/>
-                        <div class="graph_canvas">
-                            <canvas class="lead_month" width="200" height="120"/>
-                        </div>
-                    </div>-->
-<!--                    <div class="sales_activity_pie_div half_chart chart-container card-shadow">-->
-<!--                        <h2>Graph</h2>-->
-<!--                        <hr/>-->
-<!--                        <div class="graph_canvas">-->
-<!--                            <canvas class="lost_leads_graph" width="200" height="120"/>-->
-<!--                        </div>-->
-<!--                    </div>-->
+    <!--   <div class="col-sm-12 col-md-4">
+           <div class="leads_month_pie_div half_chart chart-container card-shadow">
+               <h2>Leads by Month</h2>
+               <hr/>
+               <div class="graph_canvas">
+                   <canvas class="lead_month" width="200" height="120"/>
+               </div>
+           </div>-->
+    <!--                    <div class="sales_activity_pie_div half_chart chart-container card-shadow">-->
+    <!--                        <h2>Graph</h2>-->
+    <!--                        <hr/>-->
+    <!--                        <div class="graph_canvas">-->
+    <!--                            <canvas class="lost_leads_graph" width="200" height="120"/>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
                 </div>
 
 
-<!--            </div>-->
-<!--        <div class="col-12 col-sm-12 col-md-6">-->
+        <!--            </div>-->
+        <!--        <div class="col-12 col-sm-12 col-md-6">-->
 
 
-<!--                  <div class="sales_activity_pie_div half_chart chart-container card-shadow">-->
-<!--<h2>CRM Activity</h2>-->
-<!--<hr/>-->
-<!--<div class="graph_canvas">-->
-<!--<canvas class="activity" width="200" height="120"/>-->
+        <!--                  <div class="sales_activity_pie_div half_chart chart-container card-shadow">-->
+        <!--<h2>CRM Activity</h2>-->
+        <!--<hr/>-->
+        <!--<div class="graph_canvas">-->
+        <!--<canvas class="activity" width="200" height="120"/>-->
 
-<!--</div>-->
+        <!--</div>-->
 
 
-<!--</div>-->
+        <!--</div>-->
 
-<!--<div class="lost_reason_pie_div chart-container card-shadow">-->
+        <!--<div class="lost_reason_pie_div chart-container card-shadow">-->
 
-<!--<h3 class="h5">Stage</h3>-->
-<!--                        <hr/>-->
-<!--                        <div class="graph_canvas" style="height: 400px !important;">-->
-<!--                                <canvas class="lost_leads_graph" width="200" height="120"/>-->
+        <!--<h3 class="h5">Stage</h3>-->
+        <!--                        <hr/>-->
+        <!--                        <div class="graph_canvas" style="height: 400px !important;">-->
+        <!--                                <canvas class="lost_leads_graph" width="200" height="120"/>-->
 
-<!--                        </div>-->
-<!--                    </div>-->
-<!---->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!---->
     </t>
 
 

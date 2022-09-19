@@ -15,6 +15,7 @@ var PosDashboard =  AbstractAction.extend({
 //            'click .apps':'apps',
 //            'click .stage_click':'stage_click',
             'click .calls':'calls',
+            'click .close':'close',
             'click .act':'act',
             'click .meeting':'meeting',
             'click .opp':'opp',
@@ -169,6 +170,29 @@ render_sales_activity_graph:function(){
             view_type: 'form',
             views: [[false, 'list'],[false, 'form']],
                     domain: [['activity_type_id.category', '=', "phonecall"],['res_model', '=', "crm.lead"]],
+            target: 'current'
+        }, options)
+    },
+     close: function(x){
+        var self = this;
+        x.stopPropagation();
+        x.preventDefault();
+        var options = {
+            on_reverse_breadcrumb: self.on_reverse_breadcrumb,
+        };
+        const date = new Date();
+        const first = new Date(date.getFullYear(), date.getMonth(), 1);
+        const last = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        console.log(first);
+
+        self.do_action({
+            name: _t("Close In Month"),
+            type: 'ir.actions.act_window',
+            res_model: 'crm.lead',
+            view_mode: 'tree,form',
+            view_type: 'form',
+            views: [[false, 'list'],[false, 'form']],
+                    domain: [['date_deadline', '>=', first],['date_deadline', '<=', last]],
             target: 'current'
         }, options)
     },

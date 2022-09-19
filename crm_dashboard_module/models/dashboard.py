@@ -12,25 +12,28 @@ class Dashboard(models.Model):
     def get_data(self):
         today = datetime.today()
         datem_1 = datetime(today.year, today.month, 1)
-        last_day= calendar.monthrange(today.year, today.month)[1]
+        last_day = calendar.monthrange(today.year, today.month)[1]
         datem_2 = datetime(today.year, today.month, last_day)
-        print("Date",datem_1)
-        print("Date Calendar",calendar.monthrange(today.year, today.month)[1])
+        print("Date", datem_1)
+        print("Date Calendar", calendar.monthrange(today.year, today.month)[1])
         # domain = [('date_order','>=',default_data)]
-        crm_lead=self.env['crm.lead'].search([])
-        crm_activity=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','meeting')])
-        crm_activity_meeting=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','meeting')])
-        crm_activity_call=self.env['mail.activity'].search([('res_model_id.model','=','crm.lead'),('activity_type_id.category','=','phonecall')])
-        open_opp=self.env['crm.lead'].search([('probability', '!=', 100), ('type', '=', 'opportunity')])
-        close_to=self.env['crm.lead'].search([('date_deadline', '>=', datem_1),('date_deadline', '<=', datem_2)])
-        crm_opp=self.env['crm.lead'].search([('type','=','opportunity')])
+        crm_lead = self.env['crm.lead'].search([])
+        crm_activity = self.env['mail.activity'].search(
+            [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'meeting')])
+        crm_activity_meeting = self.env['mail.activity'].search(
+            [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'meeting')])
+        crm_activity_call = self.env['mail.activity'].search(
+            [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'phonecall')])
+        open_opp = self.env['crm.lead'].search([('probability', '!=', 100), ('type', '=', 'opportunity')])
+        close_to = self.env['crm.lead'].search([('date_deadline', '>=', datem_1), ('date_deadline', '<=', datem_2)])
+        crm_opp = self.env['crm.lead'].search([('type', '=', 'opportunity')])
         return {
-            'total_lead':len(crm_lead),
-            'total_opp':len(crm_opp),
-            'total_activity':len(crm_activity),
-            'crm_activity_call':len(crm_activity_call),
-            'open_opp':len(open_opp),
-            'close_to':len(close_to),
+            'total_lead': len(crm_lead),
+            'total_opp': len(crm_opp),
+            'total_activity': len(crm_activity),
+            'crm_activity_call': len(crm_activity_call),
+            'open_opp': len(open_opp),
+            'close_to': len(close_to),
         }
 
     @api.model
@@ -119,7 +122,7 @@ class Dashboard(models.Model):
                 record_list = list(record)
                 record_list[5] = user_id_obj.name
                 activities.append(record_list)
-        print("activities",activities)
+        print("activities", activities)
         return {'activities': activities}
 
     @api.model
@@ -145,6 +148,7 @@ class Dashboard(models.Model):
                 activities.append(record_list)
         print("activities", activities)
         return {'activities': activities}
+
     # def get_recent_todo_activities(self):
     #     """Recent Activities Table"""
     #     today = fields.date.today()
@@ -191,6 +195,7 @@ class Dashboard(models.Model):
                 activities.append(record_list)
         print("activities", activities)
         return {'activities': activities}
+
     @api.model
     def get_the_sales_activity(self):
         """Sales Activity Pie"""
@@ -216,7 +221,7 @@ class Dashboard(models.Model):
         stage_ids = self.env["crm.stage"].search([])
         crm_list = []
         for stage in stage_ids:
-            leads = self.search_count([("stage_id", "=", stage.id),('type','=','opportunity')])
+            leads = self.search_count([("stage_id", "=", stage.id), ('type', '=', 'opportunity')])
             crm_list.append((stage.name, int(leads)))
         return crm_list
 
@@ -227,7 +232,6 @@ class Dashboard(models.Model):
         self._cr.execute('''select stage_id, sum(expected_revenue),(SELECT name FROM crm_stage
                 WHERE id = stage_id) from crm_lead  group by stage_id''')
         data1 = self._cr.dictfetchall()
-
 
         name = []
         for rec in data1:

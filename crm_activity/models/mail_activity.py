@@ -11,8 +11,19 @@ class MailActivity(models.Model):
     lead_id = fields.Many2one(comodel_name="crm.lead", string="Leads", required=False, )
     date_from = fields.Datetime(string="Date From", required=False, )
     date_to = fields.Datetime(string="Date To", required=False, )
-    crm_user_ids = fields.Many2many(comodel_name="res.users", relation="resuseerscrm", column1="rescrm", column2="userescrm",
+    crm_user_ids = fields.Many2many(comodel_name="res.users", relation="resuseerscrm", column1="rescrm",
+                                    column2="userescrm",
                                     string="Users", compute="_compute_users_crm")
+
+    @api.onchange('activity_type_id')
+    def _onchange_activity_type_id(self):
+        if self.activity_type_id:
+            if self.activity_type_id.summary:
+                self.summary = self.activity_type_id.summary
+            # self.date_deadline = self._calculate_date_deadline(self.activity_type_id)
+            self.user_id = self.activity_type_id.default_user_id or self.env.user
+            if self.activity_type_id.default_note:
+                self.note = self.activity_type_id.default_note
 
     @api.depends('activity_type_id')
     def _compute_users_crm(self):
