@@ -393,20 +393,7 @@ class HrApplication(models.Model):
     hiring_ids = fields.Many2many(comodel_name="hiring.request", relation="asd", column1="df", column2="das",
                                   string="Hiring", store=True)
 
-    @api.constrains('stage_id')
-    def _constrains_stage_id_a(self):
-        for x in self:
-            print("adsd", x.stage_id.name)
-            if x.stage_id.name in ["Hold", "Completed"]:
-                # x.rej_boolean = True
-                x.stage_id = None
-                x.hiring_ids = None
-                hiring_ids = self.env['hiring.request'].search([('application_ids', 'in', x.id)])
-                print(hiring_ids)
-                for h in hiring_ids:
-                    h.update({'application_ids': [(3, x.id, False)]})
-            if x.stage_id.name == "Offer Accepted":
-                x.acc_date = fields.Date.today()
+
 
 
 class AssignApplications(models.Model):

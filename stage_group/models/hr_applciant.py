@@ -1,4 +1,4 @@
-from odoo import api, fields, models 
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError, RedirectWarning, UserError
 
 
@@ -6,8 +6,13 @@ class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
 
     @api.constrains('stage_id')
-    def _constrains_stage_id_ah(self):
+    def _constrains_stage_id_a(self):
         for x in self:
+            print(self.env.user.id, 'in', x.stage_id.user_ids.ids)
+            if self.env.user.id in x.stage_id.user_ids.ids:
+                print("Access")
+            else:
+                raise ValidationError("You Need To Access To Move In This Stage")
             print("adsd", x.stage_id.name)
             if x.stage_id.name in ["Hold", "Completed"]:
                 x.stage_id = None
@@ -18,7 +23,3 @@ class HrApplicant(models.Model):
                     h.update({'application_ids': [(3, x.id, False)]})
             if x.stage_id.name == "Offer Accepted":
                 x.acc_date = fields.Date.today()
-            if x.env.uid in x.stage_id.user_ids.ids:
-                print("Access")
-            else:
-                raise ValidationError("You Need To Access To Move In This Stage")
