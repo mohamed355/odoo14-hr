@@ -10,7 +10,7 @@ from lxml import etree
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
-
+    re_action = fields.Char(string="Recommended Action", required=False, )
     last_update_applicant = fields.Date(string="Last Update", required=False, )
     app_code = fields.Char(string="Serial", required=False)
     # notes = fields.Text(string="Notes", required=False, )
@@ -91,7 +91,6 @@ class HrApp(models.Model):
                     # Set the import to false
                     node.set('import', 'false')
             result['arch'] = etree.tostring(doc)
-
 
         return result
 

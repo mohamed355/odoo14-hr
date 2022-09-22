@@ -222,6 +222,7 @@
                                 <group>
                                     <field name="job_des"/>
                                     <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
 
                                 </group>
                             </group>
