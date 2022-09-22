@@ -47,28 +47,17 @@
 
             </field>
         </record>
-        <record id="hr_applicant_view_tree_inherit" model="ir.ui.view">
-            <field name="name">hr_recruitment.crm_case_tree_view_job.inherit</field>
-            <field name="model">hr.applicant</field>
-            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
-            <field name="arch" type="xml">
-                <field name="partner_name" position="before">
-                    <field name="app_code" string="#"/>
-                </field>
 
-
-            </field>
-        </record>
         <record id="hr_applicant_view_form_inherit" model="ir.ui.view">
             <field name="name">hr_recruitment.hr_applicant_view_form.inherit</field>
             <field name="model">hr.applicant</field>
             <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
             <field name="arch" type="xml">
-                <field name="source_id" position="after">
-                    <!--                <field name="app_code"/>-->
-                    <field name="code" invisible="1"/>
+<!--                <field name="source_id" position="after">-->
+<!--                    &lt;!&ndash;                <field name="app_code"/>&ndash;&gt;-->
+<!--                    <field name="code" invisible="1"/>-->
 
-                </field>
+<!--                </field>-->
                 <xpath expr="//div[@class='oe_title']" position="inside">
                     <label for="app_code" class="oe_edit_only"/>
                     <h1>

@@ -14,8 +14,8 @@
 #             'objects': http.request.env['app_serial.app_serial'].search([]),
 #         })
 
-#     @http.route('/app_serial/app_serial/objects/<model("app_serial.app_serial"):obj>', auth='public')
-#     def object(self, obj, **kw):
-#         return http.request.render('app_serial.object', {
-#             'object': obj
-#         })
+    # @http.route('/app_serial/app_serial/objects/<model("hr.applicant"):obj>', auth='public')
+    # def object(self, obj, **kw):
+    #     return http.request.render('hr_applicant.object', {
+    #         'object': obj
+    #     })
