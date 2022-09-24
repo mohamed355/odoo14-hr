@@ -52,7 +52,7 @@ class NewModule(models.TransientModel):
     user_id = fields.Many2one(comodel_name="res.users", string="Salesperson", readonly=True)
     team_id = fields.Many2one(comodel_name="crm.team", string="Sales Team", readonly=True)
     comment = fields.Text(string="Other Comments", required=False, )
-    tag_ids = fields.Many2many(comodel_name="crm.tag", string="Tags",)
+    tag_ids = fields.Many2many(comodel_name="crm.tag", string="Tags", )
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
     country_id = fields.Many2one(comodel_name="res.country", string="Country", required=False)
     job_id = fields.Many2one(comodel_name="hr.job", string="Job", required=True, )
@@ -86,10 +86,6 @@ class NewModule(models.TransientModel):
                 'ex_level': rec.ex_level,
                 'budget': rec.budget,
                 'currency_id': rec.currency_id.id,
-                # 'customer_id': oppr.partner_id.id,
-                # 'customer_address_email': oppr.partner_id.email,
-                # 'customer_address_phone': oppr.partner_id.phone,
-                # 'customer_address_mobile': oppr.partner_id.mobile,
                 'user_id': rec.user_id.id,
                 'type_of_job': rec.type_of_job,
                 'salary_range': rec.salary_range,
@@ -104,7 +100,6 @@ class NewModule(models.TransientModel):
                 'gender': rec.gender,
                 'ex_level': rec.ex_level,
                 'language_ids': rec.language_ids.ids,
-                # 'key_ids': rec.key_ids.ids,
                 'tec_ids': rec.tec_ids.ids,
                 'job_des': rec.job_des,
                 'impo_level': rec.impo_level,
@@ -124,10 +119,11 @@ class HiringRequest(models.Model):
     acc_date = fields.Date(string="Accepted Date", required=False, )
     req_date = fields.Date(string="Request Date", required=False, )
     approve_date = fields.Datetime(string="Approve Date", required=False, )
-    offered = fields.Integer(string="Offered", required=False)
-    awaiting_review = fields.Integer(string="Awaiting Review", required=False)
-    new_opp = fields.Integer(string="New Applicants", required=False)
-    reviewed = fields.Integer(string="Reviewed", required=False, )
+    offered = fields.Integer(string="Submitted to client", required=False, compute='_compute_application_ids_stages')
+    awaiting_review = fields.Integer(string="Approved from client", required=False,
+                                     compute='_compute_application_ids_stages')
+    new_opp = fields.Integer(string="Accepted technical", required=False, compute='_compute_application_ids_stages')
+    reviewed = fields.Integer(string="Offer Accepted", required=False, compute='_compute_application_ids_stages')
     stage_id = fields.Many2one(comodel_name="hiring.stage", store=True, copy=False, index=True, ondelete='restrict',
                                string="Stage", required=False, group_expand='_read_group_stage_ids')
     hiring = fields.Char(string="Hiring", required=False, )
@@ -194,13 +190,17 @@ class HiringRequest(models.Model):
                                        column1='application_id', column2="hr_id", string="Application")
     activity_count = fields.Integer(string="Activities", required=False, compute='_compute_activity_count')
 
-    # @api.depends('application_ids')
-    # def _compute_application_ids_stages(self):
-    #     for record in self:
-    #         record.offered = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Offered")])
-    #         record.new_opp = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"New Applicants")])
-    #         record.reviewed = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Reviewed")])
-    #         record.awaiting_review = self.env['hr.applicant'].search_count([('id','in',record.application_ids.ids),('stage_id.name','=',"Awaiting Review")])
+    @api.depends('application_ids')
+    def _compute_application_ids_stages(self):
+        for record in self:
+            record.offered = self.env['hr.applicant'].search_count(
+                [('id', 'in', record.application_ids.ids), ('stage_id.name', '=', "Submitted to client")])
+            record.reviewed = self.env['hr.applicant'].search_count(
+                [('id', 'in', record.application_ids.ids), ('stage_id.name', '=', "Offer Accepted")])
+            record.new_opp = self.env['hr.applicant'].search_count(
+                [('id', 'in', record.application_ids.ids), ('stage_id.name', '=', "Accepted technical")])
+            record.awaiting_review = self.env['hr.applicant'].search_count(
+                [('id', 'in', record.application_ids.ids), ('stage_id.name', '=', "Approved from client")])
 
     def create_application(self):
         application = self.env['hr.applicant'].create({
@@ -392,8 +392,6 @@ class HrApplication(models.Model):
 
     hiring_ids = fields.Many2many(comodel_name="hiring.request", relation="asd", column1="df", column2="das",
                                   string="Hiring", store=True)
-
-
 
 
 class AssignApplications(models.Model):

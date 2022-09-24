@@ -199,8 +199,8 @@
                     <field name="email_from" string="Email"/>
                     <field name="linkedin" string="Linkedin"/>
                     <field name="experience_level"/>
-                    <field name="experience_y" string="Years of Experience" optional="hide"/>
-                    <field name="start_date" string="Experience"/>
+                    <field name="experience_y" string="Years of Experience"/>
+                    <field name="start_date" string="Experience" optional="hide"/>
                     <field name="tools"/>
                     <field name="notice_period_from" optional="hide"/>
                     <field name="notice_period_to" optional="hide"/>
@@ -220,20 +220,26 @@
                     <field name="stage_id"/>
                     <field name="priority" invisible="1"/>
                     <field name="create_date"/>
+                    <field name="email_cc"/>
+                    <field name="type_id"/>
+                    <field name="gender"/>
+                    <field name="language_ids" widget="many2many_tags"/>
+                    <field name="categ_ids" widget="many2many_tags"/>
                 </tree>
             </xpath>
         </field>
     </record>
     <!-- Inherit Form View to Modify it -->
-    <record id="hr_applicant_view_search_bis_inherit" model="ir.ui.view">
-        <field name="name">hr_applicant_view_search_bis_inherit</field>
+    <record id="hr_applicant_view_search_inherit" model="ir.ui.view">
+        <field name="name">hr_applicant_view_search_inherit</field>
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='email_from']" position="after">
+            <xpath expr="//field[@name='partner_name']" position="before">
                 <field string="Code" name="app_code" filter_domain="[('app_code', 'ilike', self)]"/>
-                <field string="Years of Experience" name="experience_y" filter_domain="[('experience_y', 'ilike', self)]"/>
+                <field string="Years of Experience" name="experience_y"
+                       filter_domain="[('experience_y', 'ilike', self)]"/>
                 <field string="Tools" name="tools" filter_domain="[('tools', 'ilike', self)]"/>
                 <field string="Expected Offshore" name="ex_of" filter_domain="[('ex_of', 'ilike', self)]"/>
                 <field string="Expected On Site" name="ex_on" filter_domain="[('ex_on', 'ilike', self)]"/>
