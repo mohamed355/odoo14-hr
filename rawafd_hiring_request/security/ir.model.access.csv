@@ -4,4 +4,5 @@ access_hiring_wizard,access.hiring.wizard,model_hiring_wizard,,1,1,1,1
 access_tec,access.tec,model_tec,,1,1,1,1
 access_key,access.key,model_key,,1,1,1,1
 access_stage,access.stage,model_hiring_stage,,1,1,1,1
+access_crm,access.crm.tag,model_crm_tag,,1,1,1,1
 access_hiring_customer,access.hiring.customer,model_hiring_customer,,1,1,1,1

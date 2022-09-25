@@ -361,6 +361,13 @@ class key(models.Model):
     name = fields.Char()
 
 
+class CrmTag(models.Model):
+    _name = 'crm.tag'
+
+    color = fields.Integer('Color Index', default=0)
+    name = fields.Char()
+
+
 class tec(models.Model):
     _name = 'tec'
     color = fields.Integer('Color Index', default=0)
