@@ -44,14 +44,15 @@
 
 
          <div class="col-sm-12 col-md-3" style="margin-left:300px">
-                    <div class="dashboard-card card-shadow hiring" style="background:skyblue;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
+             <a href="#">
+             <div class="dashboard-card card-shadow hiring" style="background:skyblue;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
     -moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);
     box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center ">
 <i class="fa fa-book"></i>
                         </div>
-                        <div class="dashboard-card__details" style="width:40%">
+                 <div class="dashboard-card__details" style="width:40%">
                             <h3>
 
                                 <span>
@@ -62,31 +63,36 @@
                                     <!--                                    <div id="leads_this_week"/>-->
                                 </span>
                             </h3>
-                            <h3 style="color:gray">H Request</h3>
+                     <h3 style="color:gray">H Request</h3>
                         </div>
                     </div>
+             </a>
                 </div>
+
          <div class="col-sm-12 col-md-3 apps">
-                    <div class="dashboard-card card-shadow"
-                         style="background:blue;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);-moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
+                          <a href="#">
+
+             <div class="dashboard-card card-shadow"
+                  style="background:blue;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);-moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
                         <div
                                 class="dashboard-card__icon-container bg-mauve-light d-flex justify-content-center align-items-center">
                             <i class="fa fa-desktop"/>
                         </div>
-                        <div class="dashboard-card__details">
+                 <div class="dashboard-card__details">
                             <h3>
                                   <span>
                                     <div id="leads_this_year"/>
                                       <div id="leads_this_quarter"/>
                                       <div id="leads_this_month"/>
                                       <div id="leads_this_all"/>
-                                      <!--                                    <div id="leads_this_week"/>-->
                                 </span>
                             </h3>
-                            <h3 style="color:gray">Applications</h3>
+                     <h3 style="color:gray">Applications</h3>
                         </div>
                     </div>
+                          </a>
                 </div>
+
             </div>
  </section>
 
@@ -94,323 +100,405 @@
 
     <t t-name="DashboardStages">
 
- <section class="dashboard_main_section" id="main_section_manager">
-     <div class="col-sm-12 col-md-12" style="height:200px;margin-top:30px">
-                               <div class="chart-container card-shadow">
-<h2>Applications Rate Metrics
-</h2>
-                                   <hr></hr>
-                                   <div t-attf-class="c100 p100 left orange"
-                                        style="margin-top:10px;margin-left:300px">
-    <span>
-<i class="fa fa-check-circle" style="font-size: 30px;
+<section class="dashboard_main_section" id="main_section_manager">
+    <div class="col-sm-12 col-md-12" style="height:200px;margin-top:30px">
+        <div class="chart-container card-shadow">
+            <h2>Applications Rate Metrics
+            </h2>
+            <hr></hr>
+            <div t-attf-class="c100 p100 left orange"
+                 style="margin-top:10px;margin-left:300px">
+                <span>
+                    <i class="fa fa-check-circle" style="font-size: 30px;
   font-weight: 900;
   margin-bottom:10px;
   display: inline-block;
-  color: #656ab0;}"></i> </span>
-                                       <span style="margin-top:25px"><div id="h_a_this_year"/></span>
-                                       <span style="margin-top:25px"><div id="h_a_this_quarter"/></span>
-                                       <span style="margin-top:25px"><div id="h_a_this_month"/></span>
-                                       <span style="margin-top:25px"><div id="h_a_this_all"/></span>
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-                                   <div t-attf-class="c100 p{{h_com_this_year}} orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-<span style="margin-bottom:15px;"><i class="fa fa-thumbs-up" style="font-size: 30px;
+  color: #656ab0;}"></i>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_a_this_year"/>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_a_this_quarter"/>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_a_this_month"/>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_a_this_all"/>
+                </span>
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{h_com_this_year}} orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <span style="margin-bottom:15px;">
+                    <i class="fa fa-thumbs-up" style="font-size: 30px;
   font-weight: 900;
   display: inline-block;
-  color: #656ab0;}"></i> </span>
-                                       <span style="margin-top:25px"><div id="h_com_this_year"/></span>
-                                       <span style="margin-top:25px"><div id="h_com_this_quarter"/></span>
-                                       <span style="margin-top:25px"><div id="h_com_this_month"/></span>
-                                       <span style="margin-top:25px"><div id="h_com_this_all"/></span>
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
+  color: #656ab0;}"></i>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_com_this_year"/>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_com_this_quarter"/>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_com_this_month"/>
+                </span>
+                <span style="margin-top:25px">
+                    <div id="h_com_this_all"/>
+                </span>
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{id='app_3_this_year'}} left orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <!--    <span>-->
+                <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                <!--  font-weight: 900;-->
+                <!--  margin-bottom:10px;-->
+                <!--  display: inline-block;-->
+                <!--  color: #656ab0;}"></i> </span>-->
+                <span>
+                    <div id="app_3_this_year"/>
+                </span>
+                <span>
+                    <div id="app_3_this_quarter"/>
+                </span>
+                <span>
+                    <div id="app_3_this_month"/>
+                </span>
+                <span>
+                    <div id="app_3_this_all"/>
+                </span>
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{app_4_this_year}} left orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <!--    <span>-->
+                <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                <!--  font-weight: 900;-->
+                <!--  margin-bottom:10px;-->
+                <!--  display: inline-block;-->
+                <!--  color: #656ab0;}"></i> </span>-->
+                <span>
+                    <div id="app_4_this_year"/>
+                </span>
+                <span>
+                    <div id="app_4_this_quarter"/>
+                </span>
+                <span>
+                    <div id="app_4_this_month"/>
+                </span>
+                <span>
+                    <div id="app_4_this_all"/>
+                </span>
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
-                                   <div t-attf-class="c100 p{{id='app_3_this_year'}} left orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-<!--    <span>-->
-                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
-                                       <!--  font-weight: 900;-->
-                                       <!--  margin-bottom:10px;-->
-                                       <!--  display: inline-block;-->
-                                       <!--  color: #656ab0;}"></i> </span>-->
-                                       <span><div id="app_3_this_year"/></span>
-                                       <span><div id="app_3_this_quarter"/></span>
-                                       <span><div id="app_3_this_month"/></span>
-                                       <span><div id="app_3_this_all"/></span>
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
+    <div class="col-sm-12 col-md-12" style="height:200px;margin-top:30px">
+        <div class="chart-container card-shadow">
+            <h2>Task Administration
+            </h2>
+            <hr></hr>
+            <div t-attf-class="c100 p100 left orange"
+                 style="margin-top:10px;margin-left:200px">
+                <span>
+                    <div id="act_all_this_all"/>
+                </span>
+                <span>
+                    <div id="act_all_this_quarter"/>
+                </span>
+                <span>
+                    <div id="act_all_this_year"/>
+                </span>
+                <span>
+                    <div id="act_all_this_month"/>
+                </span>
+                <!--                                       <span style="margin-top:25px"><div id="h_a_this_month"/></span>-->
+                <!--                                       <span style="margin-top:25px"><div id="h_a_this_all"/></span>-->
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <!--                                                           <div t-attf-class="c100 p100 left orange"-->
+            <!--                                        style="margin-top:10px;margin-left:300px">-->
+            <!--    <span>-->
+            <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+            <!--  font-weight: 900;-->
+            <!--  margin-bottom:10px;-->
+            <!--  display: inline-block;-->
+            <!--  color: #656ab0;}"></i> </span>-->
+            <!--                                       <span style="margin-top:25px"><div id="act_in_this_all"/></span>-->
+            <!--                                       <span style="margin-top:25px"><div id="act_in_this_quarter"/></span>-->
+            <!--&lt;!&ndash;                                       <span style="margin-top:25px"><div id="h_a_this_month"/></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;                                       <span style="margin-top:25px"><div id="h_a_this_all"/></span>&ndash;&gt;-->
+            <!--                                       <div class="slice">-->
+            <!--        <div class="bar"></div>-->
+            <!--                                           <div class="fill"></div>-->
+            <!--    </div>-->
+            <!--</div>-->
+
+
+            <div t-attf-class="c100 p{{h_com_this_year}} orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <span>
+                    <div id="act_in_this_all"/>
+                </span>
+                <span>
+                    <div id="act_in_this_quarter"/>
+                </span>
+                <span>
+                    <div id="act_in_this_year"/>
+                </span>
+                <span>
+                    <div id="act_in_this_month"/>
+                </span>
+                <!--                                       <span style="margin-top:25px"><div id="h_com_this_month"/></span>-->
+                <!--                                       <span style="margin-top:25px"><div id="h_com_this_all"/></span>-->
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{h_com_this_year}} orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <span>
+                    <div id="act_over_this_all"/>
+                </span>
+                <span>
+                    <div id="act_over_this_quarter"/>
+                </span>
+                <span>
+                    <div id="act_over_this_year"/>
+                </span>
+                <span>
+                    <div id="act_over_this_month"/>
+                </span>
+                <!--                                       <span style="margin-top:25px"><div id="h_com_this_month"/></span>-->
+                <!--                                       <span style="margin-top:25px"><div id="h_com_this_all"/></span>-->
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{id='app_3_this_year'}} left orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <!--    <span>-->
+                <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                <!--  font-weight: 900;-->
+                <!--  margin-bottom:10px;-->
+                <!--  display: inline-block;-->
+                <!--  color: #656ab0;}"></i> </span>-->
+                <span>
+                    <div id="act_com_this_all"/>
+                </span>
+                <span>
+                    <div id="act_com_this_quarter"/>
+                </span>
+                <span>
+                    <div id="act_com_this_year"/>
+                </span>
+                <span>
+                    <div id="act_com_this_month"/>
+                </span>
+                <!--                                       <span><div id="app_3_this_month"/></span>-->
+                <!--                                       <span><div id="app_3_this_all"/></span>-->
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{app_4_this_year}} left orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <!--    <span>-->
+                <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                <!--  font-weight: 900;-->
+                <!--  margin-bottom:10px;-->
+                <!--  display: inline-block;-->
+                <!--  color: #656ab0;}"></i> </span>-->
+                <span>
+                    <div id="act_on_this_all"/>
+                </span>
+                <span>
+                    <div id="act_on_this_quarter"/>
+                </span>
+                <span>
+                    <div id="act_on_this_year"/>
+                </span>
+                <span>
+                    <div id="act_on_this_month"/>
+                </span>
+                <!--                                       <span><div id="app_4_this_month"/></span>-->
+                <!--                                       <span><div id="app_4_this_all"/></span>-->
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+            <div t-attf-class="c100 p{{app_4_this_year}} left orange"
+                 style="margin-top:10px;margin-left:320px;margin:10px">
+                <!--    <span>-->
+                <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
+                <!--  font-weight: 900;-->
+                <!--  margin-bottom:10px;-->
+                <!--  display: inline-block;-->
+                <!--  color: #656ab0;}"></i> </span>-->
+                <span>
+                    <div id="act_not_this_all"/>
+                </span>
+                <span>
+                    <div id="act_not_this_quarter"/>
+                </span>
+                <span>
+                    <div id="act_not_this_year"/>
+                </span>
+                <span>
+                    <div id="act_not_this_month"/>
+                </span>
+                <!--                                       <span><div id="app_4_this_month"/></span>-->
+                <!--                                       <span><div id="app_4_this_all"/></span>-->
+                <div class="slice">
+                    <div class="bar"></div>
+                    <div class="fill"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
-                                   <div t-attf-class="c100 p{{app_4_this_year}} left orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-<!--    <span>-->
-                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
-                                       <!--  font-weight: 900;-->
-                                       <!--  margin-bottom:10px;-->
-                                       <!--  display: inline-block;-->
-                                       <!--  color: #656ab0;}"></i> </span>-->
-                                       <span><div id="app_4_this_year"/></span>
-                                       <span><div id="app_4_this_quarter"/></span>
-                                       <span><div id="app_4_this_month"/></span>
-                                       <span><div id="app_4_this_all"/></span>
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-</div>
 
-</div>
-     <div class="col-sm-12 col-md-12" style="height:200px;margin-top:30px">
-                               <div class="chart-container card-shadow">
-<h2>Task Administration
-</h2>
-                                   <hr></hr>
-                                   <div t-attf-class="c100 p100 left orange"
-                                        style="margin-top:10px;margin-left:200px">
-                                       <span><div id="act_all_this_all"/></span>
-                                       <span><div id="act_all_this_quarter"/></span>
-                                       <span><div id="act_all_this_year"/></span>
-                                       <span><div id="act_all_this_month"/></span>
-<!--                                       <span style="margin-top:25px"><div id="h_a_this_month"/></span>-->
-<!--                                       <span style="margin-top:25px"><div id="h_a_this_all"/></span>-->
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-<!--                                                           <div t-attf-class="c100 p100 left orange"-->
-<!--                                        style="margin-top:10px;margin-left:300px">-->
-<!--    <span>-->
-<!--<i class="fa fa-check-circle" style="font-size: 30px;-->
-<!--  font-weight: 900;-->
-<!--  margin-bottom:10px;-->
-<!--  display: inline-block;-->
-<!--  color: #656ab0;}"></i> </span>-->
-<!--                                       <span style="margin-top:25px"><div id="act_in_this_all"/></span>-->
-<!--                                       <span style="margin-top:25px"><div id="act_in_this_quarter"/></span>-->
-<!--&lt;!&ndash;                                       <span style="margin-top:25px"><div id="h_a_this_month"/></span>&ndash;&gt;-->
-<!--&lt;!&ndash;                                       <span style="margin-top:25px"><div id="h_a_this_all"/></span>&ndash;&gt;-->
-<!--                                       <div class="slice">-->
-<!--        <div class="bar"></div>-->
-<!--                                           <div class="fill"></div>-->
-<!--    </div>-->
-<!--</div>-->
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 row">
+        <div class="stages_div col-sm-6 col-lg-6 col-6 stage_click">
+            <div class="chart-container card-shadow"
+                 style="border-radius: 0.3rem;padding: 1rem;margin: 1rem auto;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);-moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
+                <h3 class="h5">Recruitment Pipline</h3>
+                <hr/>
+                <div class="crm_scroll_table">
+
+                    <div class="items-table">
+                        <div class="item-container"
+                             style="background-color: var(--grey-lighter);border-radius: 0.3rem;font-weight: 700;">
+
+                            <t t-foreach="widget.stages" t-as="stage">
+
+                                <div class="item-header" style="margin-top:5px">
+                                    <div class="count-container"
+                                         style="background-color: skyblue;border-radius: 50px;font-size:80%;width:17%;color:black">
+                                        <t t-esc="stage[1]"/>
+                                    </div>
+                                    <div class="item-title pl-3" style=" font-size: 1.3rem; font-weight: 700;">
+                                        <div class="item-content">
+                                            <span style="font-size: 0.9rem;color: var(--grey);font-weight: 700;margin-left:100px">
+                                                Stage History:
+                                                <span style="font-size: 16px;color: #4c4c4c;">
+                                                    <t t-esc="stage[2]"/>
+                                                </span>
+                                            </span>
 
 
-                                       <div t-attf-class="c100 p{{h_com_this_year}} orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-                                       <span><div id="act_in_this_all"/></span>
-                                       <span><div id="act_in_this_quarter"/></span>
-                                       <span><div id="act_in_this_year"/></span>
-                                       <span><div id="act_in_this_month"/></span>
-<!--                                       <span style="margin-top:25px"><div id="h_com_this_month"/></span>-->
-<!--                                       <span style="margin-top:25px"><div id="h_com_this_all"/></span>-->
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-                                   <div t-attf-class="c100 p{{h_com_this_year}} orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-                                       <span><div id="act_over_this_all"/></span>
-                                       <span><div id="act_over_this_quarter"/></span>
-                                       <span><div id="act_over_this_year"/></span>
-                                       <span><div id="act_over_this_month"/></span>
-<!--                                       <span style="margin-top:25px"><div id="h_com_this_month"/></span>-->
-<!--                                       <span style="margin-top:25px"><div id="h_com_this_all"/></span>-->
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-                                   <div t-attf-class="c100 p{{id='app_3_this_year'}} left orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-<!--    <span>-->
-                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
-                                       <!--  font-weight: 900;-->
-                                       <!--  margin-bottom:10px;-->
-                                       <!--  display: inline-block;-->
-                                       <!--  color: #656ab0;}"></i> </span>-->
-                                       <span><div id="act_com_this_all"/></span>
-                                       <span><div id="act_com_this_quarter"/></span>
-                                       <span><div id="act_com_this_year"/></span>
-                                       <span><div id="act_com_this_month"/></span>
-<!--                                       <span><div id="app_3_this_month"/></span>-->
-<!--                                       <span><div id="app_3_this_all"/></span>-->
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-                                   <div t-attf-class="c100 p{{app_4_this_year}} left orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-<!--    <span>-->
-                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
-                                       <!--  font-weight: 900;-->
-                                       <!--  margin-bottom:10px;-->
-                                       <!--  display: inline-block;-->
-                                       <!--  color: #656ab0;}"></i> </span>-->
-                                       <span><div id="act_on_this_all"/></span>
-                                       <span><div id="act_on_this_quarter"/></span>
-                                       <span><div id="act_on_this_year"/></span>
-                                       <span><div id="act_on_this_month"/></span>
-<!--                                       <span><div id="app_4_this_month"/></span>-->
-<!--                                       <span><div id="app_4_this_all"/></span>-->
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-                                   <div t-attf-class="c100 p{{app_4_this_year}} left orange"
-                                        style="margin-top:10px;margin-left:320px;margin:10px">
-<!--    <span>-->
-                                       <!--<i class="fa fa-check-circle" style="font-size: 30px;-->
-                                       <!--  font-weight: 900;-->
-                                       <!--  margin-bottom:10px;-->
-                                       <!--  display: inline-block;-->
-                                       <!--  color: #656ab0;}"></i> </span>-->
-                                       <span><div id="act_not_this_all"/></span>
-                                       <span><div id="act_not_this_quarter"/></span>
-                                       <span><div id="act_not_this_year"/></span>
-                                       <span><div id="act_not_this_month"/></span>
-<!--                                       <span><div id="app_4_this_month"/></span>-->
-<!--                                       <span><div id="app_4_this_all"/></span>-->
-                                       <div class="slice">
-        <div class="bar"></div>
-                                           <div class="fill"></div>
-    </div>
-</div>
-</div>
-
-</div>
-
-     <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 row">
-    <div class="stages_div col-sm-6 col-lg-6 col-6 stage_click">
-                    <div class="chart-container card-shadow"
-                         style="border-radius: 0.3rem;padding: 1rem;margin: 1rem auto;-webkit-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);-moz-box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);box-shadow: 1px 3px 5px 0px rgba(222, 222, 222, 1);">
-                        <h3 class="h5">Recruitment Pipline</h3>
-                        <hr/>
-                        <div class="crm_scroll_table">
-
-                        <div class="items-table">
-                                <div class="item-container"
-                                     style="background-color: var(--grey-lighter);border-radius: 0.3rem;font-weight: 700;">
-
-                                    <t t-foreach="widget.stages" t-as="stage">
-
-                                        <div class="item-header" style="margin-top:5px">
-                                        <div class="count-container"
-                                             style="background-color: skyblue;border-radius: 50px;font-size:80%;width:17%;color:black">
-                                            <t t-esc="stage[1]"/>
-                                        </div>
-                                            <div class="item-title pl-3" style=" font-size: 1.3rem; font-weight: 700;">
-                                            <div class="item-content">
-                                                    <span style="font-size: 0.9rem;color: var(--grey);font-weight: 700;margin-left:100px">
-                                                        Stage History:
-                                                        <span style="font-size: 16px;color: #4c4c4c;">
-                                                            <t t-esc="stage[2]"/>
-                                                        </span>
-                                                    </span>
+                                            <span style="font-size: 0.9rem;color: var(--grey);font-weight: 700;margin-left:130px">
+                                                Application:
+                                                <span style="font-size: 15px;color: #4c4c4c;">
+                                                    <t t-esc="stage[3]"/>
+                                                </span>
+                                            </span>
 
 
-                                                <span style="font-size: 0.9rem;color: var(--grey);font-weight: 700;margin-left:130px">
-                                                        Application:
-                                                        <span style="font-size: 15px;color: #4c4c4c;">
-                                                            <t t-esc="stage[3]"/>
-                                                        </span>
-                                                    </span>
-
-
-                                            </div>
                                         </div>
                                     </div>
-                                    </t>
                                 </div>
-                            </div>
-                                                </div>
-                        </div>
-
-                    </div>
-         <div class="col-sm-3 col-md-3 col-6 hiring">
-                           <div class="chart-container card-shadow">
-                        <h2>
-                            Active Jobs
-                        </h2>
-                               <hr/>
-                               <div class="graph_canvas" style="margin-top: 30px;">
-                            <canvas class="get_act_don" width="200px" height="200px"/>
+                            </t>
                         </div>
                     </div>
-                 </div>
-      </div>
-     <div class="row mt-5">
+                </div>
+            </div>
 
-   <div class="col-sm-3 col-md-4 apps">
-                           <div class="chart-container card-shadow">
-                        <h2>
-                            New Applications Per Recruiter
-                        </h2>
-                               <hr/>
-                               <div class="graph_canvas" style="margin-top: 30px;">
-                            <canvas class="get_s" width="200px" height="200px"/>
-                        </div>
-                    </div>
-                 </div>
-         <div class="col-sm-3 col-md-3 apps">
-                    <div class="chart-container card-shadow">
+        </div>
+        <div class="col-sm-3 col-md-3 col-6 hiring">
+            <div class="chart-container card-shadow">
+                <h2>
+                    Active Jobs
+                </h2>
+                <hr/>
+                <div class="graph_canvas" style="margin-top: 30px;">
+                    <canvas class="get_act_don" width="200px" height="200px"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
 
-                        <h2>Application Resources
-</h2>
-                        <hr/>
-                        <div class="graph_canvas" style="margin-top: 30px;">
-                            <canvas class="get_sources" width="200px" height="200px"/>
-                        </div>
-                    </div>
-          </div>
-         <div class="col-sm-3 col-md-4 apps">
-                    <div class="chart-container card-shadow">
-                        <h2>New Applications Per Job Position
-</h2>
-                        <hr/>
-                        <div class="graph_canvas" style="margin-top: 30px;">
-                            <canvas class="get_jobs" width="200px" height="200px"/>
-                        </div>
-                    </div>
-          </div>
-         <!--         <div class="col-sm-3 col-md-4 apps">-->
-         <!--                    <div class="chart-container card-shadow">-->
-         <!--                        <h2>Stages-->
-         <!--</h2>-->
-         <!--                        <hr/>-->
-         <!--                        <div class="card-body mt-3" id="in_ex_body_hide">-->
-         <!--                                    <div class="row">-->
-         <!--&lt;!&ndash;                                        <div class="col-md-12">&ndash;&gt;-->
-         <!--                                        <p id="myelement1"> </p>-->
-         <!--                                        <div class="chart">-->
-         <!--                                                <canvas id="canvas"> </canvas>-->
-         <!--                                            <canvas id="canvas" width="100% !important"-->
-         <!--                                                    height="auto !important"> </canvas>-->
-         <!--                                            </div>-->
-         <!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
-         <!--                                    </div>-->
-         <!--                                </div>-->
-         <!--                    </div>-->
-         <!--          </div>-->
-          </div>
+        <div class="col-sm-3 col-md-4 apps">
+            <div class="chart-container card-shadow">
+                <h2>
+                    New Applications Per Recruiter
+                </h2>
+                <hr/>
+                <div class="graph_canvas" style="margin-top: 30px;">
+                    <canvas class="get_s" width="200px" height="200px"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3 apps">
+            <div class="chart-container card-shadow">
+
+                <h2>Application Resources
+                </h2>
+                <hr/>
+                <div class="graph_canvas" style="margin-top: 30px;">
+                    <canvas class="get_sources" width="200px" height="200px"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-4 apps">
+            <div class="chart-container card-shadow">
+                <h2>New Applications Per Job Position
+                </h2>
+                <hr/>
+                <div class="graph_canvas" style="margin-top: 30px;">
+                    <canvas class="get_jobs" width="200px" height="200px"/>
+                </div>
+            </div>
+        </div>
+        <!--         <div class="col-sm-3 col-md-4 apps">-->
+        <!--                    <div class="chart-container card-shadow">-->
+        <!--                        <h2>Stages-->
+        <!--</h2>-->
+        <!--                        <hr/>-->
+        <!--                        <div class="card-body mt-3" id="in_ex_body_hide">-->
+        <!--                                    <div class="row">-->
+        <!--&lt;!&ndash;                                        <div class="col-md-12">&ndash;&gt;-->
+        <!--                                        <p id="myelement1"> </p>-->
+        <!--                                        <div class="chart">-->
+        <!--                                                <canvas id="canvas"> </canvas>-->
+        <!--                                            <canvas id="canvas" width="100% !important"-->
+        <!--                                                    height="auto !important"> </canvas>-->
+        <!--                                            </div>-->
+        <!--                                        &lt;!&ndash;                                        </div>&ndash;&gt;-->
+        <!--                                    </div>-->
+        <!--                                </div>-->
+        <!--                    </div>-->
+        <!--          </div>-->
+    </div>
 
 
- </section>
-        </t>
+</section>
+</t>
 
 
-
-</templates>
+        </templates>

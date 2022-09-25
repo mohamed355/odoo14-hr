@@ -21,21 +21,27 @@ class HrDashboard(models.Model):
         print(first_date)
         print(last_date)
         act_all = self.env['mail.activity'].search_count(
-            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date), ('res_model', '=', 'hr.applicant')])
+            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date),
+             ('res_model', '=', 'hr.applicant')])
         act_over = self.env['mail.activity'].search_count(
-            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date), ('date_deadline', '<', current_date), ('res_model', '=', 'hr.applicant')])
+            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date),
+             ('date_deadline', '<', current_date), ('res_model', '=', 'hr.applicant')])
         act_in = self.env['mail.activity'].search_count(
-            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date), ('date_deadline', '>', current_date),
+            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date),
+             ('date_deadline', '>', current_date),
              ('activity_type', '=', 'In Progress')])
         act_not = self.env['mail.activity'].search_count(
-            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date), ('date_deadline', '>', current_date),
+            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date),
+             ('date_deadline', '>', current_date),
              ('activity_type', '=', 'Not Completed')])
         act_com = self.env['mail.activity'].search_count(
-            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date), ('date_deadline', '>', current_date),
+            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date),
+             ('date_deadline', '>', current_date),
              ('activity_type', '=', 'Completed')])
 
         act_on = self.env['mail.activity'].search_count(
-            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date), ('date_deadline', '>', current_date),
+            [('date_deadline', '>=', first_date), ('date_deadline', '<=', last_date),
+             ('date_deadline', '>', current_date),
              ('activity_type', '=', 'On Hold')])
 
         data_quarter = {
@@ -100,12 +106,12 @@ class HrDashboard(models.Model):
         a = date(current_date.year, current_date.month, 1)
         # b = datetime.date(current_date.year, current_date.month, 1)
         b = date(current_date.year, current_date.month,
-                                       calendar.monthrange(current_date.year, current_date.month)[1])
+                 calendar.monthrange(current_date.year, current_date.month)[1])
 
         # print(currentDate)
         # print(lastDayOfM/onth)
-        print("a",a)
-        print("b",b)
+        print("a", a)
+        print("b", b)
         act_all = self.env['mail.activity'].search_count(
             [('date_deadline', '>=', a), ('date_deadline', '<=', b),
              ('res_model', '=', 'hr.applicant')])
@@ -153,20 +159,20 @@ class HrDashboard(models.Model):
         act_all = self.env['mail.activity'].search_count(
             [('res_model', '=', 'hr.applicant')])
         act_over = self.env['mail.activity'].search_count(
-            [('date_deadline', '<', current_date),('res_model', '=', 'hr.applicant')])
+            [('date_deadline', '<', current_date), ('res_model', '=', 'hr.applicant')])
         act_in = self.env['mail.activity'].search_count(
             [('date_deadline', '>', current_date),
-             ('activity_type', '=', 'In Progress'),('res_model', '=', 'hr.applicant')])
+             ('activity_type', '=', 'In Progress'), ('res_model', '=', 'hr.applicant')])
         act_not = self.env['mail.activity'].search_count(
             [('date_deadline', '>', current_date),
-             ('activity_type', '=', 'Not Completed'),('res_model', '=', 'hr.applicant')])
+             ('activity_type', '=', 'Not Completed'), ('res_model', '=', 'hr.applicant')])
         act_com = self.env['mail.activity'].search_count(
             [('date_deadline', '>', current_date),
-             ('activity_type', '=', 'Completed'),('res_model', '=', 'hr.applicant')])
+             ('activity_type', '=', 'Completed'), ('res_model', '=', 'hr.applicant')])
 
         act_on = self.env['mail.activity'].search_count(
             [('create_date', '>', current_date),
-             ('activity_type', '=', 'On Hold'),('res_model', '=', 'hr.applicant')])
+             ('activity_type', '=', 'On Hold'), ('res_model', '=', 'hr.applicant')])
 
         data_all = {
             'act_all': act_all,
@@ -198,8 +204,10 @@ class HrDashboard(models.Model):
         print("Duration", duration_list)
         print("Duration", sum(duration_list))
 
-        if round(len(hr_applicant) / len(open_hiring)):
+        try:
             h_a = round(len(hr_applicant) / len(open_hiring))
+        except ZeroDivisionError:
+            h_a = 0
         try:
             app_3 = round((com_app / (rej_app + ac_app)) * 100)
         except ZeroDivisionError:
@@ -210,9 +218,10 @@ class HrDashboard(models.Model):
         except ZeroDivisionError:
             app_4 = 0
 
-        h_com = 0
-        if round(len(hr_applicant) / len(open_hiring)):
+        try:
             h_com = round((len(open_hiring) / com_hiring / 100) * 100)
+        except ZeroDivisionError:
+            h_com = 0
         return {
             'open_hiring': len(open_hiring),
             'hr_applicant': len(hr_applicant),
@@ -227,6 +236,10 @@ class HrDashboard(models.Model):
     def crm_quarter(self):
         """Quarter CRM Dropdown Filter"""
         current_date = datetime.now()
+        print(round((current_date.month - 1) / 3 + 1))
+        print(datetime(current_date.year, 3 * round((current_date.month - 1) / 3 + 1) - 2, 1))
+        print(datetime(current_date.year, 3 * round((current_date.month - 1) / 3 + 1) + 1, 1) \
+              + timedelta(days=-1))
         current_quarter = round((current_date.month - 1) / 3 + 1)
         first_date = datetime(current_date.year, 3 * current_quarter - 2, 1)
         last_date = datetime(current_date.year, 3 * current_quarter + 1, 1) \
@@ -260,8 +273,10 @@ class HrDashboard(models.Model):
         print("Duration", duration_list)
         print("Duration", sum(duration_list))
 
-        if round(len(hr_applicant) / len(open_hiring)):
+        try:
             h_a = round(len(hr_applicant) / len(open_hiring))
+        except ZeroDivisionError:
+            h_a = 0
         try:
             app_3 = round((com_app / (rej_app + ac_app)) * 100)
         except ZeroDivisionError:
@@ -273,8 +288,10 @@ class HrDashboard(models.Model):
             app_3 = 0
 
         h_com = 0
-        if round(len(hr_applicant) / len(open_hiring)):
+        try:
             h_com = round((len(open_hiring) / com_hiring / 100) * 100)
+        except ZeroDivisionError:
+            h_com = 0
         # session_user_id = self.env.uid
 
         self._cr.execute('''select COUNT(id) from hiring_request Where Extract(QUARTER FROM hiring_request.create_date) = Extract(QUARTER FROM DATE(NOW()))
@@ -328,9 +345,10 @@ class HrDashboard(models.Model):
                     duration_list.append(duration.days)
         print("Duration", duration_list)
         print("Duration", sum(duration_list))
-
-        if round(len(hr_applicant) / len(open_hiring)):
+        try:
             h_a = round(len(hr_applicant) / len(open_hiring))
+        except ZeroDivisionError:
+            h_a = 0
         try:
             app_3 = round((com_app / (rej_app + ac_app)) * 100)
         except ZeroDivisionError:
@@ -340,10 +358,10 @@ class HrDashboard(models.Model):
             app_4 = round((sum(duration_list) / len(hr_applicant)) * 100)
         except ZeroDivisionError:
             app_3 = 0
-
-        h_com = 0
-        if round(len(hr_applicant) / len(open_hiring)):
+        try:
             h_com = round((len(open_hiring) / com_hiring / 100) * 100)
+        except ZeroDivisionError:
+            h_com = 0
         self._cr.execute(
             '''select COUNT(id) from hr_applicant WHERE  Extract(Year FROM hr_applicant.create_date) = Extract(Year FROM DATE(NOW()))''')
         record = self._cr.dictfetchall()
@@ -372,7 +390,7 @@ class HrDashboard(models.Model):
         """Year CRM Dropdown Filter"""
         # session_user_id = self.env.uid
         last_day_of_prev_month = date(datetime.now().year, datetime.now().month,
-                                       calendar.monthrange(datetime.now().year, datetime.now().month)[1])
+                                      calendar.monthrange(datetime.now().year, datetime.now().month)[1])
 
         print(last_day_of_prev_month)
         start_day_of_prev_month = date(datetime.now().year, datetime.now().month, 1)
