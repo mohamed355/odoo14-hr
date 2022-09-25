@@ -381,6 +381,9 @@
                                         <li>
                                             <field name="department_id"/>
                                         </li>
+                                        <li>
+                                            <field name="tag_ids"/>
+                                        </li>
                                         <li class="o_text_overflow">
                                             <field name="location"/>
                                         </li>

@@ -165,7 +165,7 @@ class HiringRequest(models.Model):
     user_id = fields.Many2one(comodel_name="res.users", string="Salesperson", readonly=True)
     team_id = fields.Many2one(comodel_name="crm.team", string="Sales Team", readonly=True)
     comment = fields.Text(string="Other Comments", required=False, )
-    tag_ids = fields.Many2many(comodel_name="crm.tag", string="Tags", readonly=True)
+    tag_ids = fields.Many2many(comodel_name="crm.tag", string="Tags", readonly=False)
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
     country_id = fields.Many2one(comodel_name="res.country", string="Country", required=False)
     job_id = fields.Many2one(comodel_name="hr.job", string="Job", required=True, )
