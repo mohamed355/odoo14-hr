@@ -16,12 +16,12 @@ class Dashboard(models.Model):
         datem_2 = datetime(today.year, today.month, last_day)
         print("Date", datem_1)
         print("Date Calendar", calendar.monthrange(today.year, today.month)[1])
-        # domain = [('date_order','>=',default_data)]
         crm_lead = self.env['crm.lead'].search([])
         crm_activity = self.env['mail.activity'].search(
-            [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'meeting')])
+            ['|', ('res_model_id.model', '=', 'crm.lead'), ('res_model_id.model', '=', 'res.partner'),
+             ('activity_type_id.category', '=', 'meeting')])
         crm_activity_meeting = self.env['mail.activity'].search(
-            [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'meeting')])
+            [('res_model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'meeting')])
         crm_activity_call = self.env['mail.activity'].search(
             [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'phonecall')])
         open_opp = self.env['crm.lead'].search([('probability', '!=', 100), ('type', '=', 'opportunity')])
@@ -32,6 +32,7 @@ class Dashboard(models.Model):
             'total_opp': len(crm_opp),
             'total_activity': len(crm_activity),
             'crm_activity_call': len(crm_activity_call),
+            # 'crm_activity_meeting': len(crm_activity_meeting),
             'open_opp': len(open_opp),
             'close_to': len(close_to),
         }
@@ -109,7 +110,7 @@ class Dashboard(models.Model):
         self._cr.execute('''select mail_activity.activity_type_id,mail_activity.date_deadline,
         mail_activity.summary,mail_activity.res_name,(SELECT mail_activity_type.name
         FROM mail_activity_type WHERE mail_activity_type.id = mail_activity.activity_type_id ),
-        mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead'  GROUP BY mail_activity.activity_type_id,
+        mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead' OR res_model = 'res.partner'  GROUP BY mail_activity.activity_type_id,
         mail_activity.date_deadline,mail_activity.summary,mail_activity.res_name,mail_activity.user_id
         order by mail_activity.date_deadline desc''')
         data = self._cr.fetchall()
@@ -133,7 +134,7 @@ class Dashboard(models.Model):
         self._cr.execute('''select mail_activity.activity_type_id,mail_activity.date_deadline,
             mail_activity.summary,mail_activity.res_name,(SELECT mail_activity_type.name
             FROM mail_activity_type WHERE mail_activity_type.id = mail_activity.activity_type_id ),
-            mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead'  GROUP BY mail_activity.activity_type_id,
+            mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead' OR res_model = 'res.partner'  GROUP BY mail_activity.activity_type_id,
             mail_activity.date_deadline,mail_activity.summary,mail_activity.res_name,mail_activity.user_id
             order by mail_activity.date_deadline desc''')
         data = self._cr.fetchall()
@@ -180,7 +181,7 @@ class Dashboard(models.Model):
         self._cr.execute('''select mail_activity.activity_type_id,mail_activity.date_deadline,
             mail_activity.summary,mail_activity.res_name,(SELECT mail_activity_type.name
             FROM mail_activity_type WHERE mail_activity_type.id = mail_activity.activity_type_id ),
-            mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead'  GROUP BY mail_activity.activity_type_id,
+            mail_activity.user_id FROM mail_activity WHERE res_model = 'crm.lead' OR res_model = 'res.partner'  GROUP BY mail_activity.activity_type_id,
             mail_activity.date_deadline,mail_activity.summary,mail_activity.res_name,mail_activity.user_id
             order by mail_activity.date_deadline desc''')
         data = self._cr.fetchall()
@@ -201,7 +202,7 @@ class Dashboard(models.Model):
         """Sales Activity Pie"""
         self._cr.execute('''select mail_activity_type.name,COUNT(*) from mail_activity
             inner join mail_activity_type on mail_activity.activity_type_id = mail_activity_type.id
-            where mail_activity.res_model = 'crm.lead' GROUP BY mail_activity_type.name''')
+            where mail_activity.res_model = 'crm.lead' OR mail_activity.res_model = 'res.partner' GROUP BY mail_activity_type.name''')
         data = self._cr.dictfetchall()
 
         name = []

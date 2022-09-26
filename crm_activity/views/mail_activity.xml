@@ -85,7 +85,7 @@
             <field name="name">mail_activity_view_calendar_inherit</field>
             <field name="model">mail.activity</field>
             <field name="arch" type="xml">
-                <calendar string="Activity" date_start="date_deadline" color="activity_type" mode="month"
+                <calendar string="Activity" date_start="date_from" date_stop="date_to" color="activity_type" mode="month"
                           quick_add="False">
                     <field name="user_id" avatar_field="avatar_128"/>
                     <field name="res_name"/>

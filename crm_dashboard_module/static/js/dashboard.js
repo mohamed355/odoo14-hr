@@ -169,7 +169,7 @@ render_sales_activity_graph:function(){
             view_mode: 'tree,form',
             view_type: 'form',
             views: [[false, 'list'],[false, 'form']],
-                    domain: [['activity_type_id.category', '=', "phonecall"],['res_model', '=', "crm.lead"]],
+                    domain: [['activity_type_id.category', '=', "phonecall"],'|',['res_model', '=', "crm.lead"],['res_model', '=', "res.partner"]],
             target: 'current'
         }, options)
     },
@@ -210,7 +210,7 @@ render_sales_activity_graph:function(){
             view_mode: 'tree,form',
             view_type: 'form',
             views: [[false, 'list'],[false, 'form']],
-                    domain: [['res_model', '=', "crm.lead"]],
+                    domain: ['|',['res_model', '=', "crm.lead"],['res_model', '=', "res.partner"]],
             target: 'current'
         }, options)
     },
@@ -282,7 +282,7 @@ render_sales_activity_graph:function(){
             view_mode: 'tree,form',
             view_type: 'form',
             views: [[false, 'list'],[false, 'form']],
-                    domain: [['activity_type_id.category', '=', "meeting"],['res_model', '=', "crm.lead"]],
+                    domain: [['activity_type_id.category', '=', "meeting"],'|',['res_model', '=', "crm.lead"],['res_model', '=', "res.partner"]],
             target: 'current'
         }, options)
     },
