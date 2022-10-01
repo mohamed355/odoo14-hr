@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_grid,product_grid_name,model_product_grid,,1,1,1,1
+access_product_lines_grid,product_grid_lines_name,model_product_grid_lines,,1,1,1,1
+
