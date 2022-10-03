@@ -16,6 +16,10 @@ class HrApplicant(models.Model):
                 else:
                     raise ValidationError("You Need To Access To Move In This Stage")
             if x.stage_id.name in ["Hold", "Completed"]:
+                app = self.env['report.technical.app'].search(
+                    [('hiring', '=', x.hiring_ids[0].name), ('name', '=', x.partner_name)])
+                if app:
+                    app.stage = x.stage_id.name
                 x.stage_id = None
                 x.hiring_ids = None
                 hiring_ids = self.env['hiring.request'].search([('application_ids', 'in', x.id)])

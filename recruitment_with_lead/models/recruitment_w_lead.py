@@ -10,6 +10,7 @@ from lxml import etree
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
+    # rec = fields.Char(string="Recruiter Text", required=False, )
     re_action = fields.Char(string="Recommended Action", required=False, )
     last_update_applicant = fields.Date(string="Last Update", required=False, )
     app_code = fields.Char(string="Serial", required=False)
@@ -43,7 +44,7 @@ class HrApp(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
     currency_of_id = fields.Many2one('res.currency', string='Currency Offshore', required=False)
     currency_on_id = fields.Many2one('res.currency', string='Currency OnSite', required=False)
-    partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter", required=False, )
+    partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter (p)", required=False, )
     start_date = fields.Date(string="Start Date", required=False, )
     experience_y = fields.Integer(compute="_calculate_experience",
                                   string="Experience Years",
@@ -69,6 +70,21 @@ class HrApp(models.Model):
             'domain': [('res_id', '=', self.id)],
 
         }
+
+    @api.depends('job_id')
+    def _compute_stage(self):
+        for applicant in self:
+            # if applicant.job_id:
+            #     if not applicant.stage_id:
+            #         stage_ids = self.env['hr.recruitment.stage'].search([
+            #             '|',
+            #             ('job_ids', '=', False),
+            #             ('job_ids', '=', applicant.job_id.id),
+            #             ('fold', '=', False)
+            #         ], order='sequence asc', limit=1).ids
+            #         applicant.stage_id = stage_ids[0] if stage_ids else False
+            # else:
+            applicant.stage_id = False
 
     @api.depends("start_date")
     def _calculate_experience(self):
