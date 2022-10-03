@@ -14,7 +14,7 @@
     </record>
     <template id="saudi_offer_template">
         <t t-call="web.html_container">
-            <t t-call="web.external_layout">
+            <t t-call="web.basic_layout">
                 <div class="page">
                     <table border="0" width="1000"
                            style="min-width: 590px; background-color: white; border-collapse:separate;">

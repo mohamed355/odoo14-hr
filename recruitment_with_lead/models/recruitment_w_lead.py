@@ -27,12 +27,10 @@ class HrApp(models.Model):
         ('m', 'Male'),
         ('f', 'Female')
     ], string='Gender')
-    # hiring_id = fields.Many2one(comodel_name="hiring.request", string="hiring", required=False, )
     experience_level = fields.Selection([
         ('intern', 'Intern'), ('fresh', 'Fresh'), ('jr', 'Junior'), ('senior', 'Senior'), ('teamlead', 'Team Lead'),
         ('manager', 'Manager'), ('consultant', 'Consultant')
     ], string='Experience level')
-    # in_active_state = fields.Boolean(related='stage_id.is_active_state')
     linkedin = fields.Char(string="Linkedin", required=False, )
     first_work_ex = fields.Char(string="Fisrt work experience ", required=False, )
     tools = fields.Char(string="Tools ", required=False, )

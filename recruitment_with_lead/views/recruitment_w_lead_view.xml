@@ -200,6 +200,8 @@
                     <field name="email_from" string="Email"/>
                     <field name="linkedin" string="Linkedin" widget="url"/>
                     <field name="experience_level"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
                     <field name="experience_y" string="Years of Experience"/>
                     <field name="start_date" string="Experience" optional="hide"/>
                     <field name="tools"/>
