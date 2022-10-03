@@ -6,6 +6,7 @@ from datetime import date, datetime
 class MailActivity(models.Model):
     _inherit = 'mail.activity'
 
+    date_deadline = fields.Date('Due Date', index=True, required=True,)
     partner_id = fields.Many2one(comodel_name="res.partner", string="Partner", required=False, )
     opportunity_id = fields.Many2one(comodel_name="crm.lead", string="Opportunity", required=False, )
     lead_id = fields.Many2one(comodel_name="crm.lead", string="Leads", required=False, )
@@ -25,6 +26,7 @@ class MailActivity(models.Model):
             if self.activity_type_id.default_note:
                 self.note = self.activity_type_id.default_note
 
+
     @api.depends('activity_type_id')
     def _compute_users_crm(self):
         for record in self:
@@ -35,9 +37,7 @@ class MailActivity(models.Model):
     def create(self, values):
         res = super(MailActivity, self).create(values)
         for record in res:
-            if record.date_deadline:
-                record.date_from = datetime.strftime(record.date_deadline, '%Y-%m-%d 02:00:00')
-                record.date_to = datetime.strftime(record.date_deadline, '%Y-%m-%d 09:00:00')
+            record.date_deadline = datetime.strftime(record.date_from, '%Y-%m-%d')
         return res
 
     @api.onchange('partner_id', 'opportunity_id', 'lead_id')
