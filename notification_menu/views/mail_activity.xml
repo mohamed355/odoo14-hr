@@ -47,7 +47,7 @@
                         <button attrs="{'invisible': [('chaining_type', '=', 'trigger')]}" invisible='1' string="Done &amp; Schedule Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>
                         <button attrs="{'invisible': [('chaining_type', '=', 'suggest')]}" invisible='1' string="Done &amp; Launch Next" name="action_done_schedule_next" type="object" class="btn-secondary" data-hotkey="x" context="{'mail_activity_quick_update': True}"/>
 <!--                        <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>-->
-<!--                        <button attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '!=', 'In Progress')]}" string="Mark as Completed" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>-->
+                        <button invisible="1" attrs="{'invisible': ['|',('chaining_type', '=', 'trigger'),('activity_type', '!=', 'In Progress')]}" string="Mark as Completed" name="action_done" type="object" class="btn-secondary" data-hotkey="w" context="{'mail_activity_quick_update': True}"/>
 <!--                        <button attrs="{'invisible': [('activity_type', '=', 'Cancelled')]}" string="Cancel" name="type_cancel" type="object" context="{'mail_activity_quick_update': True}"/>-->
 
 </footer>            </xpath>
