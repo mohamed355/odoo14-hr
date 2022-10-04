@@ -229,12 +229,12 @@ class HiringRequest(models.Model):
             else:
                 rec.app_count = 0
 
-    @api.model
-    def create(self, vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code(
-            'hiring.req.code')
-        # vals['req_date'] = fields.Datetime.now()
-        return super(HiringRequest, self).create(vals)
+    # @api.model
+    # def create(self, vals):
+    #     vals['name'] = self.env['ir.sequence'].next_by_code(
+    #         'hiring.req.code')
+    #     # vals['req_date'] = fields.Datetime.now()
+    #     return super(HiringRequest, self).create(vals)
 
     def create_activities(self):
         print('hi')
