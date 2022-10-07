@@ -12,9 +12,9 @@
                         <field name="level_2_child" invisible="1"/>
                         <field name="customer_child" invisible="1"/>
                         <field name="dep_child" invisible="1"/>
-                        <field name="level_2_id" domain="[('id', 'in', customer_child), ]"/>
+                        <field name="level_2_id" domain="[('id', 'in', customer_child), ]" string="Department"/>
                         <field name="partner_id" domain="[('id', 'in', level_2_child), ]" widget="res_partner_many2one"
-                               string="Department"
+                               string="Sector"
                                context="{'res_partner_search_mode': type == 'opportunity' and 'customer' or False,                                         'default_name': contact_name or partner_name,                                         'default_street': street,                                         'default_is_company': type == 'opportunity' and contact_name == False,                                         'default_company_name': type == 'opportunity' and partner_name,                                         'default_street2': street2,                                         'default_city': city,                                         'default_title': title,                                         'default_state_id': state_id,                                         'default_zip': zip,                                         'default_country_id': country_id,                                         'default_function': function,                                         'default_phone': phone,                                         'default_mobile': mobile,                                         'default_email': email_from,                                         'default_user_id': user_id,                                         'default_team_id': team_id,                                         'default_website': website,                                         'show_vat': True,                                     }"/>
                         <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
                         <field name="partner_name" string="Company"/>

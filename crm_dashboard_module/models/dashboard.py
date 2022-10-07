@@ -23,7 +23,7 @@ class Dashboard(models.Model):
         crm_activity_meeting = self.env['mail.activity'].search(
             [('res_model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'meeting')])
         crm_activity_call = self.env['mail.activity'].search(
-            [('res_model_id.model', '=', 'crm.lead'), ('activity_type_id.category', '=', 'phonecall')])
+            ['|', ('res_model_id.model', '=', 'crm.lead'), ('res_model_id.model', '=', 'res.partner'), ('activity_type_id.category', '=', 'phonecall')])
         open_opp = self.env['crm.lead'].search([('probability', '!=', 100), ('type', '=', 'opportunity')])
         close_to = self.env['crm.lead'].search([('date_deadline', '>=', datem_1), ('date_deadline', '<=', datem_2)])
         crm_opp = self.env['crm.lead'].search([('type', '=', 'opportunity')])

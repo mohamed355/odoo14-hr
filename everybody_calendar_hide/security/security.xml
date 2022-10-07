@@ -1,0 +1,5 @@
+<odoo>
+    <record id="everybody_show" model="res.groups">
+        <field name="name">Everybody's calendars Show</field>
+    </record>
+</odoo>

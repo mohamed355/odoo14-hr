@@ -192,11 +192,17 @@
                                 <field name="customer_ids">
                                     <tree editable="bottom">
 
-                                        <field name="customer_id"/>
-                                        <field name="level_1_child" invisible="1"/>
+                                        <field name="l_1_id"/>
+                                        <field name="level_2_child" invisible="1"/>
                                         <field name="customer_child" invisible="1"/>
-                                        <field name="level_1_id" domain="[('id', 'in', customer_child), ]"/>
-                                        <field name="contact_id" domain="[('id', 'in', level_1_child), ]"/>
+                                        <field name="dep_child" invisible="1"/>
+                                        <field name="level_2_id" domain="[('id', 'in', customer_child), ]"
+                                               string="Department"/>
+                                        <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
+                                               widget="res_partner_many2one"
+                                               string="Sector"
+                                        />
+                                        <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
                                         <field name="email"/>
                                         <field name="mobile"/>
                                     </tree>
@@ -258,7 +264,7 @@
                                         </field>
                                     </group>
                                 </page>
-                                <page string="Users" >
+                                <page string="Users">
                                     <group>
                                         <field name="user_ids" attrs="{'readonly': [('admin', '=', False)]}">
                                             <tree editable="bottom">
