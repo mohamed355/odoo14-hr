@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="emp_join_form" model="ir.ui.view">
+            <field name="name">emp_join_form</field>
+            <field name="model">hr.join</field>
+            <field name="arch" type="xml">
+                <form string="Employee Contract">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="approved" type="object" string="Approve"
+                                groups="hr.group_hr_manager" states="draft"/>
+                        <button name="create_contract" type="object" string="Create Contract"
+                                groups="hr.group_hr_manager"
+                                states="approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="department_id"/>
+                                <field name="job_position"/>
+                                <field name="product_id"/>
+                                <field name="manager_id"/>
+                                <field name="analytic_account_id"/>
+                                <field name="sales_price" groups="hr.group_hr_manager"/>
+                            </group>
+                            <group/>
+
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="emp_join_tree" model="ir.ui.view">
+            <field name="name">emp_join_tree</field>
+            <field name="model">hr.join</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Join">
+                    <field name="name"/>
+                    <field name="manager_id"/>
+                    <field name="department_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="emp_join_action" model="ir.actions.act_window">
+            <field name="name">Employee Join</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.join</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="emp_join_menu" name="Employee Join" parent="hr.menu_hr_employee_payroll"
+                  action="emp_join_action" sequence="2"/>
+    </data>
+</odoo>
