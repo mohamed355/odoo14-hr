@@ -42,7 +42,6 @@ class HrApp(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
     currency_of_id = fields.Many2one('res.currency', string='Currency Offshore', required=False)
     currency_on_id = fields.Many2one('res.currency', string='Currency OnSite', required=False)
-    partner_id = fields.Many2one(comodel_name="res.partner", string="Recruiter (p)", required=False, )
     start_date = fields.Date(string="Start Date", required=False, )
     experience_y = fields.Integer(compute="_calculate_experience",
                                   string="Experience Years",

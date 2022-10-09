@@ -82,9 +82,7 @@
                 </div>
                 <field name="stage_date" invisible="1"/>
             </field>
-            <field name="user_id" position="before">
-                <field name="partner_id"/>
-            </field>
+
             <xpath expr="//group[1]/group[4]" position="replace">
                 <group string="Contract">
                     <label for="current_salary"/>
@@ -118,7 +116,6 @@
                     </div>
                 </group>
             </xpath>
-
 
 
         </field>
@@ -201,7 +198,6 @@
                     <field name="linkedin" string="Linkedin" widget="url"/>
                     <field name="experience_level"/>
                     <field name="user_id"/>
-                    <field name="partner_id"/>
                     <field name="experience_y" string="Years of Experience"/>
                     <field name="start_date" string="Experience" optional="hide"/>
                     <field name="tools"/>
