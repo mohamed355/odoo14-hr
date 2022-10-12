@@ -9,6 +9,7 @@ class NewModule(models.TransientModel):
     _name = 'hiring.wizard'
     _description = 'Hiring Wizard'
 
+    req_owner = fields.Char(string="Request Owner", required=False, )
     offered = fields.Integer(string="Offered", required=False, )
     awaiting_review = fields.Integer(string="Awaiting Review", required=False, )
     new_opp = fields.Integer(string="New Applicants", required=False, )
@@ -93,6 +94,7 @@ class NewModule(models.TransientModel):
                 'ex_level': rec.ex_level,
                 'budget': rec.budget,
                 'currency_id': rec.currency_id.id,
+                'req_owner': rec.req_owner,
                 'user_id': rec.user_id.id,
                 'type_of_job': rec.type_of_job,
                 'salary_range': rec.salary_range,
@@ -129,6 +131,8 @@ class NewModule(models.TransientModel):
 class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+
+    req_owner = fields.Char(string="Request Owner", required=False, )
     acc_date = fields.Date(string="Accepted Date", required=False, )
     req_date = fields.Date(string="Request Date", required=False, )
     approve_date = fields.Datetime(string="Approve Date", required=False, )

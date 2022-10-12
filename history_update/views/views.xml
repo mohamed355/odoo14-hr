@@ -179,6 +179,7 @@
                                     <field name="job_level"/>
                                     <field name="location" string="Job Location"/>
                                     <field name="department_id"/>
+                                    <field name="req_owner"/>
                                 </group>
                                 <group>
                                     <field name="requested"/>

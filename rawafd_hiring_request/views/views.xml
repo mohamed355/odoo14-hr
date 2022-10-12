@@ -48,6 +48,7 @@
                             <field name="job_id"/>
                             <field name="client"/>
                             <field name="gender"/>
+                            <field name="req_owner" required="1"/>
                             <field name="location"/>
                             <field name="job_level"/>
                             <field name="nationality"/>
@@ -61,17 +62,17 @@
                             <!--                        <field name="required_tech"/>-->
                             <!--                            <field name="salary_range"/>-->
                             <field name="type_of_job"/>
-                                                                <field name="l_1_id"/>
-                                    <field name="level_2_child" invisible="1"/>
-                                    <field name="customer_child" invisible="1"/>
-                                    <field name="dep_child" invisible="1"/>
-                                    <field name="level_2_id" domain="[('id', 'in', customer_child), ]"
-                                           string="Department"/>
-                                    <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
-                                           widget="res_partner_many2one"
-                                           string="Sector"
-                                    />
-                                    <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
+                            <field name="l_1_id"/>
+                            <field name="level_2_child" invisible="1"/>
+                            <field name="customer_child" invisible="1"/>
+                            <field name="dep_child" invisible="1"/>
+                            <field name="level_2_id" domain="[('id', 'in', customer_child), ]"
+                                   string="Department"/>
+                            <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
+                                   widget="res_partner_many2one"
+                                   string="Sector"
+                            />
+                            <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
 
                             <!--                            <field name="key_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
                             <!--                        <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
