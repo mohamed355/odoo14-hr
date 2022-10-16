@@ -64,13 +64,17 @@ class NewModule(models.TransientModel):
                                                                       ('e', 'Expert')], required=False, )
     customer_ids = fields.One2many(comodel_name="hiring.customer", inverse_name="hiring_id", string="Customer",
                                    required=False, )
+
+    partner_id = fields.Many2one(comodel_name="res.partner", required=True, )
     l_1_id = fields.Many2one(comodel_name="res.partner", string="Parent Company", )
+    l_3_id = fields.Many2one(comodel_name="res.partner", string="Parent Department", )
     level_2_id = fields.Many2one(comodel_name="res.partner", string="Sector", )
     contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", )
     level_2_child = fields.One2many(comodel_name="res.partner", related="level_2_id.child_ids", required=True, )
-    partner_id = fields.Many2one(comodel_name="res.partner", required=True, )
+    level_3_child = fields.One2many(comodel_name="res.partner", related="l_3_id.child_ids", required=True, )
     dep_child = fields.One2many(comodel_name="res.partner", related="partner_id.child_ids", required=True, )
     customer_child = fields.One2many(comodel_name="res.partner", related="l_1_id.child_ids", required=True, )
+
     language_ids = fields.Many2many(comodel_name="job.lang", string="Languages", required=True)
     department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
     required_no = fields.Integer(string='Number of Required Employees')
@@ -114,6 +118,7 @@ class NewModule(models.TransientModel):
                 'customer_ids': [(0, 0, {
                     'l_1_id': rec.l_1_id.id,
                     'partner_id': rec.partner_id.id,
+                    'l_3_id': rec.l_3_id.id,
                     'contact_id': rec.contact_id.id,
                     'level_2_id': rec.level_2_id.id,
                 })],
@@ -157,7 +162,7 @@ class HiringRequest(models.Model):
                                 string="Users", )
     tec_ids = fields.Many2many(comodel_name="tec", relation="dewf", column1="wf", column2="tfeec",
                                string="Required Technology", )
-    name = fields.Char(string='Serial', readonly=True, default="New", track_visibility='onchange')
+    name = fields.Char(string='Code', readonly=False, default="New", track_visibility='onchange')
     currency_id = fields.Many2one('res.currency', string='Currency')
     requested = fields.Integer(string="Requested", required=False, )
     job_level = fields.Selection(string="Job Level",
@@ -350,6 +355,7 @@ class CrmLeadInherit(models.Model):
             'type': 'ir.actions.act_window',
             'context': {
                 'default_l_1_id': self.l_1_id.id,
+                'default_l_3_id': self.l_3_id.id,
                 'default_level_2_id': self.level_2_id.id,
                 'default_contact_id': self.contact_id.id,
                 'default_partner_id': self.partner_id.id,
@@ -368,13 +374,16 @@ class HiringRequestCustomer(models.Model):
 
     email = fields.Char(string="Email", required=False, )
     mobile = fields.Char(string="Mobile", required=False, )
+    partner_id = fields.Many2one(comodel_name="res.partner", required=True, )
     l_1_id = fields.Many2one(comodel_name="res.partner", string="Parent Company", )
+    l_3_id = fields.Many2one(comodel_name="res.partner", string="Parent Department", )
     level_2_id = fields.Many2one(comodel_name="res.partner", string="Sector", )
     contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", )
     level_2_child = fields.One2many(comodel_name="res.partner", related="level_2_id.child_ids", required=True, )
-    partner_id = fields.Many2one(comodel_name="res.partner", required=True, )
+    level_3_child = fields.One2many(comodel_name="res.partner", related="l_3_id.child_ids", required=True, )
     dep_child = fields.One2many(comodel_name="res.partner", related="partner_id.child_ids", required=True, )
     customer_child = fields.One2many(comodel_name="res.partner", related="l_1_id.child_ids", required=True, )
+
     hiring_id = fields.Many2one(comodel_name="hiring.request", string="Hiring", required=False, )
 
     @api.onchange('contact_id')
