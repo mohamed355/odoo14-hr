@@ -46,7 +46,7 @@ class NewModule(models.TransientModel):
     priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')],
                                 string='Appreciation')
     # customer_id = fields.Many2one(comodel_name="res.partner", string="Customer", readonly=True,required=True)
-    client = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
+    # client = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     # customer_address_email = fields.Char('Email', related='customer_id.email', readonly=True)
     # customer_address_phone = fields.Char('Phone', related='customer_id.phone', readonly=True)
     # customer_address_mobile = fields.Char('Mobile', related='customer_id.mobile', readonly=True)
@@ -127,7 +127,7 @@ class NewModule(models.TransientModel):
                 'required_no': rec.required_no,
                 'required_tech': rec.required_tech,
                 'location': rec.location,
-                'client': rec.client.id,
+                # 'client': rec.client.id,
                 'salary_range': rec.salary_range,
                 'type_of_job': rec.type_of_job,
             })
@@ -180,7 +180,7 @@ class HiringRequest(models.Model):
     priority = fields.Selection([('0', 'Very Low'), ('1', 'Low'), ('2', 'Normal'), ('3', 'High')],
                                 string='Appreciation')
     # customer_id = fields.Many2one(comodel_name="res.partner", string="Customer", readonly=True,required=True)
-    client = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
+    # client = fields.Many2one(comodel_name="res.partner", string="Client", required=True)
     # customer_address_email = fields.Char('Email', related='customer_id.email', readonly=True)
     # customer_address_phone = fields.Char('Phone', related='customer_id.phone', readonly=True)
     # customer_address_mobile = fields.Char('Mobile', related='customer_id.mobile', readonly=True)
