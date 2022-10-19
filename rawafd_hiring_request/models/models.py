@@ -76,7 +76,7 @@ class NewModule(models.TransientModel):
     customer_child = fields.One2many(comodel_name="res.partner", related="l_1_id.child_ids", required=True, )
 
     language_ids = fields.Many2many(comodel_name="job.lang", string="Languages", required=True)
-    department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
+    # department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
     required_no = fields.Integer(string='Number of Required Employees')
     required_tech = fields.Char(string='Required Technology')
     salary_range = fields.Char(string='Salary Range')
@@ -123,7 +123,7 @@ class NewModule(models.TransientModel):
                     'level_2_id': rec.level_2_id.id,
                 })],
                 'impo_level': rec.impo_level,
-                'department_id': rec.department_id.id,
+                # 'department_id': rec.department_id.id,
                 'required_no': rec.required_no,
                 'required_tech': rec.required_tech,
                 'location': rec.location,
@@ -199,7 +199,7 @@ class HiringRequest(models.Model):
     customer_ids = fields.One2many(comodel_name="hiring.customer", inverse_name="hiring_id", string="Customer",
                                    required=False, )
     language_ids = fields.Many2many(comodel_name="job.lang", string="Languages", required=True)
-    department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
+    # department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=True)
     required_no = fields.Integer(string='Number of Required Employees')
     required_tech = fields.Char(string='Required Technology')
     salary_range = fields.Char(string='Salary Range')
@@ -233,7 +233,7 @@ class HiringRequest(models.Model):
             'gender': self.gender,
             'job_id': self.job_id.id,
             'nationality': self.nationality,
-            'department_id': self.department_id.id,
+            # 'department_id': self.department_id.id,
             'hiring_id': self.id,
         })
 

@@ -8,7 +8,6 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
             <field name="context">{'default_oppr_id': active_id}</field>
-
         </record>
 
         <!-- Inherit Form View to Modify it -->
@@ -42,10 +41,10 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="country_id"/>
+<!--                            <field name="country_id"/>-->
                             <field name="av_status"/>
                             <field name="job_id"/>
-                            <field name="client"/>
+<!--                            <field name="client"/>-->
                             <field name="gender"/>
                             <field name="req_owner" required="1"/>
                             <field name="location"/>
@@ -54,7 +53,7 @@
                             <field name="tag_ids" widget="many2many_tags"/>
                             <field name="ex_level"/>
                             <field name="language_ids" widget="many2many_tags"/>
-                            <field name="department_id"/>
+                            <!--                            <field name="department_id"/>-->
                             <field name="type_of_job"/>
                             <field name="required_no"/>
                             <field name="budget"/>
@@ -71,7 +70,8 @@
                             <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
                                    widget="res_partner_many2one"
                                    string="Section"
-/>                            <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
+                            />
+                            <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
 
                             <!--                            <field name="key_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
                             <!--                        <field name="tec_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
@@ -191,7 +191,7 @@
                                 <field name="approved" invisible="1"/>
 
                                 <field name="req_date" string="Request Date"/>
-                                <field name="client"/>
+<!--                                <field name="client"/>-->
                                 <field name="impo_level"/>
                                 <field name="awaiting_review" invisible="1"/>
                                 <field name="offered" invisible="1"/>
@@ -208,7 +208,7 @@
                                 <field name="job_id" string="Job Title"/>
                                 <field name="job_level"/>
                                 <field name="location" string="Job Location"/>
-                                <field name="department_id"/>
+                                <!--                                <field name="department_id"/>-->
                             </group>
                             <group>
                                 <field name="requested"/>
@@ -293,13 +293,13 @@
                 <tree>
                     <field name="name" string="Code"/>
                     <field name="req_date" string="Request Date"/>
-                    <field name="client"/>
+<!--                    <field name="client"/>-->
                     <field name="job_level"/>
                     <field name="job_id" string="Job Title"/>
                     <field name="location"/>
                     <field name="nationality"/>
                     <field name="requested"/>
-                    <field name="department_id"/>
+                    <!--                    <field name="department_id"/>-->
                     <field name="new_opp"/>
 
                     <field name="awaiting_review"/>
@@ -376,9 +376,9 @@
                     <field name="stage_id"/>
                     <field name="name"/>
                     <field name="job_id"/>
-                    <field name="client"/>
+<!--                    <field name="client"/>-->
                     <field name="location"/>
-                    <field name="department_id"/>
+                    <!--                    <field name="department_id"/>-->
 
                     <templates>
                         <t t-name="kanban-box">
@@ -394,12 +394,12 @@
                                         <li>
                                             <field name="job_id"/>
                                         </li>
-                                        <li>
-                                            <field name="client"/>
-                                        </li>
-                                        <li>
-                                            <field name="department_id"/>
-                                        </li>
+<!--                                        <li>-->
+<!--                                            <field name="client"/>-->
+<!--                                        </li>-->
+<!--                                        &lt;!&ndash;                                        <li>&ndash;&gt;-->
+                                        <!--                                            <field name="department_id"/>-->
+                                        <!--                                        </li>-->
                                         <li>
                                             <field name="tag_ids"/>
                                         </li>
