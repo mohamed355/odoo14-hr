@@ -100,20 +100,23 @@ class HrApp(models.Model):
                 app.experience_m = 0
                 app.experience_d = 0
 
-    # @api.onchange('partner_mobile','linkedin','email_from')
-    # def _onchange_fields(self):
-    #     appliations = self.env['hr.applicant'].search([('job_id','=',self.job_id.id)])
-    #     for app in applications:
-    #         if self.partner_mobile:
-    #             if app.partner_mobile == self.partner_mobile:
-    #                 raise ValidationError("Mobile is Duplicated")
-    #         if self.linkedin:
-    #             if app.linkedin == self.linkedin:
-    #                 raise ValidationError("Linkedin is Duplicated")
-    #
-    #         if self.email_from:
-    #             if app.email_from == self.email_from:
-    #                 raise ValidationError("Email is Duplicated")
+    @api.onchange('partner_mobile', 'linkedin', 'email_from', 'job_id', 'email_cc')
+    def _onchange_fields(self):
+        appliations = self.search([('job_id', '=', self.job_id.id)])
+        for app in appliations:
+            if self.partner_mobile:
+                if app.partner_mobile == self.partner_mobile:
+                    raise ValidationError("Mobile is Duplicated")
+            if self.linkedin:
+                if app.linkedin == self.linkedin:
+                    raise ValidationError("Linkedin is Duplicated")
+
+            if self.email_from:
+                if app.email_from == self.email_from:
+                    raise ValidationError("Email is Duplicated")
+            if self.email_cc:
+                if app.email_cc == self.email_cc:
+                    raise ValidationError("Email CC is Duplicated")
 
 
 class TypeJob(models.Model):

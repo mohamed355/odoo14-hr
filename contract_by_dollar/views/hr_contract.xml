@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_contract_form_inherit" model="ir.ui.view">
+            <field name="name">hr_contract_form_inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+
+                <group name="yearly_advantages" position="inside">
+                    <label for="wage_convert"/>
+                    <div class="o_row">
+                        <field name="wage_convert"/>
+                        <field name="currency_wage_id" placeholder="Currency"/>
+                    </div>
+                </group>
+                <group name="salary_info" position="after">
+                    <group>
+                        <group name="salary_1">
+                            <label for="wage_1"/>
+                            <div class="o_row" name="wage_1">
+                                <field name="wage_1" nolabel="1"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="wage_1_convert"/>
+                            <div class="o_row">
+                                <field name="wage_1_convert"/>
+                                <field name="currency_wage_1_id" placeholder="Currency"/>
+                            </div>
+                        </group>
+
+                    </group>
+                </group>
+
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
