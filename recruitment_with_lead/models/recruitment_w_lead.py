@@ -10,6 +10,9 @@ from lxml import etree
 
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
+
+    _sql_constraints = [('email_uniq', 'UNIQUE(email_from)', 'Email is Duplicated')]
+
     # rec = fields.Char(string="Recruiter Text", required=False, )
     re_action = fields.Char(string="Recommended Action", required=False, )
     last_update_applicant = fields.Date(string="Last Update", required=False, )
@@ -111,9 +114,6 @@ class HrApp(models.Model):
                 if app.linkedin == self.linkedin:
                     raise ValidationError("Linkedin is Duplicated")
 
-            if self.email_from:
-                if app.email_from == self.email_from:
-                    raise ValidationError("Email is Duplicated")
             if self.email_cc:
                 if app.email_cc == self.email_cc:
                     raise ValidationError("Email CC is Duplicated")
