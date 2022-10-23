@@ -16,6 +16,6 @@ class HrContract(models.Model):
             self.wage = self.currency_wage_id.rate * self.wage_convert
 
     @api.onchange('currency_wage_1_id', 'wage_1_convert')
-    def onchange_convert(self):
+    def onchange_convert_1(self):
         if self.wage_1_convert and self.currency_wage_1_id:
             self.wage_1 = self.currency_wage_1_id.rate * self.wage_1_convert

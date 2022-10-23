@@ -16,14 +16,14 @@
                     </div>
                 </group>
                 <group name="salary_info" position="after">
-                    <group>
-                        <group name="salary_1">
+                    <group groups="hr.group_hr_manager">
+                        <group name="salary_1" groups="hr.group_hr_manager">
                             <label for="wage_1"/>
                             <div class="o_row" name="wage_1">
                                 <field name="wage_1" nolabel="1"/>
                             </div>
                         </group>
-                        <group>
+                        <group groups="hr.group_hr_manager">
                             <label for="wage_1_convert"/>
                             <div class="o_row">
                                 <field name="wage_1_convert"/>
