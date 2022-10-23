@@ -212,6 +212,13 @@ class HiringRequest(models.Model):
                                        column1='application_id', column2="hr_id", string="Application")
     activity_count = fields.Integer(string="Activities", required=False, compute='_compute_activity_count')
 
+    @api.model
+    def create(self, vals):
+        vals['name'] = self.env['ir.sequence'].next_by_code(
+            'hiring.req.code')
+        vals['req_date'] = fields.Datetime.now()
+        return super(HiringRequest, self).create(vals)
+
     @api.depends('application_ids')
     def _compute_application_ids_stages(self):
         for record in self:
