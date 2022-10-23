@@ -374,16 +374,15 @@ class HiringRequestCustomer(models.Model):
 
     email = fields.Char(string="Email", required=False, )
     mobile = fields.Char(string="Mobile", required=False, )
-    partner_id = fields.Many2one(comodel_name="res.partner", required=True, )
+    partner_id = fields.Many2one(string="Section", comodel_name="res.partner", required=False, )
     l_1_id = fields.Many2one(comodel_name="res.partner", string="Parent Company", )
     l_3_id = fields.Many2one(comodel_name="res.partner", string="Parent Department", )
-    level_2_id = fields.Many2one(comodel_name="res.partner", string="Sector", )
+    level_2_id = fields.Many2one(comodel_name="res.partner", string="Department", )
     contact_id = fields.Many2one(comodel_name="res.partner", string="Contact", )
-    level_2_child = fields.One2many(comodel_name="res.partner", related="level_2_id.child_ids", required=True, )
-    level_3_child = fields.One2many(comodel_name="res.partner", related="l_3_id.child_ids", required=True, )
-    dep_child = fields.One2many(comodel_name="res.partner", related="partner_id.child_ids", required=True, )
-    customer_child = fields.One2many(comodel_name="res.partner", related="l_1_id.child_ids", required=True, )
-
+    level_2_child = fields.One2many(comodel_name="res.partner", related="level_2_id.child_ids", required=False, )
+    level_3_child = fields.One2many(comodel_name="res.partner", related="l_3_id.child_ids", required=False, )
+    dep_child = fields.One2many(comodel_name="res.partner", related="partner_id.child_ids", required=False, )
+    customer_child = fields.One2many(comodel_name="res.partner", related="l_1_id.child_ids", required=False, )
     hiring_id = fields.Many2one(comodel_name="hiring.request", string="Hiring", required=False, )
 
     @api.onchange('contact_id')
