@@ -11,9 +11,8 @@ from lxml import etree
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
 
-    _sql_constraints = [('email_uniq', 'UNIQUE(email_from)', 'Email is Duplicated')]
+    _sql_constraints = [('email_from_uniq', 'UNIQUE(email_from)', 'Email is Duplicated')]
 
-    # rec = fields.Char(string="Recruiter Text", required=False, )
     re_action = fields.Char(string="Recommended Action", required=False, )
     last_update_applicant = fields.Date(string="Last Update", required=False, )
     app_code = fields.Char(string="Serial", required=False)
@@ -40,6 +39,8 @@ class HrApp(models.Model):
     notice_period = fields.Integer(string="Notice period 'Days' ", required=False, )
     nationality = fields.Char(string="Nationality", required=False, )
     candidate_location = fields.Char(string="Candidate Location", required=False, )
+    candidate_location_id = fields.Many2one(comodel_name="can.location", string="Candidate Location 1", required=False, )
+    nationality_id = fields.Many2one(comodel_name="nationality", string="Nationality 1", required=False, )
     cv_source = fields.Char(string="CV Source", required=False, )
     current_salary = fields.Float(string="Current Salary", required=False, )
     currency_id = fields.Many2one('res.currency', string='Currency', required=False)
@@ -132,6 +133,18 @@ class ActivityJob(models.Model):
     name = fields.Char('Name')
     no_days = fields.Integer('No.days form today')
     type_id = fields.Many2one('type.job')
+
+
+class nationality(models.Model):
+    _name = 'nationality'
+
+    name = fields.Char('Name')
+
+
+class Canlocation(models.Model):
+    _name = 'can.location'
+
+    name = fields.Char('Name')
 
 
 class JobLang(models.Model):

@@ -2,3 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_type_job_user,type job user,model_type_job,base.group_user,1,1,1,1
 access_activity_job_user,activity job user,model_activity_job,base.group_user,1,1,1,1
 access_job_lang_user,job lang user,model_job_lang,base.group_user,1,1,1,1
+access_nationality,nationality,model_nationality,,1,1,1,1
+access_can_location,can_location,model_can_location,,1,1,1,1
