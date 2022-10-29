@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hiring_customer_tree" model="ir.ui.view">
+            <field name="name">Hiring Customer Report</field>
+            <field name="model">hiring.customer</field>
+            <field name="arch" type="xml">
+                <tree string="Hiring Customer Report">
+                    <field name="l_1_id"/>
+                    <field name="level_2_child" invisible="1"/>
+                    <field name="customer_child" invisible="1"/>
+                    <field name="dep_child" invisible="1"/>
+                    <field name="level_2_id" domain="[('id', 'in', customer_child), ]"
+                           string="Department"/>
+                    <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
+                           widget="res_partner_many2one"
+                           string="Sector"
+                    />
+                    <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
+                    <field name="email"/>
+                    <field name="mobile"/>
+                    <field name="hiring_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="hiring_customer_action" model="ir.actions.act_window">
+            <field name="name">Hiring Customer Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hiring.customer</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="hiring_customer_menu" name="Hiring Customer Report"
+                  parent="hr_recruitment.report_hr_recruitment"
+                  action="hiring_customer_action" sequence="5"/>
+
+
+    </data>
+</odoo>
