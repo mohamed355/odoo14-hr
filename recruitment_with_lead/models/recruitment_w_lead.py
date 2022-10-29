@@ -11,7 +11,7 @@ from lxml import etree
 class HrApp(models.Model):
     _inherit = 'hr.applicant'
 
-    _sql_constraints = [('email_from_uniq', 'UNIQUE(email_from)', 'Email is Duplicated')]
+    _sql_constraints = [('email_from_uniq', 'CHECK (1=1)', 'Email is Duplicated')]
 
     re_action = fields.Char(string="Recommended Action", required=False, )
     last_update_applicant = fields.Date(string="Last Update", required=False, )
@@ -39,7 +39,8 @@ class HrApp(models.Model):
     notice_period = fields.Integer(string="Notice period 'Days' ", required=False, )
     nationality = fields.Char(string="Nationality", required=False, )
     candidate_location = fields.Char(string="Candidate Location", required=False, )
-    candidate_location_id = fields.Many2one(comodel_name="can.location", string="Candidate Location 1", required=False, )
+    candidate_location_id = fields.Many2one(comodel_name="can.location", string="Candidate Location 1",
+                                            required=False, )
     nationality_id = fields.Many2one(comodel_name="nationality", string="Nationality 1", required=False, )
     cv_source = fields.Char(string="CV Source", required=False, )
     current_salary = fields.Float(string="Current Salary", required=False, )
@@ -104,20 +105,27 @@ class HrApp(models.Model):
                 app.experience_m = 0
                 app.experience_d = 0
 
-    @api.onchange('partner_mobile', 'linkedin', 'email_from', 'job_id', 'email_cc')
+    @api.onchange('partner_mobile', 'partner_phone', 'linkedin', 'email_from', 'job_id', 'email_cc')
     def _onchange_fields(self):
         appliations = self.search([('job_id', '=', self.job_id.id)])
         for app in appliations:
             if self.partner_mobile:
-                if app.partner_mobile == self.partner_mobile:
+                if app.partner_mobile == self.partner_mobile or app.partner_phone == self.partner_mobile:
                     raise ValidationError("Mobile is Duplicated")
+            if self.partner_phone:
+                if app.partner_phone == self.partner_phone or app.partner_mobile == self.partner_phone:
+                    raise ValidationError("Phone is Duplicated")
+
             if self.linkedin:
                 if app.linkedin == self.linkedin:
                     raise ValidationError("Linkedin is Duplicated")
 
             if self.email_cc:
-                if app.email_cc == self.email_cc:
+                if app.email_cc == self.email_cc or app.email_from == self.email_cc:
                     raise ValidationError("Email CC is Duplicated")
+            if self.email_from:
+                if app.email_cc == self.email_from or app.email_from == self.email_from:
+                    raise ValidationError("Email is Duplicated")
 
 
 class TypeJob(models.Model):

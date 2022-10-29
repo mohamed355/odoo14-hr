@@ -9,6 +9,22 @@
             <field name="target">new</field>
             <field name="context">{'default_oppr_id': active_id}</field>
         </record>
+        <record id="hiring_request_search" model="ir.ui.view">
+            <field name="name">hiring_request_search</field>
+            <field name="model">hiring.request</field>
+            <field name="arch" type="xml">
+                <search string="Hiring Search">
+                    <field string="Hiring" name="name"
+                           filter_domain="[('name', 'ilike', self)]"/>
+                    <field string="Title" name="job_id" filter_domain="[('job_id', 'ilike', self)]"/>
+                    <field string="Request Owner" name="req_owner"
+                           filter_domain="[('req_owner', 'ilike', self)]"/>
+                    <field string="Stage" name="stage_id" filter_domain="[('stage_id', 'ilike', self)]"/>
+                    <field string="Assigned Applications" name="application_ids" filter_domain="[('application_ids', 'ilike', self)]"/>
+                    <field string="Assigned Users" name="user_ids_real" filter_domain="[('user_ids_real', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
 
         <!-- Inherit Form View to Modify it -->
         <record id="crm_lead_add_hiring_request" model="ir.ui.view">
@@ -41,10 +57,10 @@
                 <form>
                     <sheet>
                         <group>
-<!--                            <field name="country_id"/>-->
+                            <!--                            <field name="country_id"/>-->
                             <field name="av_status"/>
                             <field name="job_id"/>
-<!--                            <field name="client"/>-->
+                            <!--                            <field name="client"/>-->
                             <field name="gender"/>
                             <field name="req_owner" required="1"/>
                             <field name="location"/>
@@ -191,7 +207,7 @@
                                 <field name="approved" invisible="1"/>
 
                                 <field name="req_date" string="Request Date"/>
-<!--                                <field name="client"/>-->
+                                <!--                                <field name="client"/>-->
                                 <field name="impo_level"/>
                                 <field name="awaiting_review" invisible="1"/>
                                 <field name="offered" invisible="1"/>
@@ -293,7 +309,7 @@
                 <tree>
                     <field name="name" string="Code"/>
                     <field name="req_date" string="Request Date"/>
-<!--                    <field name="client"/>-->
+                    <!--                    <field name="client"/>-->
                     <field name="job_level"/>
                     <field name="job_id" string="Job Title"/>
                     <field name="location"/>
@@ -376,7 +392,7 @@
                     <field name="stage_id"/>
                     <field name="name"/>
                     <field name="job_id"/>
-<!--                    <field name="client"/>-->
+                    <!--                    <field name="client"/>-->
                     <field name="location"/>
                     <!--                    <field name="department_id"/>-->
 
@@ -394,10 +410,10 @@
                                         <li>
                                             <field name="job_id"/>
                                         </li>
-<!--                                        <li>-->
-<!--                                            <field name="client"/>-->
-<!--                                        </li>-->
-<!--                                        &lt;!&ndash;                                        <li>&ndash;&gt;-->
+                                        <!--                                        <li>-->
+                                        <!--                                            <field name="client"/>-->
+                                        <!--                                        </li>-->
+                                        <!--                                        &lt;!&ndash;                                        <li>&ndash;&gt;-->
                                         <!--                                            <field name="department_id"/>-->
                                         <!--                                        </li>-->
                                         <li>

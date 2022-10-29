@@ -237,7 +237,9 @@
         <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='partner_name']" position="before">
+            <xpath expr="//field[@name='partner_name']" position="replace">
+                <field string="Applicant" name="partner_name"
+                       filter_domain="['|', '|','|', ('name', 'ilike', self), ('app_code', 'ilike', self),('partner_name', 'ilike', self), ('email_from', 'ilike', self)]"/>
                 <field string="Code" name="app_code" filter_domain="[('app_code', 'ilike', self)]"/>
                 <field string="Years of Experience" name="experience_y"
                        filter_domain="[('experience_y', 'ilike', self)]"/>
@@ -296,7 +298,9 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="nationality_menu" name="Nationality" parent="hr_recruitment.menu_hr_recruitment_configuration" action="nationality_action" sequence="4"/>
-    <menuitem id="can_location_menu" name="Candidate Location" parent="hr_recruitment.menu_hr_recruitment_configuration" action="can_location_action" sequence="5"/>
+    <menuitem id="nationality_menu" name="Nationality" parent="hr_recruitment.menu_hr_recruitment_configuration"
+              action="nationality_action" sequence="4"/>
+    <menuitem id="can_location_menu" name="Candidate Location" parent="hr_recruitment.menu_hr_recruitment_configuration"
+              action="can_location_action" sequence="5"/>
 
 </odoo>
