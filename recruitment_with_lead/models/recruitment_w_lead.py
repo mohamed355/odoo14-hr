@@ -107,7 +107,7 @@ class HrApp(models.Model):
 
     @api.onchange('partner_mobile', 'partner_phone', 'linkedin', 'email_from', 'job_id', 'email_cc')
     def _onchange_fields(self):
-        appliations = self.search([('job_id', '=', self.job_id.id)])
+        appliations = self.search([('job_id', '=', self.job_id.id), ('id', '!=', self.id)])
         for app in appliations:
             if self.partner_mobile:
                 if app.partner_mobile == self.partner_mobile or app.partner_phone == self.partner_mobile:
