@@ -112,18 +112,17 @@
                                             </td>
                                             <td>
                                                 <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
-                                                    t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
                                                 <t t-out="docs.package_salary"></t>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td valign="top">
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
                                                 <![CDATA[&nbsp;]]>Basic Salary
                                             </td>
                                             <td>
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
                                                     t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
 
                                                 <t t-out="docs.basic"></t>
@@ -132,11 +131,11 @@
                                         <tr>
                                             <td valign="top">
                                                 <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]>Housing
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>Housing
                                             </td>
                                             <td>
                                                 <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
                                                     t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
                                                 <t t-out="docs.housing"></t>
                                             </td>
@@ -148,7 +147,7 @@
                                             </td>
                                             <td>
                                                 <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
+                                                <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><t
                                                     t-out="docs.proposed_currency.name"></t><![CDATA[&nbsp;]]>
 
                                                 <t t-out="docs.transportation"></t>
