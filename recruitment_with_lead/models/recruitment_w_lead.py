@@ -105,7 +105,7 @@ class HrApp(models.Model):
                 app.experience_m = 0
                 app.experience_d = 0
 
-    @api.onchange('partner_mobile', 'partner_phone', 'linkedin', 'email_from', 'job_id', 'email_cc')
+    @api.constrains('partner_mobile', 'partner_phone', 'linkedin', 'email_from', 'job_id', 'email_cc')
     def _onchange_fields(self):
         appliations = self.search([('job_id', '=', self.job_id.id), ('id', '!=', self.id)])
         for app in appliations:
