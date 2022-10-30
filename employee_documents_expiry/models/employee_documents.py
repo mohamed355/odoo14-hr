@@ -99,6 +99,7 @@ class HrEmployee(models.Model):
         }
 
     document_count = fields.Integer(compute='_document_count', string='# Documents')
+    type = fields.Selection(string="Type", selection=[('eg', 'Egypt'), ('sar', 'Saudi Arabia'), ], required=False, )
 
 
 class HrEmployeeAttachment(models.Model):

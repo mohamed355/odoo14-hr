@@ -44,5 +44,6 @@ class EmployeeEntryDocuments(models.Model):
     document_type = fields.Selection([('entry', 'Entry Process'),
                                       ('exit', 'Exit Process'),
                                       ('other', 'Other')], string='Checklist Type', required=1)
+    type = fields.Selection(string="Type", selection=[('eg', 'Egypt'), ('sar', 'Saudi Arabia'), ], required=False, )
 
 

@@ -15,12 +15,24 @@
             <page name="hr_settings" position="after">
                 <page name="checklist" string="Checklist">
                     <group>
+                        <group>
+                            <field name="type"/>
+
+                        </group>
+                        <group/>
+
+                    </group>
+                    <group>
                         <group name="entry_checklist" string="Entry Checklist">
-                            <field name="entry_checklist_ids" widget="many2many_checkboxes"/>
+                            <field name="entry_checklist_ids"
+                                   domain="[('type', '=',type ),('document_type', '=', 'entry') ]"
+                                   widget="many2many_checkboxes"/>
                             <field name="check_list_enable" invisible="1"/>
                         </group>
                         <group name="exit_checklist" string="Exit Checklist">
-                            <field name="exit_checklist_ids" widget="many2many_checkboxes"/>
+                            <field name="exit_checklist_ids"
+                                   domain="[('type', '=',type ),('document_type', '=', 'exit') ]"
+                                   widget="many2many_checkboxes"/>
                         </group>
                     </group>
                 </page>
@@ -34,9 +46,9 @@
         <field name="inherit_id" ref="hr.view_employee_tree"/>
         <field name="arch" type="xml">
             <field name="coach_id" position="after">
-               <field name="entry_progress" widget="progressbar" optional="show"
-                           options="{'max_field': 'maximum_rate'}">
-               </field>
+                <field name="entry_progress" widget="progressbar" optional="show"
+                       options="{'max_field': 'maximum_rate'}">
+                </field>
             </field>
         </field>
     </record>

@@ -40,14 +40,16 @@ class EmployeeMasterInherit(models.Model):
             total_len = self.env['employee.checklist'].search_count([('document_type', '=', 'entry')])
             entry_len = len(each.entry_checklist_ids)
             if total_len != 0:
-                each.entry_progress = (entry_len*100) / total_len
+                each.entry_progress = (entry_len * 100) / total_len
+
+    type = fields.Selection(string="Type", selection=[('eg', 'Egypt'), ('sar', 'Saudi Arabia'), ], required=False, )
 
     entry_checklist_ids = fields.Many2many('employee.checklist', 'entry_obj_ids', 'check_hr_rel', 'hr_check_rel',
-                                       string='Entry Process',
-                                       domain=[('document_type', '=', 'entry')])
+                                           string='Entry Process',
+                                           domain=[('document_type', '=', 'entry')])
     exit_checklist_ids = fields.Many2many('employee.checklist', 'exit_obj_ids', 'exit_hr_rel', 'hr_exit_rel',
-                                      string='Exit Process',
-                                      domain=[('document_type', '=', 'exit')])
+                                          string='Exit Process',
+                                          domain=[('document_type', '=', 'exit')])
     entry_progress = fields.Float(compute=entry_progress, string='Entry Progress', store=True, default=0.0)
     exit_progress = fields.Float(compute=exit_progress, string='Exit Progress', store=True, default=0.0)
     maximum_rate = fields.Integer(default=100)
@@ -79,7 +81,9 @@ class EmployeeDocumentInherit(models.Model):
 class EmployeeChecklistInherit(models.Model):
     _inherit = 'employee.checklist'
 
+    type = fields.Selection(string="Type", selection=[('eg', 'Egypt'), ('sar', 'Saudi Arabia'), ], required=False, )
+
     entry_obj_ids = fields.Many2many('hr.employee', 'entry_checklist_ids', 'hr_check_rel', 'check_hr_rel',
-                                 invisible=1)
+                                     invisible=1)
     exit_obj_ids = fields.Many2many('hr.employee', 'exit_checklist_ids', 'hr_exit_rel', 'exit_hr_rel',
-                                invisible=1)
+                                    invisible=1)
