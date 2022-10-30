@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hiring_stage_form_inherit" model="ir.ui.view">
+            <field name="name">hiring_stage_form_inherit</field>
+            <field name="model">hiring.stage</field>
+            <field name="inherit_id" ref="rawafd_hiring_request.hiring_stage_form"/>
+            <field name="arch" type="xml">
+
+                <field name="name" position="after">
+                    <field name="user_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
