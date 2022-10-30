@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="tree_task_checklist" model="ir.ui.view">
+        <field name="name">tree_task_checklist</field>
+        <field name="model">task.checklist</field>
+        <field name="arch" type="xml">
+            <tree string="Task Checklist">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
     <record id="action_task_checklist" model="ir.actions.act_window">
         <field name="name">Task Checklist</field>
         <field name="type">ir.actions.act_window</field>

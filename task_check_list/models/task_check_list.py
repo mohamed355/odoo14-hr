@@ -25,6 +25,8 @@ class ProjectTask(models.Model):
 class TaskChecklist(models.Model):
     _name = 'task.checklist'
     _description = 'Checklist for the task'
+    _order = 'sequence asc'
 
+    sequence = fields.Integer("Sequence")
     name = fields.Char(string='Name', required=True)
     description = fields.Char(string='Description')
