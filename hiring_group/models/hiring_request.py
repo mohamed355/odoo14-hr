@@ -6,7 +6,7 @@ class HiringRequest(models.Model):
     _inherit = 'hiring.request'
 
     @api.constrains('stage_id')
-    def _constrains_stage_id_a(self):
+    def _constrains_stage_id_hiring(self):
         for x in self:
             print("adsd", x.stage_id.name)
             print(self.env.user.id, 'in', x.stage_id.user_ids.ids)
