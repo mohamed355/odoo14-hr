@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="emp_email_conf_form" model="ir.ui.view">
+            <field name="name">emp_email_conf_form</field>
+            <field name="model">emp.email.conf</field>
+            <field name="arch" type="xml">
+                <form string="Employee Email Configuration">
+                    <header>
+                        <button name="change_email" type="object" string="Change Email" attrs="{'invisible': [('show_change', '=', False)]}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="show_change" invisible="1"/>
+                                <field name="leave_in"/>
+                                <field name="email"/>
+                            </group>
+                            <group>
+                                <field name="template_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="emp_email_conf_tree" model="ir.ui.view">
+            <field name="name">emp_email_conf_tree</field>
+            <field name="model">emp.email.conf</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Email Configuration">
+                    <field name="leave_in"/>
+                    <field name="email"/>
+                    <field name="template_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="emp_email_conf_action" model="ir.actions.act_window">
+            <field name="name">Employee Email Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">emp.email.conf</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="hr_leave_in_form" model="ir.ui.view">
+            <field name="name">hr_leave_in_form</field>
+            <field name="model">hr.leave.in</field>
+            <field name="arch" type="xml">
+                <form string="Hr Leave In">
+                    <sheet>
+                        <group>
+                            <field name="leave_in"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="go_to_employee" type="object" string="Go To Employee"/>
+                        <button special="cancel" type="object" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="inherit_hr_employee_form" model="ir.ui.view">
+            <field name="name">inherit.hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='coach_id']" position="after">
+                    <field name="leave_in"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_leave_in_action" model="ir.actions.act_window">
+            <field name="name">Hr Leave In</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.leave.in</field>
+            <field name="view_mode">form</field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="hr_leave_in_menu" name="Employee Email Configuration" parent="hr_recruitment.menu_hr_recruitment_configuration" action="emp_email_conf_action" sequence="5"/>
+    </data>
+</odoo>

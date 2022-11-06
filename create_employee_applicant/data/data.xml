@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="egypt_email_template" model="mail.template">
+        <field name="name">Send To Egypt</field>
+        <field
+                name="email_from"
+        >${(user.email and '%s &lt;%s&gt;' % (user.name, user.email) or '')|safe}
+        </field>
+        <field name="subject">New Employee</field>
+        <field name="email_to">i.osama@rawafdtech.net</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field
+                name="body_html"
+        ><![CDATA[
+    <p>Hello, </p>
+
+    <p>An Employee Has Been Created In Egypt Branch
+    </p>
+
+    ]]></field>
+    </record>
+    <record id="o_egypt_email_template" model="mail.template">
+        <field name="name">Send To Out Egypt</field>
+        <field
+                name="email_from"
+        >${(user.email and '%s &lt;%s&gt;' % (user.name, user.email) or '')|safe}
+        </field>
+        <field name="subject">New Employee</field>
+        <field name="email_to">a.mekhaimar@odoo.com</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field
+                name="body_html"
+        ><![CDATA[
+    <p>Hello, </p>
+
+    <p>An Employee Has Been Created In Saudi Arabia Branch
+    </p>
+
+    ]]></field>
+    </record>
+    <record id="egypt_leave_emp" model="emp.email.conf">
+        <field name="leave_in">egypt</field>
+        <field name="email">i.osama@rawafdtech.net</field>
+        <field name="template_id" ref="egypt_email_template"/>
+    </record>
+    <record id="egypt_leave_emp_out" model="emp.email.conf">
+        <field name="leave_in">o_of_egy</field>
+        <field name="email">a.mekhaimar@odoo.com</field>
+        <field name="template_id" ref="o_egypt_email_template"/>
+    </record>
+</odoo>
