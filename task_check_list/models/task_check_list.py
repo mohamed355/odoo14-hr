@@ -28,5 +28,5 @@ class TaskChecklist(models.Model):
     _order = 'sequence asc'
 
     sequence = fields.Integer("Sequence")
-    name = fields.Char(string='Name', required=True)
+    name = fields.Char(string='Name', required=False)
     description = fields.Char(string='Description')

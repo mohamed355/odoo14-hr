@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="emp_act_form" model="ir.ui.view">
+            <field name="name">emp.act.form</field>
+            <field name="model">emp.act</field>
+            <field name="arch" type="xml">
+                <form string="Employee Join Activities">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="activity_type_id"/>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <field name="hours" widget="timesheet_uom"/>
+                                <field name="user_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="emp_act_tree" model="ir.ui.view">
+            <field name="name">emp_act_tree</field>
+            <field name="model">emp.act</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Join Activities">
+                    <field name="activity_type_id"/>
+                    <field name="description"/>
+                    <field name="hours" widget="timesheet_uom"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="emp_act_action" model="ir.actions.act_window">
+            <field name="name">Employee Join Activities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">emp.act</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="emp_act_menu" name="Employee Join Activities" parent="hr.menu_hr_employee_payroll"
+                  action="emp_act_action" sequence="5"/>
+
+    </data>
+</odoo>

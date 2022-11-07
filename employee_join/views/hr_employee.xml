@@ -9,7 +9,9 @@
 
                 <xpath expr="//header" position="inside">
                     <field name="joined" invisible="1"/>
-                    <button name="join" type="object" string="Join" attrs="{'invisible': [('joined', '=', True)]}"/>
+                    <button name="join" type="object" string="Accounting Info" attrs="{'invisible': [('joined', '=', True)]}"/>
+                    <button name="emp_conf" type="object" string="Join" attrs="{'invisible': [('state', '=', 'joined')]}"/>
+                    <field name="state" widget="statusbar"/>
                 </xpath>
 
             </field>
