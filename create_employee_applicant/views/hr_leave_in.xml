@@ -45,7 +45,7 @@
             <field name="name">hr_leave_in_form</field>
             <field name="model">hr.leave.in</field>
             <field name="arch" type="xml">
-                <form string="Hr Leave In">
+                <form string="Hr Live In">
                     <sheet>
                         <group>
                             <field name="leave_in"/>
@@ -70,7 +70,7 @@
         </record>
 
         <record id="hr_leave_in_action" model="ir.actions.act_window">
-            <field name="name">Hr Leave In</field>
+            <field name="name">Hr Live In</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.leave.in</field>
             <field name="view_mode">form</field>

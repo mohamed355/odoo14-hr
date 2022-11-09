@@ -217,7 +217,7 @@
                     <field name="ref_employee_id" string="Referred" optional="hide"/>
                     <field name="description"/>
                     <field name="re_action" string="HR Interview Result"/>
-                    <field name="__last_update"/>
+                    <field name="last_update_applicant"/>
                     <field name="stage_id"/>
                     <field name="priority" invisible="1"/>
                     <field name="create_date"/>
@@ -250,6 +250,13 @@
                        filter_domain="[('notice_period_from', 'ilike', self)]"/>
                 <field string="Notice Period To" name="notice_period_to"
                        filter_domain="[('notice_period_to', 'ilike', self)]"/>
+                <field string="Email CC" name="email_cc"
+                       filter_domain="[('email_cc', 'ilike', self)]"/>
+                <field string="Phone" name="email_cc"
+                       filter_domain="[('partner_phone', 'ilike', self)]"/>
+                <field string="Mobile" name="email_cc"
+                       filter_domain="[('partner_mobile', 'ilike', self)]"/>
+
             </xpath>
 
         </field>

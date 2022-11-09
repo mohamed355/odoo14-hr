@@ -7,7 +7,7 @@ class HrApplicant(models.Model):
 
     def create_employee_from_applicant(self):
         return {
-            'name': 'Leave In',
+            'name': 'Live In',
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'res_model': 'hr.leave.in',
@@ -18,7 +18,7 @@ class HrApplicant(models.Model):
 class HrLeave(models.Model):
     _name = 'hr.leave.in'
 
-    leave_in = fields.Selection(string="Leave In", selection=[('egypt', 'Egypt'), ('o_of_egy', 'Out Of Egypt'), ],
+    leave_in = fields.Selection(string="Live In", selection=[('egypt', 'Egypt'), ('o_of_egy', 'Out Of Egypt'), ],
                                 required=False, )
 
     def go_to_employee(self):
@@ -58,30 +58,6 @@ class HrLeave(models.Model):
                     'default_applicant_id': applicant.ids,
                     'default_leave_in': self.leave_in,
                 }
-        if self.leave_in == 'egypt':
-            print('eg')
-            temp = self.env['mail.template'].search([('name', '=', 'Send To Egypt')])
-            print(temp.email_to)
-            temp.sudo().send_mail(applicant.id, force_send=True)
-            self.env['mail.activity'].create({
-                'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
-                'summary': "New Employee",
-                'user_id': self.env['res.users'].search([('id', '=', 42)]).id,
-                'note': "New Employee",
-                'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.applicant')]).id,
-                'res_id': applicant.id
-            })
-        if self.leave_in == 'o_of_egy':
-            template = self.env.ref('create_employee_applicant.o_egypt_email_template')
-            template.sudo().send_mail(applicant.id, force_send=True)
-            self.env['mail.activity'].create({
-                'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
-                'summary': "New Employee",
-                'user_id': self.env['res.users'].search([('id', '=', 37)]).id,
-                'note': "New Employee",
-                'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.applicant')]).id,
-                'res_id': applicant.id
-            })
         dict_act_window = self.env['ir.actions.act_window']._for_xml_id('hr.open_view_employee_list')
         dict_act_window['context'] = employee_data
         return dict_act_window
@@ -90,7 +66,7 @@ class HrLeave(models.Model):
 class EmployeeEmailConf(models.Model):
     _name = 'emp.email.conf'
 
-    leave_in = fields.Selection(string="Leave In", selection=[('egypt', 'Egypt'), ('o_of_egy', 'Out Of Egypt'), ],
+    leave_in = fields.Selection(string="Live In", selection=[('egypt', 'Egypt'), ('o_of_egy', 'Out Of Egypt'), ],
                                 required=False, )
     template_id = fields.Many2one('mail.template', 'Template')
     email = fields.Char(string="Email", required=False, )
