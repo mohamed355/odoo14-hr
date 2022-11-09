@@ -9,7 +9,6 @@ class HrEmployee(models.Model):
     joined = fields.Boolean(string="Joined", )
 
     def join(self):
-        self.joined = True
         return {
             'name': 'Employee Join',
             'view_type': 'form',

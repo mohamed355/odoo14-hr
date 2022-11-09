@@ -22,6 +22,8 @@ class HrJoin(models.Model):
     @api.model
     def create(self, values):
         res = super(HrJoin, self).create(values)
+        emp = self.env['hr.employee'].browse(self.env.context.get('active_id'))
+        emp.joined = True
         for record in res:
             if record.product_id:
                 if record.analytic_account_id:
