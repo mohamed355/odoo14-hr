@@ -20,8 +20,10 @@
                     <field string="Request Owner" name="req_owner"
                            filter_domain="[('req_owner', 'ilike', self)]"/>
                     <field string="Stage" name="stage_id" filter_domain="[('stage_id', 'ilike', self)]"/>
-                    <field string="Assigned Applications" name="application_ids" filter_domain="[('application_ids', 'ilike', self)]"/>
-                    <field string="Assigned Users" name="user_ids_real" filter_domain="[('user_ids_real', 'ilike', self)]"/>
+                    <field string="Assigned Applications" name="application_ids"
+                           filter_domain="[('application_ids', 'ilike', self)]"/>
+                    <field string="Assigned Users" name="user_ids_real"
+                           filter_domain="[('user_ids_real', 'ilike', self)]"/>
                 </search>
             </field>
         </record>
@@ -392,10 +394,7 @@
                     <field name="stage_id"/>
                     <field name="name"/>
                     <field name="job_id"/>
-                    <!--                    <field name="client"/>-->
                     <field name="location"/>
-                    <!--                    <field name="department_id"/>-->
-
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban">
@@ -410,12 +409,12 @@
                                         <li>
                                             <field name="job_id"/>
                                         </li>
-                                        <!--                                        <li>-->
-                                        <!--                                            <field name="client"/>-->
-                                        <!--                                        </li>-->
-                                        <!--                                        &lt;!&ndash;                                        <li>&ndash;&gt;-->
-                                        <!--                                            <field name="department_id"/>-->
-                                        <!--                                        </li>-->
+                                        <li>
+                                            <field name="req_owner"/>
+                                        </li>
+                                        <li>
+                                            <field name="nationality"/>
+                                        </li>
                                         <li>
                                             <field name="tag_ids"/>
                                         </li>

@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-       <record id="hiring_officer" model="ir.rule">
-           <field name="name">Hiring Officer</field>
-           <field ref="model_hiring_request" name="model_id"/>
-           <field name="domain_force">[('user_ids_real', '=',user.id )]</field>
-           <field name="perm_write" eval="0"/>
-           <field name="perm_create" eval="0"/>
-           <field name="perm_read" eval="1"/>
-           <field name="perm_unlink" eval="0"/>
-           <!-- You can attach this rule to a specific group, Or make it Global -->
-           <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_user'))]"/>
-           <!--<field name="global" eval="1"/> -->
-       </record>
-  <record id="hiring_admin" model="ir.rule">
-           <field name="name">Hiring Admin</field>
-           <field ref="model_hiring_request" name="model_id"/>
-           <field name="domain_force"></field>
-           <field name="perm_write" eval="1"/>
-           <field name="perm_create" eval="1"/>
-           <field name="perm_read" eval="1"/>
-           <field name="perm_unlink" eval="1"/>
-           <!-- You can attach this rule to a specific group, Or make it Global -->
-           <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
-           <!--<field name="global" eval="1"/> -->
-       </record>
+        <record id="hiring_comp_rule" model="ir.rule">
+            <field name="name">Hiring multi company rule</field>
+            <field name="model_id" ref="model_hiring_request"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="hiring_officer" model="ir.rule">
+            <field name="name">Hiring Officer</field>
+            <field ref="model_hiring_request" name="model_id"/>
+            <field name="domain_force">[('user_ids_real', '=',user.id )]</field>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <!-- You can attach this rule to a specific group, Or make it Global -->
+            <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_user'))]"/>
+            <!--<field name="global" eval="1"/> -->
+        </record>
+        <record id="hiring_admin" model="ir.rule">
+            <field name="name">Hiring Admin</field>
+            <field ref="model_hiring_request" name="model_id"/>
+            <field name="domain_force"></field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <!-- You can attach this rule to a specific group, Or make it Global -->
+            <field name="groups" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+            <!--<field name="global" eval="1"/> -->
+        </record>
 
     </data>
 </odoo>

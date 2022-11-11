@@ -324,33 +324,34 @@ render_sales_activity_graph:function(){
                     },]
                 };
          var options = {
-                    responsive: true,
-                    title: false,
-                    legend: {
-                        display: true,
-                        position: "bottom",
-                        labels: {
-                            fontColor: "#333",
-                            fontSize: 16
-                        }
-                    },
-                    scales: {
-                        yAxes: [{
-                            gridLines: {
-                                color: "rgba(0, 0, 0, 0)",
-                                display: false,
-                            },
-                            ticks: {
-                                min: 0,
-                                display: false,
-                            }
-                        }]
-                    }
-                };
+            responsive: true,
+            title: {
+              display: true,
+              position: "top",
+              text: "",
+              fontSize: 18,
+              fontColor: "#111"
+            },
+            legend: {
+              display: true,
+              position: "bottom",
+              labels: {
+                fontColor: "#333",
+                fontSize: 16
+              }
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }]
+            }
+          };
 
                 //create Chart class object
                 var chart = new Chart(ctx, {
-                    type: "bar",
+                    type: "horizontalBar",
                     data: data,
                     options: options
                 });

@@ -137,6 +137,9 @@ class HiringRequest(models.Model):
     _name = 'hiring.request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    company_id = fields.Many2one('res.company', string='Company', required=True, index=True,
+                                 default=lambda self: self.env.company,
+                                 help="Hiring Company")
     req_owner = fields.Char(string="Request Owner", required=False, )
     acc_date = fields.Date(string="Accepted Date", required=False, )
     req_date = fields.Date(string="Request Date", required=False, )
@@ -364,6 +367,7 @@ class CrmLeadInherit(models.Model):
                 'default_l_1_id': self.l_1_id.id,
                 'default_l_3_id': self.l_3_id.id,
                 'default_level_2_id': self.level_2_id.id,
+                'default_oppr_id': self.id,
                 'default_contact_id': self.contact_id.id,
                 'default_partner_id': self.partner_id.id,
             },

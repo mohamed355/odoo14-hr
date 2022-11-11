@@ -417,11 +417,11 @@
                         <!--                        </div>-->
                     </div>
                 </div>
-    <div class="year_to_date_graph_div col-sm-3 col-md-3">
-                    <div class="sales_activity_pie_div half_chart chart-container card-shadow">
+    <div class="year_to_date_graph_div col-sm-3 col-md-4">
+                    <div class="sales_activity_pie_div chart-container card-shadow">
                         <h2>Amount By Stage</h2>
                         <hr/>
-                        <div class="graph_canvas" style="margin-top: 30px;">
+                        <div class="graph_canvas" style="margin-bottom: 30px;">
                             <canvas class="lost_leads_graph" width="200px" height="200px"/>
                         </div>
                         <!--                        <div style="margin-top: 30px;margin-left: 20px;">-->

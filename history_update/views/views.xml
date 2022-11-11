@@ -176,6 +176,7 @@
                             <group>
                                 <group>
                                     <field name="job_id" string="Job Title"/>
+                                    <field name="company_id" string="Company"/>
                                     <field name="job_level"/>
                                     <field name="location" string="Job Location"/>
                                 </group>
