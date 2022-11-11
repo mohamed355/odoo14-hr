@@ -15,4 +15,3 @@ class HiringRequest(models.Model):
                     print("Access")
                 else:
                     raise ValidationError("You Need To Access To Move In This Stage")
-
