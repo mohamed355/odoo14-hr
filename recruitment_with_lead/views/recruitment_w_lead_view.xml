@@ -250,15 +250,14 @@
                        filter_domain="[('notice_period_from', 'ilike', self)]"/>
                 <field string="Notice Period To" name="notice_period_to"
                        filter_domain="[('notice_period_to', 'ilike', self)]"/>
-                <field string="Email CC" name="email_cc"
-                       filter_domain="[('email_cc', 'ilike', self)]"/>
-                <field string="Phone" name="email_cc"
-                       filter_domain="[('partner_phone', 'ilike', self)]"/>
-                <field string="Mobile" name="email_cc"
-                       filter_domain="[('partner_mobile', 'ilike', self)]"/>
+                <field string="Phone &amp; Mobile" name="email_cc"
+                       filter_domain="['|',('partner_phone', 'ilike', self),('partner_mobile', 'ilike', self)]"/>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="replace">
+                <field string="Email &amp; Email CC" name="email_from"
+                       filter_domain="['|',('email_from', 'ilike', self),('email_cc', 'ilike', self)]"/>
 
             </xpath>
-
         </field>
     </record>
     <record id="hr_applicant_survey" model="ir.ui.view">

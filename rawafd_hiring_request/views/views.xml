@@ -316,7 +316,7 @@
                     <field name="job_id" string="Job Title"/>
                     <field name="location"/>
                     <field name="nationality"/>
-                    <field name="requested"/>
+                    <field name="req_owner"/>
                     <!--                    <field name="department_id"/>-->
                     <field name="new_opp"/>
 
