@@ -68,7 +68,7 @@
                 <field name="gender"/>
                 <field name="experience_level"/>
                 <field name="language_ids" widget="many2many_tags"/>
-                <field name="linkedin" widget="url"/>
+                <field name="linkedin"/>
                 <!--                <field name="first_work_ex"/>-->
                 <field name="tools"/>
                 <field name="job_id" invisible="1"/>
@@ -198,7 +198,7 @@
                     <field name="partner_phone" string="Phone" optional="hide"/>
                     <field name="partner_mobile" string="Mobile"/>
                     <field name="email_from" string="Email"/>
-                    <field name="linkedin" string="Linkedin" widget="url"/>
+                    <field name="linkedin" string="Linkedin"/>
                     <field name="experience_level"/>
                     <field name="user_id"/>
                     <field name="experience_y" string="Years of Experience"/>
