@@ -13,16 +13,16 @@ def extract_email(email):
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    @api.model
-    def create(self, vals):
-        employee = super(HrEmployee, self).create(vals)
-        if not employee.user_id:
-            user = employee.sudo()._create_user()
-            group_portal = self.env.ref('base.group_portal')
-            group_public = self.env.ref('base.group_public')
-            user.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
-            employee.user_id = user.id
-        return employee
+    # @api.model
+    # def create(self, vals):
+    #     employee = super(HrEmployee, self).create(vals)
+    #     if not employee.user_id:
+    #         user = employee.sudo()._create_user()
+    #         group_portal = self.env.ref('base.group_portal')
+    #         group_public = self.env.ref('base.group_public')
+    #         user.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
+    #         employee.user_id = user.id
+    #     return employee
 
     def _create_user(self):
         company = self.env.user.company_id
