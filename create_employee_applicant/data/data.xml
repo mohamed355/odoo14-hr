@@ -18,6 +18,12 @@
 
     <p>An Employee Has Been Created In Egypt Branch
     </p>
+    <div style="margin: 16px 0px 16px 0px;">
+                            <a href="web#id=${object.id}&cids=1&model=hr.employee&view_type=form"
+                                style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                                View Employee
+                            </a>
+                        </div>
 
     ]]></field>
     </record>

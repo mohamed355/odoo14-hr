@@ -9,9 +9,23 @@
 
                 <xpath expr="//header" position="inside">
                     <field name="joined" invisible="1"/>
-                    <button name="join" type="object" string="Accounting Info" attrs="{'invisible': [('joined', '=', True)]}"/>
-                    <button name="emp_conf" type="object" string="Join" attrs="{'invisible': [('state', '=', 'joined')]}"/>
+                    <field name="dir" invisible="1"/>
+                    <button name="join" type="object" string="Accounting Info"
+                            attrs="{'invisible': ['|',('joined', '=', True),('dir','=','in')]}"/>
+                    <button name="emp_conf" type="object" string="Join"
+                            attrs="{'invisible': [('state', '=', 'joined')]}"/>
                     <field name="state" widget="statusbar"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Direction Info">
+                        <group>
+                            <field name="location"/>
+                            <field name="nationality_id"/>
+                            <field name="assign_to"/>
+                            <field name="dir"/>
+                            <field name="note"/>
+                        </group>
+                    </page>
                 </xpath>
 
             </field>

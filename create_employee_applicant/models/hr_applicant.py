@@ -6,20 +6,43 @@ class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
 
     def create_employee_from_applicant(self):
-        return {
-            'name': 'Live In',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'hr.leave.in',
-            'target': 'new'
-        }
+        if self.hiring_ids:
+            return {
+                'name': 'Live In',
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'hr.leave.in',
+                'context': {
+                    'default_location': self.location,
+                    'default_nationality_id': self.nationality_id.id,
+                    'default_dir': self.hiring_ids[0].dir,
+                },
+                'target': 'new'
+            }
+        else:
+            return {
+                'name': 'Live In',
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'hr.leave.in',
+                'context': {
+                    'default_location': self.location,
+                    'default_nationality_id': self.nationality_id.id,
+                },
+                'target': 'new'
+            }
 
 
 class HrLeave(models.Model):
     _name = 'hr.leave.in'
 
-    leave_in = fields.Selection(string="Live In", selection=[('egypt', 'Egypt'), ('o_of_egy', 'Out Of Egypt'), ],
-                                required=False, )
+    location = fields.Selection(string="Location", selection=[('off', 'Offshore'), ('on', 'Onsite'), ],
+                                required=False, readonly=True)
+    nationality_id = fields.Many2one(comodel_name="nationality", string="Nationality", required=False, )
+    assign_to = fields.Selection(string="Assign To", selection=[('eg', 'Egypt HR Office'), ('sr', 'Saudi HR Office'), ],
+                                 required=False, )
+    note = fields.Text(string="Note", required=False, )
+    dir = fields.Selection(string="Direction", selection=[('in', 'Internal'), ('ex', 'External'), ], required=False, )
 
     def go_to_employee(self):
         employee = False
@@ -44,23 +67,60 @@ class HrLeave(models.Model):
                 address_id = new_partner_id.address_get(['contact'])['contact']
             if applicant.partner_name or contact_name:
                 employee_data = {
-                    'default_name': applicant.partner_name or contact_name,
-                    'default_job_id': applicant.job_id.id,
-                    'default_job_title': applicant.job_id.name,
+                    'name': applicant.partner_name or contact_name,
+                    'job_id': applicant.job_id.id,
+                    'job_title': applicant.job_id.name,
                     'address_home_id': address_id,
-                    'default_department_id': applicant.department_id.id or False,
-                    'default_address_id': applicant.company_id and applicant.company_id.partner_id
-                                          and applicant.company_id.partner_id.id or False,
-                    'default_work_email': applicant.department_id and applicant.department_id.company_id
-                                          and applicant.department_id.company_id.email or False,
-                    'default_work_phone': applicant.department_id.company_id.phone,
-                    'form_view_initial_mode': 'edit',
-                    'default_applicant_id': applicant.ids,
-                    'default_leave_in': self.leave_in,
+                    'department_id': applicant.department_id.id or False,
+                    'address_id': applicant.company_id and applicant.company_id.partner_id
+                                  and applicant.company_id.partner_id.id or False,
+                    'work_email': applicant.department_id and applicant.department_id.company_id
+                                  and applicant.department_id.company_id.email or False,
+                    'work_phone': applicant.department_id.company_id.phone,
+                    'applicant_id': applicant.ids,
+                    'hr_leave_in_id': self.id,
+                    'location': self.location,
+                    'assign_to': self.assign_to,
+                    'note': self.note,
+                    'dir': self.dir,
                 }
-        dict_act_window = self.env['ir.actions.act_window']._for_xml_id('hr.open_view_employee_list')
-        dict_act_window['context'] = employee_data
-        return dict_act_window
+                emp_obj = self.env['hr.employee'].sudo().create(employee_data)
+                if self.assign_to == 'eg':
+                    print('eg')
+                    temp = self.env['mail.template'].search([('name', '=', 'Send To Egypt')])
+                    print(temp.email_to)
+                    temp.sudo().send_mail(applicant.id, force_send=True)
+                    self.env['mail.activity'].create({
+                        'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+                        'summary': "New Employee",
+                        'user_id': self.env['res.users'].search([('id', '=', 2)]).id,
+                        'note': "New Employee",
+                        'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
+                        'res_id': emp_obj.id
+                    })
+                if self.assign_to == 'sr':
+                    template = self.env.ref('create_employee_applicant.o_egypt_email_template')
+                    template.sudo().send_mail(applicant.id, force_send=True)
+                    self.env['mail.activity'].create({
+                        'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+                        'summary': "New Employee",
+                        'user_id': self.env['res.users'].search([('id', '=', 2)]).id,
+                        'note': "New Employee",
+                        'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
+                        'res_id': emp_obj.id
+                    })
+                if self.dir == 'in':
+                    emp_objs = self.env['emp.act'].search([('internal', '=',True)])
+                    for emps in emp_objs:
+                        activity_obj = self.env['mail.activity'].create({
+                            'activity_type_id': emps.activity_type_id.id,
+                            # 'summary': emp.description,
+                            'date_deadline': fields.Date.today(),
+                            'user_id': emps.user_id.id,
+                            'note': emps.description,
+                            'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
+                            'res_id': emp_obj.id
+                        })
 
 
 class EmployeeEmailConf(models.Model):

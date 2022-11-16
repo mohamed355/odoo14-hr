@@ -11,10 +11,12 @@
                             <group>
                                 <field name="activity_type_id"/>
                                 <field name="description"/>
+                                <field name="internal"/>
                             </group>
                             <group>
                                 <field name="hours" widget="timesheet_uom"/>
                                 <field name="user_id"/>
+                                <field name="template_id" attrs="{'invisible':[('internal','=',True)]}"/>
                             </group>
                         </group>
                     </sheet>

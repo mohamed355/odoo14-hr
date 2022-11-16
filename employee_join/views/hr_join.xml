@@ -23,9 +23,15 @@
                                 <field name="department_id"/>
                                 <field name="job_position"/>
                                 <field name="product_id"/>
+                                <field name="template_id"/>
                                 <field name="manager_id"/>
                                 <field name="analytic_account_id"/>
                                 <field name="sales_price" groups="hr.group_hr_manager"/>
+                                <field name="location"/>
+                                <field name="nationality_id"/>
+                                <field name="assign_to"/>
+                                <field name="dir"/>
+                                <field name="note"/>
                             </group>
                             <group/>
 

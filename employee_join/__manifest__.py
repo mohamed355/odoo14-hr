@@ -1,7 +1,7 @@
 {
     'name': 'Employee Join',
     'author': 'Ezzedin Saleh',
-    'depends': ['base', 'hr', 'hr_contract', 'account'],
+    'depends': ['base', 'hr', 'hr_contract', 'account', 'create_employee_applicant'],
     'data': [
         'security/ir.model.access.csv',
         'views/hr_join.xml',

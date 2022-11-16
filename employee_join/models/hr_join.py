@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class HrJoin(models.Model):
     _name = 'hr.join'
 
+    template_id = fields.Many2one(comodel_name="template.act", string="Template", required=False, )
     name = fields.Many2one(comodel_name="hr.employee", string="Employee", required=False, )
     department_id = fields.Many2one(comodel_name="hr.department", string="Department", required=False,
                                     related='name.department_id',
@@ -18,6 +19,14 @@ class HrJoin(models.Model):
     sales_price = fields.Float(string="Sales Price", required=False, )
     state = fields.Selection(string="State", selection=[('draft', 'Draft'), ('approved', 'Approved'), ],
                              required=False, default='draft')
+    hr_leave_in_id = fields.Many2one(comodel_name="hr.leave.in", string="Live", required=False, )
+    location = fields.Selection(string="Location", selection=[('off', 'Offshore'), ('on', 'Onsite'), ],
+                                required=False, readonly=True)
+    nationality_id = fields.Many2one(comodel_name="nationality", string="Nationality", required=False, )
+    assign_to = fields.Selection(string="Assign To", selection=[('eg', 'Egypt HR Office'), ('sr', 'Saudi HR Office'), ],
+                                 required=False, )
+    note = fields.Text(string="Note", required=False, )
+    dir = fields.Selection(string="Direction", selection=[('in', 'Internal'), ('ex', 'External'), ], required=False, )
 
     @api.model
     def create(self, values):
@@ -29,6 +38,17 @@ class HrJoin(models.Model):
                 if record.analytic_account_id:
                     self.env['account.analytic.default'].create(
                         {'analytic_id': record.analytic_account_id.id, 'product_id': record.product_id.id})
+            emp_objs = self.env['emp.act'].search([('template_id', '=', record.template_id.id)])
+            for emps in emp_objs:
+                activity_obj = self.env['mail.activity'].create({
+                    'activity_type_id': emps.activity_type_id.id,
+                    # 'summary': emp.description,
+                    'date_deadline': fields.Date.today(),
+                    'user_id': emps.user_id.id,
+                    'note': emps.description,
+                    'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
+                    'res_id': emp.id
+                })
 
         return res
 
