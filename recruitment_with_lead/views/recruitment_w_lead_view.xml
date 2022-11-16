@@ -60,6 +60,7 @@
                 <field name="nationality_id"/>
                 <field name="last_update_applicant"/>
                 <field name="candidate_location"/>
+                <field name="location"/>
                 <field name="candidate_location_id"/>
             </field>
             <field name="type_id" position="after">
