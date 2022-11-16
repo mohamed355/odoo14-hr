@@ -17,8 +17,6 @@ class HrEmployee(models.Model):
     def create(self, vals):
         employee = super(HrEmployee, self).create(vals)
         if not employee.user_id:
-            if not employee.work_email:
-                raise UserError(_('Work email is not defined for employee %s !') % employee.name)
             user = employee.sudo()._create_user()
             group_portal = self.env.ref('base.group_portal')
             group_public = self.env.ref('base.group_public')
