@@ -188,8 +188,8 @@ class HiringRequest(models.Model):
     # customer_address_email = fields.Char('Email', related='customer_id.email', readonly=True)
     # customer_address_phone = fields.Char('Phone', related='customer_id.phone', readonly=True)
     # customer_address_mobile = fields.Char('Mobile', related='customer_id.mobile', readonly=True)
-    user_id = fields.Many2one(comodel_name="res.users", string="Salesperson", readonly=True)
-    team_id = fields.Many2one(comodel_name="crm.team", string="Sales Team", readonly=True)
+    user_id = fields.Many2one(comodel_name="res.users", string="Salesperson", readonly=False)
+    team_id = fields.Many2one(comodel_name="crm.team", string="Sales Team", readonly=False)
     comment = fields.Text(string="Other Comments", required=False, )
     tag_ids = fields.Many2many(comodel_name="crm.tag", string="Tags", readonly=False)
     oppr_id = fields.Many2one(comodel_name="crm.lead", string="Oppr", required=False)
@@ -253,6 +253,16 @@ class HiringRequest(models.Model):
 
     def approve(self):
         self.approved = True
+
+    def show_cust_report(self):
+        return {
+            'name': ('Customer Report'),
+            'view_mode': 'tree',
+            'res_model': 'hiring.customer',
+            'type': 'ir.actions.act_window',
+            'domain': [('hiring_id', '=', self.id)],
+            'target': 'new'
+        }
 
     @api.depends()
     def _compute_application_ids(self):

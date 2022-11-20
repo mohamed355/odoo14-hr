@@ -327,6 +327,7 @@
                     <field name="stage_id"/>
                     <field name="user_ids_real" widget="many2many_tags"/>
                     <field name="note"/>
+                    <button name="show_cust_report" type="object" string="Show Customer"/>
                     <!--                    <field name="approved" />-->
 
 
