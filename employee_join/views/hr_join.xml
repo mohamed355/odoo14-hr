@@ -36,6 +36,25 @@
                             <group/>
 
                         </group>
+                        <group>
+                            <field name="customer_ids">
+                                <tree editable="bottom">
+
+                                    <field name="l_1_id"/>
+                                    <field name="level_2_child" invisible="1"/>
+                                    <field name="customer_child" invisible="1"/>
+                                    <field name="dep_child" invisible="1"/>
+                                    <field name="level_2_id" domain="[('id', 'in', customer_child), ]"
+                                           string="Department"/>
+                                    <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
+                                           widget="res_partner_many2one"
+                                           string="Sector"
+                                    />
+                                    <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
+                                </tree>
+                            </field>
+
+                        </group>
                     </sheet>
                 </form>
             </field>

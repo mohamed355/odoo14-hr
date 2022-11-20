@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_visa_type,access.visa.type,model_visa_type,,1,1,1,1
+access_boundaries,access.boundaries,model_boundaries,,1,1,1,1
+access_accommodation,access.accommodation,model_accommodation,,1,1,1,1

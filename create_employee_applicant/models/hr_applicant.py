@@ -66,24 +66,37 @@ class HrLeave(models.Model):
                 applicant.partner_id = new_partner_id
                 address_id = new_partner_id.address_get(['contact'])['contact']
             if applicant.partner_name or contact_name:
-                employee_data = {
-                    'name': applicant.partner_name or contact_name,
-                    'job_id': applicant.job_id.id,
-                    'job_title': applicant.job_id.name,
-                    'address_home_id': address_id,
-                    'department_id': applicant.department_id.id or False,
-                    'address_id': applicant.company_id and applicant.company_id.partner_id
-                                  and applicant.company_id.partner_id.id or False,
-                    'work_email': applicant.department_id and applicant.department_id.company_id
-                                  and applicant.department_id.company_id.email or False,
-                    'work_phone': applicant.department_id.company_id.phone,
-                    'applicant_id': applicant.ids,
-                    'hr_leave_in_id': self.id,
-                    'location': self.location,
-                    'assign_to': self.assign_to,
-                    'note': self.note,
-                    'dir': self.dir,
-                }
+                if applicant.hiring_ids:
+                    lines = []
+                    if applicant.hiring_ids:
+                        for customer in applicant.hiring_ids[0].customer_ids:
+                            lines.append((0, 0, {
+                                'l_1_id': customer.l_1_id.id,
+                                'partner_id': customer.partner_id.id,
+                                'l_3_id': customer.l_3_id.id,
+                                'contact_id': customer.contact_id.id,
+                                'level_2_id': customer.level_2_id.id,
+                            }))
+                    employee_data = {
+                        'name': applicant.partner_name or contact_name,
+                        'job_id': applicant.job_id.id,
+                        'job_title': applicant.job_id.name,
+                        'address_home_id': address_id,
+                        'department_id': applicant.department_id.id or False,
+                        'address_id': applicant.company_id and applicant.company_id.partner_id
+                                      and applicant.company_id.partner_id.id or False,
+                        'work_email': applicant.department_id and applicant.department_id.company_id
+                                      and applicant.department_id.company_id.email or False,
+                        'work_phone': applicant.department_id.company_id.phone,
+                        'applicant_id': applicant.ids,
+                        'hr_leave_in_id': self.id,
+                        'location': self.location,
+                        'assign_to': self.assign_to,
+                        'note': self.note,
+                        'dir': self.dir,
+                        'customer_ids': lines,
+                    }
+
                 emp_obj = self.env['hr.employee'].sudo().create(employee_data)
                 if self.assign_to == 'eg':
                     print('eg')
@@ -110,7 +123,7 @@ class HrLeave(models.Model):
                         'res_id': emp_obj.id
                     })
                 if self.dir == 'in':
-                    emp_objs = self.env['emp.act'].search([('internal', '=',True)])
+                    emp_objs = self.env['emp.act'].search([('internal', '=', True)])
                     for emps in emp_objs:
                         activity_obj = self.env['mail.activity'].create({
                             'activity_type_id': emps.activity_type_id.id,

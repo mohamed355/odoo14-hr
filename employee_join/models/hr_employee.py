@@ -15,8 +15,20 @@ class HrEmployee(models.Model):
                                  required=False, )
     note = fields.Text(string="Note", required=False, )
     dir = fields.Selection(string="Direction", selection=[('in', 'Internal'), ('ex', 'External'), ], required=False, )
+    customer_ids = fields.One2many(comodel_name="hiring.customer", inverse_name="employee_id", string="Customer",
+                                   required=False, )
 
     def join(self):
+        lines = []
+        if self.customer_ids:
+            for customer in self.customer_ids:
+                lines.append((0, 0, {
+                    'l_1_id': customer.l_1_id.id,
+                    'partner_id': customer.partner_id.id,
+                    'l_3_id': customer.l_3_id.id,
+                    'contact_id': customer.contact_id.id,
+                    'level_2_id': customer.level_2_id.id,
+                }))
         return {
             'name': 'Employee Join',
             'view_type': 'form',
@@ -30,6 +42,7 @@ class HrEmployee(models.Model):
                 'default_assign_to': self.hr_leave_in_id.assign_to,
                 'default_note': self.hr_leave_in_id.note,
                 'default_dir': self.hr_leave_in_id.dir,
+                'default_customer_ids': lines,
             },
             'target': 'new'
 

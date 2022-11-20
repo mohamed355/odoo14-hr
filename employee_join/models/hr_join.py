@@ -27,13 +27,29 @@ class HrJoin(models.Model):
                                  required=False, )
     note = fields.Text(string="Note", required=False, )
     dir = fields.Selection(string="Direction", selection=[('in', 'Internal'), ('ex', 'External'), ], required=False, )
+    customer_ids = fields.One2many(comodel_name="hiring.customer", inverse_name="acc_id", string="Customer",
+                                   required=False, )
 
     @api.model
     def create(self, values):
         res = super(HrJoin, self).create(values)
         emp = self.env['hr.employee'].browse(self.env.context.get('active_id'))
         emp.joined = True
+
         for record in res:
+            emp.customer_ids.unlink()
+            print(record.customer_ids, 'c')
+            if record.customer_ids:
+                for customer in record.customer_ids:
+                    self.env['hiring.customer'].create({
+                        'l_1_id': customer.l_1_id.id,
+                        'partner_id': customer.partner_id.id,
+                        'l_3_id': customer.l_3_id.id,
+                        'contact_id': customer.contact_id.id,
+                        'level_2_id': customer.level_2_id.id,
+                        'employee_id': emp.id,
+
+                    })
             if record.product_id:
                 if record.analytic_account_id:
                     self.env['account.analytic.default'].create(
@@ -72,3 +88,10 @@ class HrJoin(models.Model):
             'target': 'new'
 
         }
+
+
+class HiringCustomer(models.Model):
+    _inherit = 'hiring.customer'
+
+    acc_id = fields.Many2one(comodel_name="hr.join", string="Join", required=False, )
+    employee_id = fields.Many2one(comodel_name="hr.employee", string="Employee", required=False, )

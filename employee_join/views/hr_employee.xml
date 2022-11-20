@@ -12,8 +12,8 @@
                     <field name="dir" invisible="1"/>
                     <button name="join" type="object" string="Accounting Info"
                             attrs="{'invisible': ['|',('joined', '=', True),('dir','=','in')]}"/>
-                    <button name="emp_conf" type="object" string="Join"
-                            attrs="{'invisible': [('state', '=', 'joined')]}"/>
+                    <!--                    <button name="emp_conf" type="object" string="Join"-->
+                    <!--                            attrs="{'invisible': [('state', '=', 'joined')]}"/>-->
                     <field name="state" widget="statusbar"/>
                 </xpath>
                 <xpath expr="//notebook" position="inside">
@@ -24,6 +24,26 @@
                             <field name="assign_to"/>
                             <field name="dir"/>
                             <field name="note"/>
+                        </group>
+                    </page>
+                    <page string="Customer">
+                        <group>
+                            <field name="customer_ids">
+                                <tree editable="bottom">
+                                    <field name="l_1_id"/>
+                                    <field name="level_2_child" invisible="1"/>
+                                    <field name="customer_child" invisible="1"/>
+                                    <field name="dep_child" invisible="1"/>
+                                    <field name="level_2_id" domain="[('id', 'in', customer_child), ]"
+                                           string="Department"/>
+                                    <field name="partner_id" domain="[('id', 'in', level_2_child), ]"
+                                           widget="res_partner_many2one"
+                                           string="Sector"
+                                    />
+                                    <field name="contact_id" domain="[('id', 'in', dep_child), ]"/>
+                                </tree>
+                            </field>
+
                         </group>
                     </page>
                 </xpath>
