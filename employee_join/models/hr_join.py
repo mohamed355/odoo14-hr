@@ -15,6 +15,7 @@ class HrJoin(models.Model):
     manager_id = fields.Many2one('hr.employee', string="Manager", related='name.parent_id', readonly=False,
                                  store=True, )
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', )
+    analytic_account_group_id = fields.Many2one('account.analytic.group', string='Analytic Account Group', )
     company_id = fields.Many2one('res.company', string='Analytic Account', related='name.company_id', store=True)
     sales_price = fields.Float(string="Sales Price", required=False, )
     state = fields.Selection(string="State", selection=[('draft', 'Draft'), ('approved', 'Approved'), ],
@@ -37,6 +38,8 @@ class HrJoin(models.Model):
         emp.joined = True
 
         for record in res:
+            emp.analytic_account_group_id = record.analytic_account_group_id.id
+            emp.analytic_account_id = record.analytic_account_id.id
             emp.customer_ids.unlink()
             print(record.customer_ids, 'c')
             if record.customer_ids:

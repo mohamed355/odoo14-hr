@@ -25,7 +25,8 @@
                                 <field name="product_id"/>
                                 <field name="template_id"/>
                                 <field name="manager_id"/>
-                                <field name="analytic_account_id"/>
+                                <field name="analytic_account_group_id"/>
+                                <field name="analytic_account_id" domain="[('group_id', '=',analytic_account_group_id ), ]"/>
                                 <field name="sales_price" groups="hr.group_hr_manager"/>
                                 <field name="location"/>
                                 <field name="nationality_id"/>

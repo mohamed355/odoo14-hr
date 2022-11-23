@@ -4,6 +4,8 @@ from odoo import api, fields, models
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account', )
+    analytic_account_group_id = fields.Many2one('account.analytic.group', string='Analytic Account Group', )
     work_email = fields.Char('Work Email', required=False, )
     state = fields.Selection(string="State", selection=[('new', 'New'), ('joined', 'Joined'), ], required=False,
                              default='new')

@@ -11,8 +11,13 @@
                     <field name="boundaries_id"/>
                     <field name="accommodation_id"/>
                     <field name="acc_date"/>
+                    <field name="social_insurance"/>
+                    <field name="medical_in"/>
+                    <field name="taxes"/>
                 </group>
-
+                <xpath expr="//field[@name='address_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
         <record id="visa_type_form" model="ir.ui.view">
