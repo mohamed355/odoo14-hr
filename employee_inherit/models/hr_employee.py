@@ -9,6 +9,11 @@ class HrEmployee(models.Model):
     boundaries_id = fields.Many2one(comodel_name="boundaries", string="Boundaries N", required=False, )
     accommodation_id = fields.Many2one(comodel_name="accommodation", string="Accommodation N", required=False, )
     acc_date = fields.Date(string="Accommodation date", required=False, )
+
+
+class HrContract(models.Model):
+    _inherit = 'hr.contract'
+
     social_insurance = fields.Char(string="Social insurance", required=False, )
     medical_in = fields.Char(string="Medical insurance", required=False, )
     taxes = fields.Char(string="Taxes", required=False, )

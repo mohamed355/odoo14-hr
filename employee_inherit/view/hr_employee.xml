@@ -11,9 +11,6 @@
                     <field name="boundaries_id"/>
                     <field name="accommodation_id"/>
                     <field name="acc_date"/>
-                    <field name="social_insurance"/>
-                    <field name="medical_in"/>
-                    <field name="taxes"/>
                 </group>
                 <xpath expr="//field[@name='address_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -74,9 +71,27 @@
             <field name="res_model">accommodation</field>
             <field name="view_mode">tree,form</field>
         </record>
+        <record id="hr_contract_form_inherit" model="ir.ui.view">
+            <field name="name">hr_contract_form_inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
 
-        <menuitem id="visa_type_menu_action" name="Visa Types" parent="hr.menu_hr_employee_payroll" action="visa_type_action"/>
-        <menuitem id="boundaries_menu_action" name="Boundaries" parent="hr.menu_hr_employee_payroll" action="boundaries_action"/>
-        <menuitem id="accommodation_menu_action" name="Accommodation" parent="hr.menu_hr_employee_payroll" action="accommodation_action"/>
+                <xpath expr="//field[@name='hr_responsible_id']" position="after">
+                    <field name="social_insurance"/>
+                    <field name="medical_in"/>
+                    <field name="taxes"/>
+
+                </xpath>
+
+            </field>
+        </record>
+
+        <menuitem id="visa_type_menu_action" name="Visa Types" parent="hr.menu_hr_employee_payroll"
+                  action="visa_type_action"/>
+        <menuitem id="boundaries_menu_action" name="Boundaries" parent="hr.menu_hr_employee_payroll"
+                  action="boundaries_action"/>
+        <menuitem id="accommodation_menu_action" name="Accommodation" parent="hr.menu_hr_employee_payroll"
+                  action="accommodation_action"/>
     </data>
 </odoo>
