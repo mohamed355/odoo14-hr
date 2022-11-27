@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="expiration_conf_tree" model="ir.ui.view">
+            <field name="name">expiration_conf_tree</field>
+            <field name="model">expire.conf</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Expiration Configuration">
+                    <field name="name"/>
+                    <field name="days"/>
+                </tree>
+            </field>
+        </record>
+        <record id="expiration_conf_action" model="ir.actions.act_window">
+            <field name="name">Employee Expiration Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">expire.conf</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="expiration_conf_action_menu" name="Employee Expiration Configuration" parent="hr.menu_hr_employee_payroll"
+                  action="expiration_conf_action"/>
+
+    </data>
+</odoo>

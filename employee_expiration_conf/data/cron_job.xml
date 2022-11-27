@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.cron" id="employee_exp_cron">
+            <field name="name">Employee Expiration Configuration</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.action_cron_auto_emp_expire()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record model="expire.conf" id="expire_conf_act">
+            <field name="name">Expiration Activity</field>
+            <field name="days">70</field>
+            <field name="activity" eval="True"/>
+        </record>
+        <record model="expire.conf" id="expire_conf_mail">
+            <field name="name">Expiration Email</field>
+            <field name="days">70</field>
+            <field name="mail" eval="True"/>
+        </record>
+
+
+    </data>
+</odoo>
