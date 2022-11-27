@@ -105,7 +105,8 @@ class ReportTechnicalApp(models.Model):
         for x in self:
             meeting = self.env['calendar.event'].search([('interview_id', '=', x.id)], order='create_date asc')
             print(meeting.mapped('name'))
-            x.meeting_id = meeting[-1].id
+            if meeting:
+                x.meeting_id = meeting[-1].id
 
     def open_meeting(self):
         return {

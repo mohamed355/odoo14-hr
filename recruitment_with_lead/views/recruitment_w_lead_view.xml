@@ -68,7 +68,7 @@
                 <field name="last_update_applicant"/>
                 <field name="candidate_location"/>
                 <field name="location" string="Request Location"/>
-                <field name="user"/>
+<!--                <field name="user"/>-->
                 <field name="candidate_location_id" attrs="{'invisible':[('user','=',False)]}"
                        options="{'no_create': True}"/>
                 <field name="candidate_location_id" attrs="{'invisible':[('user','!=',False)]}"/>

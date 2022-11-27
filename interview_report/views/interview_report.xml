@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="interview_report_tree" model="ir.ui.view">
+            <field name="name">interview_report_tree</field>
+            <field name="model">interview.report</field>
+            <field name="arch" type="xml">
+                <tree string="HR Interview Report" editable="bottom">
+                    <field name="name"/>
+                    <field name="location"/>
+                    <field name="app_name"/>
+                    <field name="mobile" optional="hide"/>
+                    <field name="email" optional="hide"/>
+                    <field name="job_id"/>
+                    <field name="resume" filename="resume_name"/>
+                    <field name="resume_name" invisible="1"/>
+                    <field name="interviewed_by"/>
+                    <field name="date"/>
+                    <field name="inter_status" optional="hide"/>
+                    <field name="rec_action"/>
+                    <field name="re_reason" optional="hide"/>
+                    <field name="notes"/>
+                    <button name="open" type="object" string="Download" class="oe_highlight"/>
+                </tree>
+            </field>
+        </record>
+        <record id="interview_report_action" model="ir.actions.act_window">
+            <field name="name">HR Interview Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">interview.report</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="interview_report_menu" name="HR Interview Report"
+                  parent="hr_recruitment.report_hr_recruitment"
+                  action="interview_report_action"/>
+
+
+    </data>
+</odoo>
