@@ -7,6 +7,12 @@ from odoo.exceptions import UserError
 from odoo.tools import email_re
 
 
+class MailTe(models.Model):
+    _inherit = 'mail.template'
+
+    user = fields.Boolean(string="", )
+
+
 class HrApplicant(models.Model):
     _inherit = 'hr.applicant'
 
@@ -115,7 +121,7 @@ class MailComposeMessage(models.TransientModel):
                             'hiring': app.hiring_ids[0].name,
                             'job_title': app.hiring_ids[0].job_id.name,
                             'location': app.hiring_ids[0].location,
-                            'client': app.hiring_ids[0].client.name,
+                            # 'client': app.hiring_ids[0].client.name,
                             'offer_job_title': app.offer_job_id,
                             'offer_date': fields.Datetime.now(),
                             'package_salary': app.package_salary,

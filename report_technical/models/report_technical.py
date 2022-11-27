@@ -17,7 +17,7 @@ class HrApplicant(models.Model):
                     'hiring': self.hiring_ids[0].name,
                     'job_title': self.hiring_ids[0].job_id.name,
                     'location': self.hiring_ids[0].location,
-                    'client': self.hiring_ids[0].client.name,
+                    # 'client': self.hiring_ids[0].client.name,
                     'serial': self.app_code,
                     'notice_period_from': self.notice_period_from,
                     'notice_period_to': self.notice_period_to,
@@ -38,7 +38,7 @@ class HrApplicant(models.Model):
                     'hiring': self.hiring_ids[0].name,
                     'job_title': self.hiring_ids[0].job_id.name,
                     'location': self.hiring_ids[0].location,
-                    'client': self.hiring_ids[0].client.name,
+                    # 'client': self.hiring_ids[0].client.name,
                     'serial': self.app_code,
                     'notice_period_from': self.notice_period_from,
                     'notice_period_to': self.notice_period_to,
@@ -103,8 +103,9 @@ class ReportTechnicalApp(models.Model):
     @api.depends()
     def _compute_meeting(self):
         for x in self:
-            meeting = self.env['calendar.event'].search([('interview_id', '=', x.id)])
-            x.meeting_id = meeting.id
+            meeting = self.env['calendar.event'].search([('interview_id', '=', x.id)], order='create_date asc')
+            print(meeting.mapped('name'))
+            x.meeting_id = meeting[-1].id
 
     def open_meeting(self):
         return {

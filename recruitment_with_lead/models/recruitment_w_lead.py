@@ -13,7 +13,8 @@ class HrApp(models.Model):
 
     _sql_constraints = [('email_from_uniq', 'CHECK (1=1)', 'Email is Duplicated')]
 
-    location = fields.Selection(string="Location", selection=[('off', 'Offshore'), ('on', 'Onsite'), ], required=False, )
+    location = fields.Selection(string="Location", selection=[('off', 'Offshore'), ('on', 'Onsite'), ],
+                                required=False, )
     re_action = fields.Char(string="Recommended Action", required=False, )
     last_update_applicant = fields.Date(string="Last Update", required=False, )
     app_code = fields.Char(string="Serial", required=False)
@@ -58,11 +59,25 @@ class HrApp(models.Model):
                                   string="Experience dayes", store=True)
     notice_period_to = fields.Integer(string="Notice Period To", required=False, )
     notice_period_from = fields.Integer(string="Notice Period From", required=False, )
+    user = fields.Boolean(string="User", compute='_compute_user')
+
+    @api.depends()
+    def _compute_user(self):
+        for record in self:
+            if self.env.user.has_group('hr_recruitment.group_hr_recruitment_user') and not self.env.user.has_group(
+                    'hr_recruitment.group_hr_recruitment_manager'):
+                record.user = True
+            else:
+                record.user = False
 
     @api.onchange('stage_id')
     def onchange_stage_id(self):
         dt_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.stage_date = dt_string
+
+    def open_new(self):
+        return {'type': 'ir.actions.act_url', 'url': '/web#model=hr.applicant&id=' + str(self.id),
+                'target': 'new'}
 
     def action_activities(self):
         return {
