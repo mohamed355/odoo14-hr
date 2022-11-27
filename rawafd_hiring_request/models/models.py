@@ -215,9 +215,11 @@ class HiringRequest(models.Model):
     application_ids = fields.Many2many(comodel_name="hr.applicant", relation="hr_application_rel",
                                        column1='application_id', column2="hr_id", string="Application")
     activity_count = fields.Integer(string="Activities", required=False, compute='_compute_activity_count')
-    
-    
+
     # def open_record(self):
+    def open_new(self):
+        return {'type': 'ir.actions.act_url', 'url': '/web#model=hiring.request&id=' + str(self.id),
+                'target': 'new'}
 
     @api.model
     def create(self, vals):

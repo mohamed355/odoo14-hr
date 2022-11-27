@@ -14,6 +14,7 @@
                         </group>
                         <group string="Completed">
                             <field name="checklist_progress" widget="percentpie"/>
+                            <field name="reviewed_by_id"/>
                         </group>
                     </group>
                 </page>

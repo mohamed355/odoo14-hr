@@ -309,6 +309,7 @@
             <field name="model">hiring.request</field>
             <field name="arch" type="xml">
                 <tree>
+                    <button name="open_new" type="object" icon="fa-hand-pointer-o"/>
                     <field name="name" string="Code"/>
                     <field name="req_date" string="Request Date"/>
                     <!--                    <field name="client"/>-->

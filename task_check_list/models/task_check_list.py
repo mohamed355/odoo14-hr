@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class ProjectTask(models.Model):
@@ -20,6 +21,13 @@ class ProjectTask(models.Model):
     checklist_progress = fields.Float(compute=checklist_progress, string='Progress', store=True,
                                       default=0.0)
     max_rate = fields.Integer(string='Maximum rate', default=100)
+    reviewed_by_id = fields.Many2one(comodel_name="res.users", string="Reviewed By", required=False, )
+
+    @api.constrains('stage_id')
+    def constrains_stage_id_checklist(self):
+        if self.stage_id.name == 'Submit to client':
+            if not self.reviewed_by_id:
+                raise ValidationError("Please Select Reviewed By")
 
 
 class TaskChecklist(models.Model):

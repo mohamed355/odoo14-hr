@@ -1,24 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="view_calendar_event_form" model="ir.ui.view">
+            <field name="name">calendar.event.form</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <field name="categ_ids" position="after">
+                    <field name="technical" groups="hr_recruitment.group_hr_recruitment_manager,recruitment_with_lead.group_hr_recruitment_man"/>
+                </field>
+            </field>
+        </record>
+
         <record id="action_calendar_event_crm" model="ir.actions.act_window">
-        <field name="name">Meetings</field>
-        <field name="res_model">calendar.event</field>
-        <field name="view_mode">calendar,tree,form</field>
-<!--        <field name="view_id" ref="view_calendar_event_calendar"/>-->
-<!--        <field name="search_view_id" ref="view_calendar_event_search"/>-->
-        <field name="help" type="html">
-          <p class="o_view_nocontent_smiling_face">
-            No meetings found. Let's schedule one!
-          </p><p>
-            The calendar is shared between employees and fully integrated with
-            other applications such as the employee leaves or the business
-            opportunities.
-          </p>
-        </field>
-    </record>
+            <field name="name">Meetings</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No meetings found. Let's schedule one!
+                </p>
+                <p>
+                    The calendar is shared between employees and fully integrated with
+                    other applications such as the employee leaves or the business
+                    opportunities.
+                </p>
+            </field>
+        </record>
+        <record id="action_calendar_event_rec_hr" model="ir.actions.act_window">
+            <field name="name">Meetings</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('technical','=',False)]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No meetings found. Let's schedule one!
+                </p>
+                <p>
+                    The calendar is shared between employees and fully integrated with
+                    other applications such as the employee leaves or the business
+                    opportunities.
+                </p>
+            </field>
+        </record>
+        <record id="action_calendar_event_rec_tec" model="ir.actions.act_window">
+            <field name="name">Meetings</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('technical','!=',False)]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No meetings found. Let's schedule one!
+                </p>
+                <p>
+                    The calendar is shared between employees and fully integrated with
+                    other applications such as the employee leaves or the business
+                    opportunities.
+                </p>
+            </field>
+        </record>
     </data>
 
-    <menuitem id="menu_action_calendar" name="Main Calendar" parent="crm.crm_menu_root" action="action_calendar_event_crm" sequence="5"/>
-    <menuitem id="menu_action_calendar_recruitment" name="Meeting Calendar" parent="notification_menu.all_activities" action="action_calendar_event_crm" sequence="5"/>
+    <menuitem id="menu_action_calendar" name="Main Calendar" parent="crm.crm_menu_root"
+              action="action_calendar_event_crm" sequence="5"/>
+    <menuitem id="menu_action_calendar_recruitment_hr" name="HR Calendar" parent="notification_menu.all_activities"
+              action="action_calendar_event_rec_hr" sequence="5"/>
+    <menuitem id="menu_action_calendar_recruitment_te" name="Technical Calendar"
+              parent="notification_menu.all_activities"
+              action="action_calendar_event_rec_tec" sequence="5" groups="hr_recruitment.group_hr_recruitment_manager,recruitment_with_lead.group_hr_recruitment_man"/>
 </odoo>
