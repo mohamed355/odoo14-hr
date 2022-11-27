@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="print_enter_material_paperformat" model="report.paperformat">
+        <field name="name">Enter Material</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">190</field>
+        <field name="page_width">290</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">100</field>
+    </record>
+    <record id="temp_report_enter_material_report" model="ir.actions.report">
+        <field name="name">LLLL</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="report_name">app_interview.temp_report_enter_material</field>
+        <field name="report_file">app_interview.temp_report_enter_material</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="paperformat_id" ref="print_enter_material_paperformat"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="temp_report_enter_material">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="tg-9wq8" rowspan="1">
+                        <p style="text-align:left;margin:0px 5px 0px 0px; padding: 20px 5px 0px 30px;">
+                            <img src="gate/static/description/Group 57998.png" lat="logo" width="110px" height="110px"
+                                 style="margin:auto"/>
+                        </p>
+                        <p style="text-align:right;margin:-70px 20px 0px 0px; padding: 0px 5px 0px 60px;font-size: 20px;">
+                            <b>وزارة الكهرباء و الماء</b>
+                            <br/>
+                            <b>Ministry of Electricity</b>
+                        </p>
+                        <br/>
+                        <br/>
+                        <p style="text-align:center;font-weight:bold;margin-top:-10px;font-size:20px">
+                            <span>محطة الصبية لتوليد القوي الكهربائية وتقطير المياه</span>
+                            <br/>
+                            <span>SUBIYA POWER GENERATION AND WATER AND DISTLATION PLANT</span>
+                        </p>
+                    </div>
+                    <div class="page"
+                         style="text-align:right; font-size: 30px; margin:-180px 5px 0px 5px; padding: 70px 5px 0px 5px; border-collapse:separate;">
+                        <style type="text/css">.tg {border-collapse:collapse;border-spacing:0;} .tg
+                            td{border-color:black;border-style:solid;border-width:0px;font-family:Arial,
+                            sans-serif;font-size:20px; overflow:hidden;padding:9px 9px;word-break:normal;} .tg
+                            th{border-color:black;border-style:solid;border-width:0px;font-family:Arial,
+                            sans-serif;font-size:20px; font-weight:normal;overflow:hidden;padding:9px
+                            9px;word-break:normal;} .tg .tg-cly1{text-align:center;vertical-align:middle} .tg
+                            .tg-baqh{text-align:right;vertical-align:top} .tg
+                            .tg-nrix{text-align:right;vertical-align:middle} .tg .tg-az3n{font-family:"Arial Black",
+                            Gadget, sans-serif !important;text-align:center;vertical-align:middle}
+                        </style>
+                        <table class="tg">
+                            <thead>
+                                <tr>
+                                    <th class="tg-9wq8" rowspan="2">
+                                        <p style="text-align:left;">
+                                            <img src="gate/static/description/Group 58040.png" lat="logo" width="110px"
+                                                 height="110px" style="margin:auto"/>
+                                        </p>
+                                    </th>
+                                    <th colspan="2" style="text-align:center;font-weight:bold;margin-top:-10px"></th>
+                                    <th class="tg-9wq8" rowspan="2">
+                                        <p style="text-align:right;">
+                                            <img src="gate/static/description/Group 57998.png" lat="logo" width="110px"
+                                                 height="110px" style="margin:auto"/>
+                                        </p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <br/>
+                                <tr style="align:center;">
+                                    <td class="tg-9wq8" colspan="4" style="text-align:center;font-weight: bold;">تصريح
+                                        دخول وخروج سيارة
+                                    </td>
+                                    <td class="tg-9wq8">
+                                        <!--                                         <t t-esc="o.date"/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-9wq8" colspan="4" style="text-align:left;">
+                                        <p>
+                                            <!--                                             <t t-if="o.image_1920"> -->
+                                            <!--                                                 <img t-att-src="image_data_uri(o.image_1920)" -->
+                                            <!--                                                      style="height:130px;width:80px"/> -->
+                                            <!--                                             </t> -->
+                                        </p>
+                                    </td>
+                                    <td class="tg-9wq8" colspan="4" style="text-align:center;">
+                                        <!--                                         <t t-esc="o.reference"/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-9wq8" colspan="2">
+                                        <!--                                         <t t-esc="o.location"/> -->
+                                        <td class="tg-9wq8" colspan="2" style="font-weight: bold;">:رقم التصريح</td>
+                                    </td>
+                                </tr>
+                                <br/>
+                                <tr>
+                                    <td class="tg-9wq8" colspan="2">
+                                        <!--                        <t t-esc="o.location"/> -->
+                                        <td class="tg-9wq8" colspan="2" style="font-weight: bold;">بيانات التصريح -</td>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>تاريخ انشاء التصريح</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>اسم الشركه</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>رقم الهويه</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>الاسم</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>الوظيفه</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>الجنسيه</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-9wq8" colspan="2">
+                                        <!--                        <t t-esc="o.location"/> -->
+                                        <td class="tg-9wq8" colspan="2" style="font-weight: bold;">التوقيتات والبوابات
+                                            -
+                                        </td>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>بداية التصريح</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>بوابات الدخول</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>نهاية التصريح</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>بوابات الخروج</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-9wq8" colspan="2">
+                                        <!--                        <t t-esc="o.location"/> -->
+                                        <td class="tg-9wq8" colspan="2" style="font-weight: bold;">بيانات السيارة -</td>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>نوع السيارة</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>السيارة</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>اسم السائق</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>رقم السيارة</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr valign="top">
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span/>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding: 0in">
+                                        <p align="right">
+                                            <br/>
+                                        </p>
+                                    </td>
+                                    <td width="25%" style="border: none; padding-right: 20px;">
+                                        <p align="right">
+                                            <font face="Abyssinica SIL">
+                                                <span lang="hi-IN">
+                                                    <span>اسم المالك</span>
+                                                </span>
+                                            </font>
+                                        </p>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-6"/>
+                            <div class="col-6">
+                                <ul style="direction :  rtl;margin-left: 60%;">
+                                    <li>بيانات الاصناف</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th></th>
+                                <th class="text-center">الكمية المتاحة</th>
+                                <th class="text-center">اسم الصنف</th>
+                                <th class="text-center">م</th>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <report id="print_enter_material_report" string="Print Enter Material" model="approval.request"
+            report_type="qweb-pdf" file="gates.temp_report_enter_material" name="gates.temp_report_enter_material"
+            paperformat="print_enter_material_paperformat" menu="False"/>
+</odoo>

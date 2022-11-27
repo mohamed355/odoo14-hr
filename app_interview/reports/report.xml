@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="print_card_for_employee_paperformat" model="report.paperformat">
+        <field name="name">Card For Employee</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">110</field>
+        <field name="page_width">50</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">100</field>
+    </record>
+    <record id="report" model="ir.actions.report">
+        <field name="name">Reprot</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="report_name">app_interview.template</field>
+        <field name="report_file">app_interview.template</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="paperformat_id" ref="print_card_for_employee_paperformat"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-3" style="border:1px solid black"/>-->
+                    <!--                        <div class="col-6" style="border:1px solid black">-->
+                    <!--                            <p>محطة الصبية لتوليد القوى الكهربائية وتقطير المياه-->
+                    <!--                                <br/>-->
+                    <!--                                SUBIYA POWER GENERATION AND WATER AND DISTLATION PLANT-->
+                    <!--                            </p>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-3" style="border:1px solid black"/>-->
+                    <!--                    </div>-->
+
+                    <br></br>
+                    <!--                    <div class="row" style="margin-right:20%">-->
+
+                    <!--                        <div class="col-4"/>-->
+                    <!--                        <div class="col-5" style="border:1px solid black">-->
+                    <!--                            <h4 align="right">-->
+                    <!--                            </h4>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-3"/>-->
+
+
+                    <!--                    </div>-->
+                    <div style="border:1px solid black;width:10%;display:inline-block">
+                        <p>
+                            PHOTO
+                        </p>
+
+                    </div>
+                    <div style="margin-left:5%;border:1px solid black;width:50%;max-height:10%;display:inline-block">
+                        <p>
+                            <p style="text-align:center;">محطة الصبية لتوليد القوى الكهربائية وتقطير المياه
+                                <br/>
+                                SUBIYA POWER GENERATION AND WATER AND DISTLATION PLANT
+                            </p>
+                        </p>
+                    </div>
+                    <div style="margin-left:70%;border:1px solid black;width:10%;display:inline-block">
+                        <p>
+                            PHOTO
+                        </p>
+
+                    </div>
+
+
+                    <br/>
+                    <br/>
+                    <div class="row" style="margin-right:20%">
+                        <div class="col-4">
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                        </div>
+                        <div class="col-2">
+                            <h4 align="right">:الجنسيه</h4>
+                            <h4 align="right">:تصريح رقم</h4>
+                            <h4 align="right">:ينتهي في</h4>
+                        </div>
+                        <div class="col-4">
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                        </div>
+                        <div class="col-2">
+                            <h4 align="right">:الاسم</h4>
+                            <h4 align="right">:الرقم المدني</h4>
+                            <h4 align="right">:يبدا في</h4>
+                            <h4 align="right">:ملاحظات</h4>
+                        </div>
+
+
+                    </div>
+                    <p style="page-break-after:always;"></p>
+                    <h2 align="center">هويه ألمحطه</h2>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row" style="margin-right:20%">
+                        <div class="col-10">
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                            <h4 align="right">×××</h4>
+                        </div>
+                        <div class="col-2">
+                            <h4 align="right">:اسم العقد</h4>
+                            <h4 align="right">:رقم الملف</h4>
+                            <h4 align="right">:الوظيفة</h4>
+                            <h4 align="right">:القسم</h4>
+                            <h4 align="right">:فصيلة الدم</h4>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </t>
+        </t>
+    </template>
+</odoo>

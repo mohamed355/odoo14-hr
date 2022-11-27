@@ -56,6 +56,7 @@
                         <group>
                             <field name="inter_by"/>
                             <field name="re_action"/>
+                            <field name="rej_reasons_id"/>
                         </group>
                         <group/>
                     </group>

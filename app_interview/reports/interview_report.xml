@@ -19,7 +19,6 @@
     <record id="interview_report" model="ir.actions.report">
         <field name="name">Interview</field>
         <field name="model">hr.applicant</field>
-        <!--        <field name="height">1000</field>-->
         <field name="report_type">qweb-pdf</field>
         <field name="print_report_name">'%s - %s' % (object.partner_name,object.app_code)</field>
         <field name="report_name">app_interview.interview_template</field>
