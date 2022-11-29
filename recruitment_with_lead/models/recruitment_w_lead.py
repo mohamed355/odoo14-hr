@@ -13,6 +13,7 @@ class HrApp(models.Model):
 
     _sql_constraints = [('email_from_uniq', 'CHECK (1=1)', 'Email is Duplicated')]
 
+    sample = fields.Char(string="Sample", required=False, )
     location = fields.Selection(string="Location", selection=[('off', 'Offshore'), ('on', 'Onsite'), ],
                                 required=False, )
     re_action = fields.Char(string="Recommended Action", required=False, )

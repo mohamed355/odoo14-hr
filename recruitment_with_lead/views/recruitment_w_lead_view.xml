@@ -64,8 +64,10 @@
             <field name="source_id" position="after">
                 <field name="ref_employee_id"/>
                 <field name="nationality"/>
+                <field name="sample"/>
                 <field name="nationality_id" options="{'no_create': True}"/>
-                <field name="last_update_applicant"/>
+
+
                 <field name="candidate_location"/>
                 <field name="location" string="Request Location"/>
                 <field name="user" invisible="1"/>
