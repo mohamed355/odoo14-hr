@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <group name="has_work_permit" position="inside">
                     <field name="visa_type_id"/>
-                    <field name="boundaries_id"/>
-                    <field name="accommodation_id"/>
+                    <field name="boundaries"/>
+                    <field name="accommodation"/>
                     <field name="acc_date"/>
                 </group>
                 <xpath expr="//field[@name='address_id']" position="attributes">
