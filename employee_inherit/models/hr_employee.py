@@ -6,8 +6,8 @@ class HrEmployee(models.Model):
 
     hr_leave_in_id = fields.Many2one(comodel_name="hr.leave.in", string="Live", required=False, )
     visa_type_id = fields.Many2one(comodel_name="visa.type", string="Visa Type", required=False, )
-    boundaries = fields.Integer(string="Boundaries Number", required=False, )
-    accommodation = fields.Integer(string="Accommodation Number", required=False, )
+    boundaries = fields.Char(string="Boundaries Number", required=False, )
+    accommodation = fields.Char(string="Accommodation Number", required=False, )
     acc_date = fields.Date(string="Accommodation date", required=False, )
 
 
