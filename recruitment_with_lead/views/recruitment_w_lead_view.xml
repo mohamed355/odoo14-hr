@@ -65,6 +65,7 @@
                 <field name="ref_employee_id"/>
                 <field name="nationality"/>
                 <field name="sample"/>
+                <field name="last_update_applicant"/>
                 <field name="nationality_id" options="{'no_create': True}"/>
 
 
