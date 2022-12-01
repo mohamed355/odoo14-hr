@@ -107,6 +107,8 @@ class ReportTechnicalApp(models.Model):
             print(meeting.mapped('name'))
             if meeting:
                 x.meeting_id = meeting[-1].id
+            else:
+                x.meeting_id = False
 
     def open_meeting(self):
         return {
