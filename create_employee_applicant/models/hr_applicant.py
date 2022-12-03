@@ -105,9 +105,17 @@ class HrLeave(models.Model):
                     temp.sudo().send_mail(applicant.id, force_send=True)
                     self.env['mail.activity'].create({
                         'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
-                        'summary': "New Employee",
-                        'user_id': self.env['res.users'].search([('id', '=', 2)]).id,
-                        'note': "New Employee",
+                        'summary': "New Employee %s" % emp_obj.name,
+                        'user_id': self.env['res.users'].search([('id', '=', 42)]).id,
+                        'note': "New Employee %s" % emp_obj.name,
+                        'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
+                        'res_id': emp_obj.id
+                    })
+                    self.env['mail.activity'].create({
+                        'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
+                        'summary': "New Employee %s" % emp_obj.name,
+                        'user_id': self.env['res.users'].search([('id', '=', 43)]).id,
+                        'note': "New Employee %s" % emp_obj.name,
                         'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
                         'res_id': emp_obj.id
                     })
@@ -116,9 +124,9 @@ class HrLeave(models.Model):
                     template.sudo().send_mail(applicant.id, force_send=True)
                     self.env['mail.activity'].create({
                         'activity_type_id': self.env.ref('mail.mail_activity_data_todo').id,
-                        'summary': "New Employee",
-                        'user_id': self.env['res.users'].search([('id', '=', 2)]).id,
-                        'note': "New Employee",
+                        'summary': "New Employee %s" % emp_obj.name,
+                        'user_id': self.env['res.users'].search([('id', '=', 37)]).id,
+                        'note': "New Employee %s" % emp_obj.name,
                         'res_model_id': self.env['ir.model'].search([('model', '=', 'hr.employee')]).id,
                         'res_id': emp_obj.id
                     })

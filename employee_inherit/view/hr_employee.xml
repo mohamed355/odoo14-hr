@@ -6,6 +6,9 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
+                <field name="coach_id" position="after">
+                    <field name="profile"/>
+                </field>
                 <group name="has_work_permit" position="inside">
                     <field name="visa_type_id"/>
                     <field name="boundaries"/>

@@ -10,6 +10,7 @@
         'views/views.xml',
         'views/templates.xml',
         'data/ir_sequence.xml',
+        'data/mail_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
